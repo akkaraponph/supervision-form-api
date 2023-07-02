@@ -13,6 +13,16 @@ module.exports = {
 				created_at: new Date(),
 				updated_at: new Date(),
 
+			},
+			{
+				id: "e16263e9-cd10-4bd8-b040-ff550a0d5ba2",
+				username: "user2",
+				password: passwordHashing,
+				email: "test2@gmail.com",
+				status: "user",
+				created_at: new Date(),
+				updated_at: new Date(),
+
 			}
 		]
 		await queryInterface.bulkInsert('user', userData)
