@@ -32,6 +32,10 @@ export const App = () => {
 		res.end("Hello, World!");
 	})
 
+	app.get("/api/test", (req: Request, res: Response) => {
+		res.end("test successfully");
+	})
+
 	return app
 }
 
