@@ -1,0 +1,2258 @@
+{
+	"info": {
+		"_postman_id": "47a7f803-af97-43f9-8852-1744bb3cedcb",
+		"name": "InformationSystemForm",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21020441"
+	},
+	"item": [
+		{
+			"name": "schools",
+			"item": [
+				{
+					"name": "{{ep}}/schools",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"idSchool\":\"sci22123\",\r\n    \"name\":\"test\",\r\n    \"size\":\"small\",\r\n    \"district\":\"23\",\r\n    \"email\":\"test@school.com\",\r\n    \"tel\":\"0978232212\",\r\n    \"address\":\"test\",\r\n    \"junior\":\"test\",\r\n    \"senior\":\"test\",\r\n    \"director\":\"test\",\r\n    \"nTeacher\":\"22\",\r\n    \"nPersonnel\": \"3\",\r\n    \"teachingStyle\":\"test\",\r\n    \"openClass\":\"test\",\r\n     \"userId\":\"d0fecc57-4fa5-4ed6-97ce-b8ceb3d493fa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/schools",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"schools"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{ep}}/schools",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"idSchool\":\"sci22123\",\r\n    \"name\":\"test\",\r\n    \"size\":\"small\",\r\n    \"district\":\"23\",\r\n    \"email\":\"test@school.com\",\r\n    \"tel\":\"0978232212\",\r\n    \"address\":\"test\",\r\n    \"junior\":\"test\",\r\n    \"senior\":\"test\",\r\n    \"director\":\"test\",\r\n    \"nTeacher\":\"22\",\r\n    \"nPersonnel\": \"3\",\r\n    \"teachingStyle\":\"test\",\r\n    \"openClass\":\"test\",\r\n     \"userId\":\"d0fecc57-4fa5-4ed6-97ce-b8ceb3d493fa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/schools",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"schools"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{ep}}/schools/:id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"idSchool\":\"sci22123\",\r\n    \"name\":\"test\",\r\n    \"size\":\"small\",\r\n    \"district\":\"23\",\r\n    \"email\":\"test@school.com\",\r\n    \"tel\":\"0978232212\",\r\n    \"address\":\"test\",\r\n    \"junior\":\"test\",\r\n    \"senior\":\"test\",\r\n    \"director\":\"test\",\r\n    \"nTeacher\":\"22\",\r\n    \"nPersonnel\": \"3\",\r\n    \"teachingStyle\":\"test\",\r\n    \"openClass\":\"test\",\r\n     \"userId\":\"d0fecc57-4fa5-4ed6-97ce-b8ceb3d493fa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/schools/0061f19e-0cb7-4f90-9de5-8c42bfbe45e6",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"schools",
+								"0061f19e-0cb7-4f90-9de5-8c42bfbe45e6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{ep}}/schools/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"idSchool\":\"sci11111\",\r\n    \"name\":\"test\",\r\n    \"size\":\"small\",\r\n    \"district\":\"23\",\r\n    \"email\":\"test@school.com\",\r\n    \"tel\":\"0978232212\",\r\n    \"address\":\"test\",\r\n    \"junior\":\"test\",\r\n    \"senior\":\"test\",\r\n    \"director\":\"test\",\r\n    \"nTeacher\":\"22\",\r\n    \"nPersonnel\": \"3\",\r\n    \"teachingStyle\":\"test\",\r\n    \"openClass\":\"test\",\r\n     \"userId\":\"d0fecc57-4fa5-4ed6-97ce-b8ceb3d493fa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/schools/0061f19e-0cb7-4f90-9de5-8c42bfbe45e6",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"schools",
+								"0061f19e-0cb7-4f90-9de5-8c42bfbe45e6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{ep}}/schools",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"idSchool\":\"sci11111\",\r\n    \"name\":\"test\",\r\n    \"size\":\"small\",\r\n    \"district\":\"23\",\r\n    \"email\":\"test@school.com\",\r\n    \"tel\":\"0978232212\",\r\n    \"address\":\"test\",\r\n    \"junior\":\"test\",\r\n    \"senior\":\"test\",\r\n    \"director\":\"test\",\r\n    \"nTeacher\":\"22\",\r\n    \"nPersonnel\": \"3\",\r\n    \"teachingStyle\":\"test\",\r\n    \"openClass\":\"test\",\r\n     \"userId\":\"d0fecc57-4fa5-4ed6-97ce-b8ceb3d493fa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/schools/0061f19e-0cb7-4f90-9de5-8c42bfbe45e6",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"schools",
+								"0061f19e-0cb7-4f90-9de5-8c42bfbe45e6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "supervision form type",
+			"item": [
+				{
+					"name": "/supervision_forms/types",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/types",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/supervision_forms/types/id/:id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/types/id/0258c3e4-08e0-4145-ab16-38fe8ca12257",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"types",
+								"id",
+								"0258c3e4-08e0-4145-ab16-38fe8ca12257"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/supervision_forms/types/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/types/create",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"types",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/supervision_forms/types/update/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test 2\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/types/update/0258c3e4-08e0-4145-ab16-38fe8ca12257",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"types",
+								"update",
+								"0258c3e4-08e0-4145-ab16-38fe8ca12257"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/supervision_forms/types/delete/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test 2\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/types/delete/0258c3e4-08e0-4145-ab16-38fe8ca12257",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"types",
+								"delete",
+								"0258c3e4-08e0-4145-ab16-38fe8ca12257"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "supervision form",
+			"item": [
+				{
+					"name": "/supervision_forms",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/supervision_forms/id/:id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/id/e36263e9-cd10-4bd8-b040-ff550a0d5ba2",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"id",
+								"e36263e9-cd10-4bd8-b040-ff550a0d5ba2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/supervision_forms/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"SUPERVISION\",\r\n    \"detail\":\"test\",\r\n    \"term\":\"2\",\r\n    \"educationYear\": \"2566\",\r\n    \"supervisionFormTypeId\":\"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/create",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/supervision_forms/update/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n        \"name\": \"SUPERVISION\",\r\n        \"detail\": \"test 2\",\r\n        \"term\": \"2\",\r\n        \"educationYear\": \"2566\",\r\n        \"supervisionFormTypeId\": \"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/update/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"update",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/supervision_forms/delete/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test 2\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/delete/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"delete",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "personnel",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idPersonnel\": \"sci22123\",\r\n    \"name\": \"test\",\r\n    \"lastname\": \"test\",\r\n    \"position\": \"test\",\r\n    \"group\": \"test\",\r\n    \"email\": \"test@gmail.com\",\r\n    \"address\": \"test\",\r\n    \"tel\": \"0987654321\",\r\n    \"userId\": \"aca85c2a-40e0-4f5d-9d9f-054d3194ef95\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/personnels",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"personnels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"idSchool\":\"sci22123\",\r\n    \"name\":\"test\",\r\n    \"size\":\"small\",\r\n    \"district\":\"23\",\r\n    \"email\":\"test@school.com\",\r\n    \"tel\":\"0978232212\",\r\n    \"address\":\"test\",\r\n    \"junior\":\"test\",\r\n    \"senior\":\"test\",\r\n    \"director\":\"test\",\r\n    \"nTeacher\":\"22\",\r\n    \"nPersonnel\": \"3\",\r\n    \"teachingStyle\":\"test\",\r\n    \"openClass\":\"test\",\r\n     \"userId\":\"d0fecc57-4fa5-4ed6-97ce-b8ceb3d493fa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/personnels",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"personnels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"idSchool\":\"sci22123\",\r\n    \"name\":\"test\",\r\n    \"size\":\"small\",\r\n    \"district\":\"23\",\r\n    \"email\":\"test@school.com\",\r\n    \"tel\":\"0978232212\",\r\n    \"address\":\"test\",\r\n    \"junior\":\"test\",\r\n    \"senior\":\"test\",\r\n    \"director\":\"test\",\r\n    \"nTeacher\":\"22\",\r\n    \"nPersonnel\": \"3\",\r\n    \"teachingStyle\":\"test\",\r\n    \"openClass\":\"test\",\r\n     \"userId\":\"d0fecc57-4fa5-4ed6-97ce-b8ceb3d493fa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/personnels/f3849ce6-96eb-497d-bc43-1b10b6ca8949",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"personnels",
+								"f3849ce6-96eb-497d-bc43-1b10b6ca8949"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idPersonnel\": \"sci22123\",\r\n    \"name\": \"asdasdasdas\",\r\n    \"lastname\": \"test\",\r\n    \"position\": \"test\",\r\n    \"group\": \"test\",\r\n    \"email\": \"test@gmail.com\",\r\n    \"address\": \"test\",\r\n    \"tel\": \"0987654321\",\r\n    \"userId\": \"aca85c2a-40e0-4f5d-9d9f-054d3194ef95\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/personnels/f3849ce6-96eb-497d-bc43-1b10b6ca8949",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"personnels",
+								"f3849ce6-96eb-497d-bc43-1b10b6ca8949"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"idSchool\":\"sci11111\",\r\n    \"name\":\"test\",\r\n    \"size\":\"small\",\r\n    \"district\":\"23\",\r\n    \"email\":\"test@school.com\",\r\n    \"tel\":\"0978232212\",\r\n    \"address\":\"test\",\r\n    \"junior\":\"test\",\r\n    \"senior\":\"test\",\r\n    \"director\":\"test\",\r\n    \"nTeacher\":\"22\",\r\n    \"nPersonnel\": \"3\",\r\n    \"teachingStyle\":\"test\",\r\n    \"openClass\":\"test\",\r\n     \"userId\":\"d0fecc57-4fa5-4ed6-97ce-b8ceb3d493fa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/personnels/f3849ce6-96eb-497d-bc43-1b10b6ca8949",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"personnels",
+								"f3849ce6-96eb-497d-bc43-1b10b6ca8949"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "getOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ep}}/users/get/d0fecc57-4fa5-4ed6-97ce-b8ceb3d493fa",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"users",
+								"get",
+								"d0fecc57-4fa5-4ed6-97ce-b8ceb3d493fa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ep}}/users",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "me",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ep}}/users/me",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"test2\",\r\n    \"password\": \"test2\",\r\n    \"email\": \"test2@gmail.com\",\r\n    \"status\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/users",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user\",\r\n    \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/users/login",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"test\",\r\n    \"password\": \"test\",\r\n    \"email\": \"test@gmail.com\",\r\n    \"status\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/users/",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"test\",\r\n    \"password\": \"test\",\r\n    \"email\": \"test@gmail.com\",\r\n    \"status\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/users/",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "question",
+			"item": [
+				{
+					"name": "/question",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/question",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"question"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/question/id/:id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/question/id/e36263e9-cd10-4bd8-b040-ff550a0d5ba2",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"question",
+								"id",
+								"e36263e9-cd10-4bd8-b040-ff550a0d5ba2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/question/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"SUPERVISION\",\r\n    \"detail\":\"test\",\r\n    \"term\":\"2\",\r\n    \"educationYear\": \"2566\",\r\n    \"supervisionFormTypeId\":\"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/question/create",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"question",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/question/update/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n        \"name\": \"SUPERVISION\",\r\n        \"detail\": \"test 2\",\r\n        \"term\": \"2\",\r\n        \"educationYear\": \"2566\",\r\n        \"supervisionFormTypeId\": \"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/question/update/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"question",
+								"update",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/question/delete/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test 2\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/question/delete/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"question",
+								"delete",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "result/question/boolean",
+			"item": [
+				{
+					"name": "/result/question/boolean",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/result/question/boolean",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"result",
+								"question",
+								"boolean"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/result/question/boolean/id/:id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/result/question/boolean/id/e36263e9-cd10-4bd8-b040-ff550a0d5ba2",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"result",
+								"question",
+								"boolean",
+								"id",
+								"e36263e9-cd10-4bd8-b040-ff550a0d5ba2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/result/question/boolean/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"SUPERVISION\",\r\n    \"detail\":\"test\",\r\n    \"term\":\"2\",\r\n    \"educationYear\": \"2566\",\r\n    \"supervisionFormTypeId\":\"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/result/question/boolean/create",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"result",
+								"question",
+								"boolean",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/result/question/boolean/update/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n        \"name\": \"SUPERVISION\",\r\n        \"detail\": \"test 2\",\r\n        \"term\": \"2\",\r\n        \"educationYear\": \"2566\",\r\n        \"supervisionFormTypeId\": \"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/result/question/boolean/update/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"result",
+								"question",
+								"boolean",
+								"update",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/result/question/boolean/delete/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test 2\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/result/question/boolean/delete/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"result",
+								"question",
+								"boolean",
+								"delete",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "result/question/open_end",
+			"item": [
+				{
+					"name": "/result/question/open_end",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/result/question/open_end",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"result",
+								"question",
+								"open_end"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/result/question/open_end/id/:id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/result/question/open_end/id/e36263e9-cd10-4bd8-b040-ff550a0d5ba2",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"result",
+								"question",
+								"open_end",
+								"id",
+								"e36263e9-cd10-4bd8-b040-ff550a0d5ba2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/result/question/open_end/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"SUPERVISION\",\r\n    \"detail\":\"test\",\r\n    \"term\":\"2\",\r\n    \"educationYear\": \"2566\",\r\n    \"supervisionFormTypeId\":\"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/result/question/open_end/create",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"result",
+								"question",
+								"open_end",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/result/question/open_end/update/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n        \"name\": \"SUPERVISION\",\r\n        \"detail\": \"test 2\",\r\n        \"term\": \"2\",\r\n        \"educationYear\": \"2566\",\r\n        \"supervisionFormTypeId\": \"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/result/question/open_end/update/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"result",
+								"question",
+								"open_end",
+								"update",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/result/question/open_end/delete/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test 2\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/result/question/open_end/delete/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"result",
+								"question",
+								"open_end",
+								"delete",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "custom/section",
+			"item": [
+				{
+					"name": "/custom/section",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/section/id/:id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/id/e36263e9-cd10-4bd8-b040-ff550a0d5ba2",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"id",
+								"e36263e9-cd10-4bd8-b040-ff550a0d5ba2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/section/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"SUPERVISION\",\r\n    \"detail\":\"test\",\r\n    \"term\":\"2\",\r\n    \"educationYear\": \"2566\",\r\n    \"supervisionFormTypeId\":\"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/create",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/section/update/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n        \"name\": \"SUPERVISION\",\r\n        \"detail\": \"test 2\",\r\n        \"term\": \"2\",\r\n        \"educationYear\": \"2566\",\r\n        \"supervisionFormTypeId\": \"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/update/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"update",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/section/delete/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test 2\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/delete/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"delete",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "custom/section/question",
+			"item": [
+				{
+					"name": "/custom/section/question",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/question",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"question"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/section/question/id/:id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/question/id/e36263e9-cd10-4bd8-b040-ff550a0d5ba2",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"question",
+								"id",
+								"e36263e9-cd10-4bd8-b040-ff550a0d5ba2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/section/question/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"SUPERVISION\",\r\n    \"detail\":\"test\",\r\n    \"term\":\"2\",\r\n    \"educationYear\": \"2566\",\r\n    \"supervisionFormTypeId\":\"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/question/create",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"question",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/section/question/update/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n        \"name\": \"SUPERVISION\",\r\n        \"detail\": \"test 2\",\r\n        \"term\": \"2\",\r\n        \"educationYear\": \"2566\",\r\n        \"supervisionFormTypeId\": \"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/update/question/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"update",
+								"question",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/section/question/delete/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test 2\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/question/delete/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"question",
+								"delete",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "custom/section/question/result/boolean",
+			"item": [
+				{
+					"name": "/custom/section/question/result/boolean",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/question",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"question"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/section/question/result/boolean/id/:id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/question/id/e36263e9-cd10-4bd8-b040-ff550a0d5ba2",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"question",
+								"id",
+								"e36263e9-cd10-4bd8-b040-ff550a0d5ba2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/section/question/result/boolean/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"SUPERVISION\",\r\n    \"detail\":\"test\",\r\n    \"term\":\"2\",\r\n    \"educationYear\": \"2566\",\r\n    \"supervisionFormTypeId\":\"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/question/create",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"question",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/section/question/result/boolean/update/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n        \"name\": \"SUPERVISION\",\r\n        \"detail\": \"test 2\",\r\n        \"term\": \"2\",\r\n        \"educationYear\": \"2566\",\r\n        \"supervisionFormTypeId\": \"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/update/question/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"update",
+								"question",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/section/question/result/boolean/delete/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test 2\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/question/delete/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"question",
+								"delete",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "custom/section/question/result/open_end",
+			"item": [
+				{
+					"name": "/custom/section/question/open_end/result",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/question/open_end/result",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"question",
+								"open_end",
+								"result"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/section/question/open_end/result/id/:id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/question/open_end/result/id/e36263e9-cd10-4bd8-b040-ff550a0d5ba2",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"question",
+								"open_end",
+								"result",
+								"id",
+								"e36263e9-cd10-4bd8-b040-ff550a0d5ba2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/section/question/open_end/result/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"SUPERVISION\",\r\n    \"detail\":\"test\",\r\n    \"term\":\"2\",\r\n    \"educationYear\": \"2566\",\r\n    \"supervisionFormTypeId\":\"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/question/open_end/result/create",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"question",
+								"open_end",
+								"result",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/section/question/open_end/result/update/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n        \"name\": \"SUPERVISION\",\r\n        \"detail\": \"test 2\",\r\n        \"term\": \"2\",\r\n        \"educationYear\": \"2566\",\r\n        \"supervisionFormTypeId\": \"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/question/open_end/result/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"question",
+								"open_end",
+								"result",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/section/question/open_end/result/delete/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test 2\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/section/question/open_end/result/delete/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"section",
+								"question",
+								"open_end",
+								"result",
+								"delete",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "custom/sub_section",
+			"item": [
+				{
+					"name": "/custom/sub_section",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/sub_section",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"sub_section"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/sub_section/id/:id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/sub_section/id/e36263e9-cd10-4bd8-b040-ff550a0d5ba2",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"sub_section",
+								"id",
+								"e36263e9-cd10-4bd8-b040-ff550a0d5ba2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/sub_section/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"SUPERVISION\",\r\n    \"detail\":\"test\",\r\n    \"term\":\"2\",\r\n    \"educationYear\": \"2566\",\r\n    \"supervisionFormTypeId\":\"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/sub_section/create",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"sub_section",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/sub_section/update/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n        \"name\": \"SUPERVISION\",\r\n        \"detail\": \"test 2\",\r\n        \"term\": \"2\",\r\n        \"educationYear\": \"2566\",\r\n        \"supervisionFormTypeId\": \"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/sub_section/update/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"sub_section",
+								"update",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/sub_section/delete/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test 2\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/sub_section/delete/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"sub_section",
+								"delete",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "custom/sub_section/question",
+			"item": [
+				{
+					"name": "/custom/sub_section/question",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/sub_section/question",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"sub_section",
+								"question"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/sub_section/question/id/:id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/sub_section/question/id/e36263e9-cd10-4bd8-b040-ff550a0d5ba2",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"sub_section",
+								"question",
+								"id",
+								"e36263e9-cd10-4bd8-b040-ff550a0d5ba2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/sub_section/question/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"SUPERVISION\",\r\n    \"detail\":\"test\",\r\n    \"term\":\"2\",\r\n    \"educationYear\": \"2566\",\r\n    \"supervisionFormTypeId\":\"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/sub_section/question/create",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"sub_section",
+								"question",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/sub_section/question/update/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n        \"name\": \"SUPERVISION\",\r\n        \"detail\": \"test 2\",\r\n        \"term\": \"2\",\r\n        \"educationYear\": \"2566\",\r\n        \"supervisionFormTypeId\": \"541e70ff-0893-435d-928e-7fa07ec82f01\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/sub_section/update/question/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"sub_section",
+								"update",
+								"question",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/custom/sub_section/question/delete/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"type\":\"SUPERVISION\",\r\n    \"name\":\"test 2\",\r\n    \"formType\":\"TWO_CHOICE\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ep}}/supervision_forms/custom/sub_section/question/delete/1f9308f6-00e7-4a79-8762-3dd334bc760f",
+							"host": [
+								"{{ep}}"
+							],
+							"path": [
+								"supervision_forms",
+								"custom",
+								"sub_section",
+								"question",
+								"delete",
+								"1f9308f6-00e7-4a79-8762-3dd334bc760f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlMTYyNjNlOS1jZDEwLTRiZDgtYjA0MC1mZjU1MGEwZDViYTEiLCJzdGF0dXMiOiJ1c2VyIiwibmFtZSI6InVzZXIiLCJpYXQiOjE2ODc4NTM2NTQsImV4cCI6MTY4Nzg1NzI1NH0.x8dDWabrFMiEPLevEi5UkaSXlS9CYTWNdktH6fWCN_A",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ep",
+			"value": "http://localhost:7200/api",
+			"type": "string"
+		}
+	]
+}
