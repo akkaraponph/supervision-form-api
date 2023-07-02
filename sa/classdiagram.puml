@@ -1,0 +1,309 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+package diagram {
+
+
+	class User {
+		- id : uuid
+		- username : string
+		- password : string
+		- email : string
+		- status : string
+		- createdAt : Date
+		- updatedAt : Date
+	}
+
+
+	class School {
+		- id: uuid
+		- idSchool: string
+		- name: string
+		- size: string
+		- district: string
+		- email: string
+		- tel: string
+		- address: string
+		- junior: string
+		- senior: string
+		- director: string
+		- nTeacher: string
+		- nPersonnel: string
+		- teachingStyle: string
+		- openClass: string
+		- userId: string
+		- createdAt: Date
+		- updatedAt: Date
+
+	}
+
+	enum SupervisionFormTypeEnum {
+		- PREPARING_OPEN_SCHOOL
+		- SUPERVISION
+		- TRACKING
+	}
+
+	enum FormType {
+		- RATING_SCALE
+		- CUSTOM
+		- QUESTION
+	}
+
+	class SupervisionFormType {
+		- id: string
+		- type: string
+		- name: string
+		- formType: FormType
+	}
+
+	class SupervisionForm {
+		- id: string
+		- name: string
+		- detail: string
+		- term: string
+		- year: string
+		- supervisionFormTypeId: string
+		- suggestion : string
+		- supervisorName : string
+	}
+
+	class RSFSection {
+		- id:string
+		- section: string
+		- supervisionFormId: string
+	}
+	note top of RSFSection : "RatingScaleSection"
+
+	class RSFQuestion {
+		- id:string
+		- question: string
+		- ratingScaleTypeId: string
+	}
+    note top of RSFQuestion : "RatingScaleQuestion"
+
+
+	class ResultRatingScale {
+		- id:string
+		- score: number
+		- RSFQuestionId: string
+		- schoolSupervisionFormId : uuid
+	}
+
+	class Personnel {
+		- id: uuid
+		- idPersonnel: string
+		- name: string
+		- lastname: string
+		- position: string
+		- group: string
+		- 	email: string
+		-	address: string
+		-	tel: string
+		-	userId:uuid
+		-	createdAt: Date
+		-	updatedAt: Date
+		}
+		
+		enum QuestionTypeEnum {
+			OPEN_END
+			BOOLEAN
+		}
+       
+
+		class CFSection {
+			- id : uuid
+			- section : string
+			- supervisionFormId : uuid
+			- haveSubSection : boolean
+		}
+        note top of CFSection : "CustomFormSection"
+
+		class CFSubSection {
+			- id : uuid
+			- section : string
+			- CFSectionId: uuid
+		}
+		note top of CFSubSection : "CustomFormSubSection"
+
+
+		class CFQSection {
+			- id : uuid
+			- question : string
+			- type : QuestionTypeEnum
+			- customSectionId : uuid
+		}
+note top of CFQSection : "CustomFormQuestionOfSection"
+
+		class CFQSubSection {
+			- id : uuid
+			- question : string
+			- target : string
+			- type : QuestionTypeEnum
+			- customSubSectionId : uuid
+		}
+		  note top of CFQSubSection : "CustomFormQuestionOfSubSection"
+
+
+		class ResultCFBQSection {
+			- id : uuid
+			- result : boolean
+			- remark : string
+			  - file : string
+			- CFQSectionId : uuid
+			- schoolSupervisionFormId : uuid
+            - createdAt : date
+            - updatedAt : date
+		}
+         note top of ResultCFBQSection : "ResultCustomFormBooleanQuestionOfSection"
+
+		class ResultCFOEQSection {
+			- id : uuid
+			- result : string
+			- remark : string
+            - file : string
+			- CFQSectionId : uuid
+			- schoolSupervisionFormId : uuid
+            - createdAt : date
+            - updatedAt : date
+		}
+         note top of ResultCFOEQSection : "ResultCustomFormOpenEndQuestionOfSection"
+
+
+		class ResultCFBQSubSection {
+			- id : uuid
+			- result : boolean
+			- remark : string
+			  - file : string
+			- CFQSubSectionId : uuid
+			- schoolSupervisionFormId : uuid
+            - createdAt : date
+            - updatedAt : date
+		}
+		  note top of ResultCFBQSubSection : "ResultCustomFormBooleanQuestionOfSubSection"
+
+
+		class ResultCFOEQSubSection {
+			- id : uuid
+			- result : string
+            - file : string
+			- remark : string
+			- CFQSubSectionId : uuid
+			- schoolSupervisionFormId : uuid
+            - createdAt : date
+            - updatedAt : date
+		}
+		  note top of ResultCFOEQSubSection : "ResultCustomFormOpenEndQuestionOfSubSection"
+
+		class QF {
+			- id : uuid
+			- type : QuestionTypeEnum
+			- question : string
+			- supervisionFormId : uuid
+		}
+		  note top of QF : "Question Form"
+
+		class ResultQFBQ  {
+		    - id : uuid
+		    - result : boolean
+		    - file : string
+		    - remark : string
+		    - schoolId : uuid
+		    - createdAt : date
+		    - updatedAt : date
+		}
+		 note top of ResultQFBQ : "ResultQFBooleanQuestion"
+
+
+		class ResultQFOEQ  {
+        		    - id : uuid
+        		    - result : string
+        		    - file : string
+        		    - remark : string
+        		    - schoolId : uuid
+        		    - createdAt : date
+        		    - updatedAt : date
+        		}
+		 note top of ResultQFOEQ : "ResultQFOpenEndQuestion"
+
+
+		class SchoolSupervisionForm {
+		    - id : uuid
+		    - schoolId : uuid
+		    - supervisionFormId : uuid
+		    - year : string
+		    - term : string
+		}
+
+		class News {
+		    - id : uuid
+		    - name : string
+		    - editor : string
+		    - content : text
+		    - link : string
+		    - img1 : string
+		    - img2 : string
+		    - img3 : string
+		    - img4 : string
+		    - img5 : string
+            - createdAt : date
+            - updatedAt : date
+		}
+
+		User "1" -- "*" School
+		User "1" -- "*" News
+		User "1" -- "*" Personnel
+		Personnel "1" -- "*" SupervisionFormType : "Manage"
+
+
+		SupervisionFormType "1" -- "*" SupervisionForm
+		SupervisionFormType -- FormType
+
+		SupervisionForm -- SupervisionFormTypeEnum
+
+'		SupervisionForm "M" .. "M" School : ""
+
+        SupervisionForm "0..*" -- "1" SchoolSupervisionForm
+        SchoolSupervisionForm "1" -- "0..*" School
+
+		SupervisionForm "1" -- "1..*" RSFSection : "has"
+		RSFSection "1" -- "1..*" RSFQuestion : "has"
+		RSFQuestion "1" -- "0..*" ResultRatingScale : "have"
+
+		SupervisionForm "1" -- "1..*" CFSection : "have"
+		CFSection "1" -- "0..*" CFSubSection : "may be have"
+
+		CFSection "1" -- "1..*" CFQSection : "have"
+		CFSubSection "1" -- "1..*" CFQSubSection : "have"
+
+        CFQSection -- QuestionTypeEnum
+        CFQSubSection -- QuestionTypeEnum
+
+		ResultCFBQSection "1" -left- "1" CFQSection : "have"
+		ResultCFOEQSection "1" -up- "1" CFQSection : "have"
+
+		ResultCFBQSubSection "1" -left- "1" CFQSubSection : "have"
+		ResultCFOEQSubSection "1" -- "1" CFQSubSection : "have"
+
+        SupervisionFormType "1" -up- "0..*" QF : "may be have"
+
+        ResultCFBQSection "0..*" -- "1" School : "may be have"
+        ResultCFBQSubSection "0..*" -- "1" School : "may be have"
+
+        SchoolSupervisionForm "1" -- "0..*" ResultCFOEQSection : "may be have"
+        SchoolSupervisionForm "1" -- "0..*" ResultCFOEQSubSection : "may be have"
+        ResultRatingScale "0..*" -- "1" SchoolSupervisionForm : "may be have"
+
+        ResultQFBQ "0..*" -- "1" SchoolSupervisionForm : "may be have"
+        ResultQFOEQ "0..*" -- "1" SchoolSupervisionForm : "may be have"
+
+
+        QuestionTypeEnum -- ResultQFBQ
+        QuestionTypeEnum -- ResultQFOEQ
+
+        QF "1" -up- "1" ResultQFBQ : "have"
+
+	}
+
+	@enduml
+
