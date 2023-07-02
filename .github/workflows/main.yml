@@ -27,6 +27,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /var/www/supervision_form_server/
+            git stash
             git pull
             git status
+            git stash pop
             yarn
