@@ -30,5 +30,6 @@ jobs:
             eval "$(ssh-agent -s)"
             ssh-add ~/.ssh/bd_sfs_api
             git pull
-            git status
             yarn
+            yarn build
+            pm2 restart 0
