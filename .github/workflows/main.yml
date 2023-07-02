@@ -27,8 +27,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /var/www/supervision_form_server/
-            git stash
+            eval "$(ssh-agent -s)"
+            ssh-add ~/.ssh/bd_sfs_api
             git pull
             git status
-            git stash pop
             yarn
