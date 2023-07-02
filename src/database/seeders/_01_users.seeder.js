@@ -9,7 +9,7 @@ module.exports = {
 				username: "user",
 				password: passwordHashing,
 				email: "test@gmail.com",
-				status: "user",
+				status: "admin",
 				created_at: new Date(),
 				updated_at: new Date(),
 
