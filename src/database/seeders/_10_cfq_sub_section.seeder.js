@@ -151,8 +151,70 @@ module.exports = {
 				detail: "",
 				cf_sub_section_id: "848609d2-8f37-44ff-b6d1-000002c00003"
 			},
-		
-			
+			// 4.1 โรงเรียนได้สนับสนุนและส่งเสริมให้ครูจัดกิจกรรมการเรียนรู้สะเต็มศึกษา (STEM Education) ในกลุ่มสาระการเรียนรู้ใดบ้าง
+			{
+				id: "108609d2-8f37-44ff-b6d2-000004c00001",
+				question: 'วิทยาศาสตร์',
+				type: "BOOLEAN",
+				detail: "",
+				cf_sub_section_id: "848609d2-8f37-44ff-b6d1-000004c00001"
+			},
+			{
+				id: "108609d2-8f37-44ff-b6d2-000004c00002",
+				question: 'คณิตศาสตร์',
+				type: "BOOLEAN",
+				detail: "",
+				cf_sub_section_id: "848609d2-8f37-44ff-b6d1-000004c00001"
+			},
+			{
+				id: "108609d2-8f37-44ff-b6d2-000004c00003",
+				question: 'ภาษาไทย',
+				type: "BOOLEAN",
+				detail: "",
+				cf_sub_section_id: "848609d2-8f37-44ff-b6d1-000004c00001"
+			},
+			{
+				id: "108609d2-8f37-44ff-b6d2-000004c00004",
+				question: 'ศิลปะ',
+				type: "BOOLEAN",
+				detail: "",
+				cf_sub_section_id: "848609d2-8f37-44ff-b6d1-000004c00001"
+			},
+			{
+				id: "108609d2-8f37-44ff-b6d2-000004c00005",
+				question: 'สังคมศึกษาฯ',
+				type: "BOOLEAN",
+				detail: "",
+				cf_sub_section_id: "848609d2-8f37-44ff-b6d1-000004c00001"
+			},
+			{
+				id: "108609d2-8f37-44ff-b6d2-000004c00006",
+				question: 'สุขศึกษาและพลศึกษา',
+				type: "BOOLEAN",
+				detail: "",
+				cf_sub_section_id: "848609d2-8f37-44ff-b6d1-000004c00001"
+			},
+			{
+				id: "108609d2-8f37-44ff-b6d2-000004c00007",
+				question: 'การงานอาชีพ',
+				type: "BOOLEAN",
+				detail: "",
+				cf_sub_section_id: "848609d2-8f37-44ff-b6d1-000004c00001"
+			},
+			{
+				id: "108609d2-8f37-44ff-b6d2-000004c00008",
+				question: 'ภาษาต่างประเทศ',
+				type: "BOOLEAN",
+				detail: "",
+				cf_sub_section_id: "848609d2-8f37-44ff-b6d1-000004c00001"
+			},
+			{
+				id: "108609d2-8f37-44ff-b6d2-000004c00009",
+				question: 'กิจกรรมพัฒนาผู้เรียน',
+				type: "BOOLEAN",
+				detail: "",
+				cf_sub_section_id: "848609d2-8f37-44ff-b6d1-000004c00001"
+			},
 		]
 		await queryInterface.bulkInsert('cfq_sub_section', seedData)
 	},
