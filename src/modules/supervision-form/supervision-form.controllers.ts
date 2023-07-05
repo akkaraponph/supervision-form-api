@@ -75,10 +75,10 @@ export const getOne = async (req: Request, res: Response) => {
 					},
 				},
 				{
-					model: db.RatingScaleSection,
+					model: db.RSFSection,
 					include: [
 						{
-							model: db.RatingScaleQuestion,
+							model: db.RSFQuestion,
 
 						},
 					],
@@ -90,23 +90,23 @@ export const getOne = async (req: Request, res: Response) => {
 					// },
 				},
 				{
-					model: db.CustomFormSection,
+					model: db.CFSection,
 					include: [
 						{
-							model: db.CustomFormSubSection,
+							model: db.CFSubSection,
 							include: [
 								{
-									model: db.CustomFormQuestionOfSubSection,
+									model: db.CFQSubSection,
 								}
 							]
 						},
 						{
-							model: db.CustomFormQuestionOfSection
+							model: db.CFQSection
 						}
 					]
 				},
 				{
-					model: db.QuestionForm,
+					model: db.QF,
 				},
 
 			],
