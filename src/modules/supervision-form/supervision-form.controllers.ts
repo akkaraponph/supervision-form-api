@@ -5,11 +5,113 @@ import { FormType, SupervisionFormTypeAttributes, supervisionFormTypeEnum } from
 import { SupervisionFormAttributes } from "./supervision-form.types";
 import { getPaginationMeta } from "../../common/utils/meta.util";
 import { createResponse } from '../../common/utils/response.util';
+import { v4 as uuidv4 } from 'uuid';
 
 import db from "../../database/models";
+import { Sequelize, Transaction } from 'sequelize';
 
+
+import { CloneRSFSectionAttributes, RSFQuestionAttributes, RSFSectionAttributes } from "./rating-scale-form/rsf.types";
 const SupervisionFormModel = db.SupervisionForm
 const SupervisionFormTypeModel = db.SupervisionFormType
+const RSFSectionModel = db.RSFSection
+const RSFQuestionModel = db.RSFQuestion
+
+export const cloningByTermAndYear = async (req: Request, res: Response) => {
+	try {
+		const { cloneTerm, cloneYear, newTerm, newYear } = req.body
+		if (!cloneTerm && !cloneYear && !newTerm && !newYear) return createResponse(res, 400, {
+			msg: 'The cloneTerm, cloneyear, newTerm and newYear is required'
+		})
+
+		// const allSupervisionFormType = await SupervisionFormTypeModel.findAll({
+		// 	raw: true
+		// })
+		const Include = [
+			{
+				model: SupervisionFormTypeModel,
+				where: {
+					formType: {
+						[Op.or]: [FormType.RATING_SCALE, FormType.CUSTOM, FormType.QUESTION],
+					},
+				},
+			},
+			{
+				model: RSFSectionModel,
+				include: [
+					{
+						model: db.RSFQuestion,
+
+					},
+				],
+			},
+			{
+				model: db.CFSection,
+				include: [
+					{
+						model: db.CFSubSection,
+						include: [
+							{
+								model: db.CFQSubSection,
+							}
+						]
+					},
+					{
+						model: db.CFQSection
+					}
+				]
+			},
+			{
+				model: db.QF,
+			},
+		];
+
+		const allSupervisionFormWhereCloneQuery = await SupervisionFormModel.findAll({
+			where: {
+				term: cloneTerm,
+				year: cloneYear
+			},
+			// include: Include
+		})
+
+		await db.sequelize.transaction(async (transaction: Transaction) => {
+			const clonedRows = allSupervisionFormWhereCloneQuery.map((row: any) => {
+				const clonedRow = { ...row };
+				console.log(clonedRow['dataValues'].name)
+				
+				// Generate a new UUID v4 for SupervisionForm
+				const supervisionFormUUID = uuidv4();
+			
+				// Set new values
+				clonedRow.id = supervisionFormUUID;
+				clonedRow.term = newTerm;
+				clonedRow.year = newYear;
+				clonedRow.name = clonedRow['dataValues'].name;
+				clonedRow.detail = clonedRow['dataValues'].detail;
+				clonedRow.suggestion = clonedRow['dataValues'].suggestion;
+				clonedRow.supervisorName = clonedRow['dataValues'].supervisorName;
+				clonedRow.supervisionFormTypeId = clonedRow['dataValues'].supervisionFormTypeId;
+
+				
+				return clonedRow;
+			});
+
+			// Bulk create the cloned SupervisionForm rows
+			await SupervisionFormModel.bulkCreate(clonedRows, { transaction });
+
+		});
+
+		createResponse(res, 200, {
+			msg: 'success',
+			payload: {}
+		})
+	} catch (error) {
+		console.error(error)
+		return createResponse(res, 400, {
+			msg: 'Encountered an error when clone supervision form!'
+		})
+	}
+}
 
 export const create = async (req: Request, res: Response) => {
 	try {
@@ -35,7 +137,7 @@ export const create = async (req: Request, res: Response) => {
 
 export const getAllExistingYears = async (req: Request, res: Response) => {
 	try {
-		const forms = await db.SupervisionForm.findAll({
+		const forms = await SupervisionFormModel.findAll({
 			attributes: ['year'],
 			group: ['year'],
 			raw: true,
@@ -75,7 +177,7 @@ export const getOne = async (req: Request, res: Response) => {
 					},
 				},
 				{
-					model: db.RSFSection,
+					model: RSFSectionModel,
 					include: [
 						{
 							model: db.RSFQuestion,
@@ -134,7 +236,7 @@ export const getAll = async (req: Request, res: Response): Promise<Response> => 
 		const limit = parseInt(query.limit as string) || 10; // Number of records per page
 		const offset = (page - 1) * limit; // Offset calculation
 		const req_endpoint = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
-		
+
 		let whereClauseSupervisionFormType: Partial<SupervisionFormTypeAttributes> = {}; // Initialize an empty object for the where clause
 
 		if (query.type) {
@@ -143,7 +245,7 @@ export const getAll = async (req: Request, res: Response): Promise<Response> => 
 		if (query.form_type) {
 			whereClauseSupervisionFormType.formType = query.form_type as FormType; // Add a condition for the "term" query parameter
 		}
-		
+
 		const Include = [
 			{
 				model: SupervisionFormTypeModel,
@@ -210,7 +312,7 @@ export const getAll = async (req: Request, res: Response): Promise<Response> => 
 			},
 		]
 		let whereClause: Partial<SupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
-		
+
 		if (query.supervisor_name) {
 			whereClause.supervisorName = query.supervisor_name as string; // Add a condition for the "year" query parameter
 		}
@@ -311,5 +413,6 @@ export default {
 	getAll,
 	update,
 	destroy,
-	getAllExistingYears
+	getAllExistingYears,
+	cloningByTermAndYear
 }

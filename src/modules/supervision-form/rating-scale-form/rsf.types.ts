@@ -2,6 +2,14 @@ export interface RSFSectionAttributes {
 	id?:string;
 	type?: string;
 	supervisionFormId?: string;
+	RSFQuestions? : RSFQuestionAttributes;
+}
+
+export interface CloneRSFSectionAttributes {
+	id?:string;
+	type?: string;
+	supervisionFormId?: string;
+	RSFQuestions? : RSFQuestionAttributes[];
 }
 
 export interface RSFQuestionAttributes {
