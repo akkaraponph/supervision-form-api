@@ -45,6 +45,7 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 
 					},
 				],
+
 			},
 			{
 				model: db.CFSection,
@@ -65,27 +66,35 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 			{
 				model: db.QF,
 			},
-		];
+
+		]
+		//  ค้นหาข้อมูล แบบฟอร์มนิเทศติดตาม ทั้งหมดตามปีที่ต้องการโคลน
 		const allSupervisionFormWhereCloneQuery = await SupervisionFormModel.findAll({
 			where: {
 				term: cloneTerm,
 				year: cloneYear
 			},
-			include: Include
+			// include: Include
 		})
+		// ประกาศ interface ไว้สำหรับ จับคู่ id ของฟอร์ม นิเทศติดตาม
 		interface SupervisionFormValuePair { previousId: string, presentId: string, typeId: string };
+		// ประกาศ interface ไว้สำหรับ จับคู่ id ของฟอร์มต่าง ๆ 
 		interface CloneValuePair { previousId: string, presentId: string };
+		// ประกาศ ตัวแปร listSupervisionPair ไว้ทำการ keep list
 		let listSupervisionPair: SupervisionFormValuePair[] = [];
+		// ทำการ แมพ ข้อมูลที่ได้จากการ คิวรี ก่อนหน้า เพื่อใช้ในการ clone
 		const clonedRows = allSupervisionFormWhereCloneQuery.map((row: any) => {
+			// แทนข้อมูล ตัวแปร clonedRow สำหรับ ในแต่ละ แบบฟอร์มนิเทศติดตาม
 			const clonedRow = { ...row };
-			// console.log(clonedRow['dataValues'].name)
-			// Generate a new UUID v4 for SupervisionForm
+			// สร้าง ไอดี ใหม่สำหรับ แบบฟอร์มนิเทศติดตามตัวใหม่
 			const supervisionFormUUID = uuidv4();
+			// จับคู่ไอดีของแบบฟอร์มเดิม กับแบบฟอร์มใหม่
 			const valuePair: SupervisionFormValuePair = {
 				previousId: clonedRow['dataValues'].id,
 				typeId: clonedRow['dataValues'].supervisionFormTypeId,
 				presentId: supervisionFormUUID
 			}
+			// push into list
 			listSupervisionPair.push(valuePair)
 
 			// Set new values
@@ -104,32 +113,40 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 		// Bulk create the cloned SupervisionForm rows
 		const resultSupervisionFormCreated = await SupervisionFormModel.bulkCreate(clonedRows, { transaction: t })
 		await t.commit();
+		/**
+		 * ========================================================
+		 * ===============>> clone supervision form
+		 * ========================================================
+		 */
 		resultSupervisionFormCreated.map(async (row: any) => {
 			const newSupervisionFormId = row['dataValues'].id
 			const checkType = await SupervisionFormTypeModel.findOne({
 				where: { id: row['dataValues'].supervisionFormTypeId },
 				raw: true
 			})
-			if (checkType.formType === FormType.RATING_SCALE) {
-				const oldSupervisionFormidValuePair = listSupervisionPair.find(item => item.presentId === newSupervisionFormId);
+			const SupervisionFormidValuePair = listSupervisionPair.find(item => item.presentId === newSupervisionFormId);
+			const indexToRemove = listSupervisionPair.findIndex(item => item.presentId === newSupervisionFormId);
+			if (indexToRemove !== -1) {
+				listSupervisionPair.splice(indexToRemove, 1);
+			}
 
+			if (checkType.formType === FormType.RATING_SCALE) {
 
 				const RSFSections = await RSFSectionModel.findAll({
-					where: { supervisionFormId: oldSupervisionFormidValuePair?.previousId },
+					where: { supervisionFormId: SupervisionFormidValuePair?.previousId },
 				})
 
-				let listPair: CloneValuePair[] = [];
+				let listRSFSectionPair: CloneValuePair[] = [];
 
 				const RSFSectionClones = RSFSections.map((row: any) => {
 					const RSFSectionClone = { ...row };
 
 					const newRSFSectionId = uuidv4();
 
-					listPair.push({
+					listRSFSectionPair.push({
 						previousId: RSFSectionClone['dataValues'].id,
 						presentId: newRSFSectionId
 					})
-
 
 					// Set new values
 					RSFSectionClone.id = newRSFSectionId;
@@ -143,10 +160,43 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 				// Bulk create the cloned SupervisionForm rows
 				try {
 					const resultRSFSectionCreated = await db.RSFSection.bulkCreate(RSFSectionClones, { transaction: RSFSectionTransaction })
-					console.log("=====================")
-					console.log(resultRSFSectionCreated)
-					console.log("=====================")
 					await RSFSectionTransaction.commit();
+					/**
+					 * ========================================================
+					 * ===============>> clone rating sacle question
+					 * ========================================================
+					 */
+					// const newRSFSectionId = row['dataValues'].id
+					// const RSFSectionValuePair = listRSFSectionPair.find(item => item.presentId === newRSFSectionId);
+					// const indexToRemove = listRSFSectionPair.findIndex(item => item.presentId === newRSFSectionId);
+					// if (indexToRemove !== -1) {
+					// 	listRSFSectionPair.splice(indexToRemove, 1);
+					// }
+					// const RSFQuestions = await RSFQuestionModel.findAll({
+					// 	where: { RSFSectionId: RSFSectionValuePair?.previousId },
+					// })
+
+					// const RSFQuestionClones = RSFQuestions.map((row: any) => {
+					// 	const RSFQuestionClone = { ...row };
+	
+					// 	const newRSFSectionId = uuidv4();
+	
+					// 	// Set new values
+					// 	RSFQuestionClone.id = newRSFSectionId;
+					// 	RSFQuestionClone.question = RSFQuestionClone['dataValues'].question;
+					// 	RSFQuestionClone.RSFSectionId = newRSFSectionId;
+	
+					// 	return RSFQuestionClone;
+					// });
+	
+					// const RSFQuestionTransaction = await db.sequelize.transaction();
+					// try {
+					// 	await db.RSFQuestion.bulkCreate(RSFQuestionClones, { transaction: RSFQuestionTransaction })
+					// 	await RSFQuestionTransaction.commit();
+					// } catch (error) {
+					// 	RSFQuestionTransaction.rollback()
+					// 	throw new Error()
+					// }
 				} catch (error) {
 					RSFSectionTransaction.rollback()
 					throw new Error()
@@ -158,37 +208,32 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 			}
 
 			if (checkType.formType === FormType.QUESTION) {
-				console.log("=====================")
-				console.log(checkType)
-				console.log("=====================");
+				// console.log("=====================")
+				// console.log(checkType)
+				// console.log("=====================");
 			}
 			if (checkType.formType === FormType.CUSTOM) {
-				console.log("=====================")
-				console.log(checkType)
-				console.log("=====================");
+				// console.log("=====================")
+				// console.log(checkType)
+				// console.log("=====================");
 			}
 
 			// throw new Error()
 
 		})
-		// const response = await resultSupervisionFormCreated.findAll({
-		// 	include: Include,
+
+
+		// const ids = resultSupervisionFormCreated.map((item: any) => item['dataValues'].id);
+
+		// const results = await SupervisionFormModel.findAll({
+		// 	where: {
+		// 		id: ids
+		// 	},
+		// 	include: Include
 		// });
-		const ids = resultSupervisionFormCreated.map((item: any) => {
-			console.log("======================item")
-			console.log(item['dataValues'])
-			console.log("======================item")
-		});
-		
-		const results = await SupervisionFormModel.findAll({
-			where: {
-				id: ids
-			},
-			include: Include
-		});
 		createResponse(res, 200, {
 			msg: 'success',
-			payload: {results, ids}
+			payload: resultSupervisionFormCreated
 		})
 	} catch (error) {
 		console.error(error)
@@ -270,12 +315,7 @@ export const getOne = async (req: Request, res: Response) => {
 
 						},
 					],
-					// required: {
-					//   model: SupervisionFormTypeModel,
-					//   where: {
-					// 	formType: FormType.RATING_SCALE,
-					//   },
-					// },
+
 				},
 				{
 					model: db.CFSection,
