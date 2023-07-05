@@ -18,6 +18,7 @@ const RSFSectionModel = db.RSFSection
 const RSFQuestionModel = db.RSFQuestion
 
 export const cloningByTermAndYear = async (req: Request, res: Response) => {
+	const t = await db.sequelize.transaction();
 	try {
 		const { cloneTerm, cloneYear, newTerm, newYear } = req.body
 		if (!cloneTerm && !cloneYear && !newTerm && !newYear) return createResponse(res, 400, {
@@ -65,48 +66,133 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 				model: db.QF,
 			},
 		];
-
 		const allSupervisionFormWhereCloneQuery = await SupervisionFormModel.findAll({
 			where: {
 				term: cloneTerm,
 				year: cloneYear
 			},
-			// include: Include
+			include: Include
 		})
+		interface SupervisionFormValuePair { previousId: string, presentId: string, typeId: string };
+		interface CloneValuePair { previousId: string, presentId: string };
+		let listSupervisionPair: SupervisionFormValuePair[] = [];
+		const clonedRows = allSupervisionFormWhereCloneQuery.map((row: any) => {
+			const clonedRow = { ...row };
+			// console.log(clonedRow['dataValues'].name)
+			// Generate a new UUID v4 for SupervisionForm
+			const supervisionFormUUID = uuidv4();
+			const valuePair: SupervisionFormValuePair = {
+				previousId: clonedRow['dataValues'].id,
+				typeId: clonedRow['dataValues'].supervisionFormTypeId,
+				presentId: supervisionFormUUID
+			}
+			listSupervisionPair.push(valuePair)
 
-		await db.sequelize.transaction(async (transaction: Transaction) => {
-			const clonedRows = allSupervisionFormWhereCloneQuery.map((row: any) => {
-				const clonedRow = { ...row };
-				console.log(clonedRow['dataValues'].name)
-				
-				// Generate a new UUID v4 for SupervisionForm
-				const supervisionFormUUID = uuidv4();
-			
-				// Set new values
-				clonedRow.id = supervisionFormUUID;
-				clonedRow.term = newTerm;
-				clonedRow.year = newYear;
-				clonedRow.name = clonedRow['dataValues'].name;
-				clonedRow.detail = clonedRow['dataValues'].detail;
-				clonedRow.suggestion = clonedRow['dataValues'].suggestion;
-				clonedRow.supervisorName = clonedRow['dataValues'].supervisorName;
-				clonedRow.supervisionFormTypeId = clonedRow['dataValues'].supervisionFormTypeId;
+			// Set new values
+			clonedRow.id = supervisionFormUUID;
+			clonedRow.term = newTerm;
+			clonedRow.year = newYear;
+			clonedRow.name = clonedRow['dataValues'].name;
+			clonedRow.detail = clonedRow['dataValues'].detail;
+			clonedRow.suggestion = clonedRow['dataValues'].suggestion;
+			clonedRow.supervisorName = clonedRow['dataValues'].supervisorName;
+			clonedRow.supervisionFormTypeId = clonedRow['dataValues'].supervisionFormTypeId;
 
-				
-				return clonedRow;
-			});
-
-			// Bulk create the cloned SupervisionForm rows
-			await SupervisionFormModel.bulkCreate(clonedRows, { transaction });
-
+			return clonedRow;
 		});
 
+		// Bulk create the cloned SupervisionForm rows
+		const resultSupervisionFormCreated = await SupervisionFormModel.bulkCreate(clonedRows, { transaction: t })
+		await t.commit();
+		resultSupervisionFormCreated.map(async (row: any) => {
+			const newSupervisionFormId = row['dataValues'].id
+			const checkType = await SupervisionFormTypeModel.findOne({
+				where: { id: row['dataValues'].supervisionFormTypeId },
+				raw: true
+			})
+			if (checkType.formType === FormType.RATING_SCALE) {
+				const oldSupervisionFormidValuePair = listSupervisionPair.find(item => item.presentId === newSupervisionFormId);
+
+
+				const RSFSections = await RSFSectionModel.findAll({
+					where: { supervisionFormId: oldSupervisionFormidValuePair?.previousId },
+				})
+
+				let listPair: CloneValuePair[] = [];
+
+				const RSFSectionClones = RSFSections.map((row: any) => {
+					const RSFSectionClone = { ...row };
+
+					const newRSFSectionId = uuidv4();
+
+					listPair.push({
+						previousId: RSFSectionClone['dataValues'].id,
+						presentId: newRSFSectionId
+					})
+
+
+					// Set new values
+					RSFSectionClone.id = newRSFSectionId;
+					RSFSectionClone.type = RSFSectionClone['dataValues'].type;
+					RSFSectionClone.supervisionFormId = newSupervisionFormId;
+
+					return RSFSectionClone;
+				});
+
+				const RSFSectionTransaction = await db.sequelize.transaction();
+				// Bulk create the cloned SupervisionForm rows
+				try {
+					const resultRSFSectionCreated = await db.RSFSection.bulkCreate(RSFSectionClones, { transaction: RSFSectionTransaction })
+					console.log("=====================")
+					console.log(resultRSFSectionCreated)
+					console.log("=====================")
+					await RSFSectionTransaction.commit();
+				} catch (error) {
+					RSFSectionTransaction.rollback()
+					throw new Error()
+				}
+
+				// console.log("=====================")
+				// console.log(resultRSFSectionCreated)
+				// console.log("=====================");
+			}
+
+			if (checkType.formType === FormType.QUESTION) {
+				console.log("=====================")
+				console.log(checkType)
+				console.log("=====================");
+			}
+			if (checkType.formType === FormType.CUSTOM) {
+				console.log("=====================")
+				console.log(checkType)
+				console.log("=====================");
+			}
+
+			// throw new Error()
+
+		})
+		// const response = await resultSupervisionFormCreated.findAll({
+		// 	include: Include,
+		// });
+		const ids = resultSupervisionFormCreated.map((item: any) => {
+			console.log("======================item")
+			console.log(item['dataValues'])
+			console.log("======================item")
+		});
+		
+		const results = await SupervisionFormModel.findAll({
+			where: {
+				id: ids
+			},
+			include: Include
+		});
 		createResponse(res, 200, {
 			msg: 'success',
-			payload: {}
+			payload: {results, ids}
 		})
 	} catch (error) {
 		console.error(error)
+		t.rollback();
 		return createResponse(res, 400, {
 			msg: 'Encountered an error when clone supervision form!'
 		})
