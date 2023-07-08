@@ -137,6 +137,7 @@ router.delete('/cf/sub_section/question/open_end/result/delete/:id', ResultCFOEQ
 
 router.get('/school', SchoolSupervisionFormControllers.getAll)
 router.get('/school/id/:id', SchoolSupervisionFormControllers.getOne)
+router.get('/school/education_year', SchoolSupervisionFormControllers.getOneByTermAndYear)
 router.post('/school/create', SchoolSupervisionFormControllers.create)
 router.patch('/school/update/:id', SchoolSupervisionFormControllers.update)
 router.delete('/school/delete/:id', SchoolSupervisionFormControllers.destroy)
