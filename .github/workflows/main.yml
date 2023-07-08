@@ -30,6 +30,7 @@ jobs:
             eval "$(ssh-agent -s)"
             ssh-add ~/.ssh/bd_sfs_api
             git pull
-            yarn
+            yarn install
             yarn build
-            pm2 restart tam_api
+            pm2 delete services
+            pm2 start "yarn cross-env NODE_ENV=production node dist/index.js" --name "services"

@@ -17,11 +17,13 @@ import ResultCFOEQSubSectionControllers from "./custom-form/result-cfoeq-sub-sec
 import QFControllers from "./question-form/qf.controllers";
 import ResultQFBQControllers from "./question-form/result-qfbq.controllers";
 import ResultQFOEQControllers from "./question-form/result-qfoeq.controllers";
+import SchoolSupervisionFormControllers from "./school-supervision-form/school-supervision-form.controllers"
 
 const router = Router();
 
 // ชื่อ แบบ ฟอร์มทั้ง 18 ฟอร์ม
 router.get('', supervisionFormControllers.getAll)
+router.post('/clone', supervisionFormControllers.cloningByTermAndYear)
 router.get('/year', supervisionFormControllers.getAllExistingYears)
 router.get('/id/:id', supervisionFormControllers.getOne)
 router.post('/create', supervisionFormControllers.create)
@@ -33,7 +35,6 @@ router.get('/types/id/:id', supervisionFormTypeControllers.getOne)
 router.post('/types/create', supervisionFormTypeControllers.create)
 router.patch('/types/update/:id', supervisionFormTypeControllers.update)
 router.delete('/types/delete/:id', supervisionFormTypeControllers.destroy)
-
 
 // rating scale form section
 router.get('/rsf', RSFSectionControllers.getAll)
@@ -134,6 +135,10 @@ router.post('/cf/sub_section/question/open_end/result/create', ResultCFOEQSubSec
 router.patch('/cf/sub_section/question/open_end/result/update/:id', ResultCFOEQSubSectionControllers.update)
 router.delete('/cf/sub_section/question/open_end/result/delete/:id', ResultCFOEQSubSectionControllers.destroy)
 
-
+router.get('/school', SchoolSupervisionFormControllers.getAll)
+router.get('/school/id/:id', SchoolSupervisionFormControllers.getOne)
+router.post('/school/create', SchoolSupervisionFormControllers.create)
+router.patch('/school/update/:id', SchoolSupervisionFormControllers.update)
+router.delete('/school/delete/:id', SchoolSupervisionFormControllers.destroy)
 
 export default router;

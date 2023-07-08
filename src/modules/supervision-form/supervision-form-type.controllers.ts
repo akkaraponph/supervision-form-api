@@ -5,6 +5,7 @@ import { getPaginationMeta } from "../../common/utils/meta.util";
 import { createResponse } from "../../common/utils/response.util";
 const SupervisionFormTypeModel = db.SupervisionFormType
 
+
 export const create = async (req: Request, res: Response) => {
     try {
 
@@ -153,5 +154,6 @@ export default {
     getOne,
     getAll,
     update,
-    destroy
+    destroy,
+
 }
