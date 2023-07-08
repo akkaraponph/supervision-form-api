@@ -372,6 +372,7 @@ export const getAll = async (req: Request, res: Response): Promise<Response> => 
 			whereClauseSupervisionFormType.formType = query.form_type as FormType; // Add a condition for the "term" query parameter
 		}
 		
+		
 		const Include = [
 			{
 				model: SupervisionFormTypeModel,
