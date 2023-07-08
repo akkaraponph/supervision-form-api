@@ -111,7 +111,7 @@ export const me = async (req: Request, res: Response) => {
         console.log("==================")
         return res.status(400).json({
             msg: "get profile was failed",
-            payload: {error}
+            payload: { error }
         })
     }
 }
@@ -260,8 +260,22 @@ export const login = async (req: Request, res: Response) => {
                 payload: {}
             })
         }
+        const schoolData = await SchoolModel.findOne({
+            where: { userId: user.id },
+            raw:true
+        })
+        let sid = "";
+        if (schoolData) {
+            sid = schoolData.id
+        }
+        console.log(schoolData)
         // const token = jwt.sign({ id: user.id, role: user.role, name: user.name }, "test", { expiresIn: '1h' });
-        const token: string = createJwtToken({ sub: user.id, status: user.status, name: user.username })
+        const token: string = createJwtToken({
+            sub: user.id,
+            status: user.status,
+            name: user.username,
+            sid : sid
+        })
         delete user.password
         return res.status(200).json({
             msg: "login was successfully",

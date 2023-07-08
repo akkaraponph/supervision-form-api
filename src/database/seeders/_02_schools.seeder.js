@@ -17,7 +17,7 @@ module.exports = {
 				n_personnel: "3",
 				teaching_style: "test",
 				open_class: "string",
-				user_id: "e16263e9-cd10-4bd8-b040-ff550a0d5ba1",
+				user_id: "e16263e9-cd10-4bd8-b040-ff550a0d5ba2",
 				created_at: new Date(),
 				updated_at: new Date(),
 
