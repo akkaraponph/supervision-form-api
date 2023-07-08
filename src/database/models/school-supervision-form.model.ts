@@ -3,7 +3,7 @@
 import { Model, UUIDV4 } from "sequelize";
 
 
-import { SchoolSupervisionFormAttributes } from "../../modules/supervision-form/supervision-form.types";
+import { SchoolSupervisionFormAttributes } from "../../modules/supervision-form/school-supervision-form/school-supervision-form.types";
 
 module.exports = (sequelize: any, DataTypes: any) => {
 	class SchoolSupervisionForm extends Model<SchoolSupervisionFormAttributes> implements SchoolSupervisionFormAttributes {
