@@ -12,6 +12,7 @@ const router = Router();
 
 router.get('/:id', personnelController.getOne)
 router.get('/', personnelController.getAll)
+router.get('/user/', authMiddleware, personnelController.getByUser)
 router.post('/', personnelController.create)
 router.patch('/:id', personnelController.update)
 router.delete('/:id', personnelController.remove)
