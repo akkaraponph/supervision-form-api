@@ -31,6 +31,25 @@ export const create = async (req: Request, res: Response) => {
 	}
 }
 
+export const getByUser = async (req: Request, res: Response) => {
+	try {
+		const userId = req.user?.id
+		const personnel = await PersonnelModel.findOne({
+			where: { userId }
+		});
+
+		res.json({
+			msg: `get one by user personnel was successfully`,
+			payload: personnel
+		})
+	} catch (error) {
+		res.status(400).json({
+			msg: "get one by userpersonnel was failed",
+			payload: {}
+		})
+	}
+}
+
 export const getOne = async (req: Request, res: Response) => {
 	try {
 		const id = req.params?.id
@@ -113,5 +132,6 @@ export default {
 	update,
 	getAll,
 	getOne,
+	getByUser,
 	remove
 }
