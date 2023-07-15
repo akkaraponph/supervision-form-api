@@ -33,8 +33,9 @@ export const create = async (req: Request, res: Response) => {
 
 export const getByUser = async (req: Request, res: Response) => {
 	try {
+		const userId = req.user?.id
 		const personnel = await PersonnelModel.findOne({
-			where: { user: req.user?.id }
+			where: { userId }
 		});
 
 		res.json({
