@@ -23,6 +23,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		email!: string;
 		address!: string;
 		tel!: string;
+		imgUrl!:string
 		userId!: string;
 
 		static associate(models: any) {
@@ -71,6 +72,10 @@ module.exports = (sequelize: any, DataTypes: any) => {
 			},
 			tel: {
 				type: DataTypes.STRING(10),
+				allowNull: true,
+			},
+			imgUrl: {
+				type: DataTypes.TEXT,
 				allowNull: true,
 			},
 			userId: {

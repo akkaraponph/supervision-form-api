@@ -9,6 +9,7 @@ export interface PersonnelAttributes {
 	address?: string;
 	tel?: string;
 	userId:string;
+	imgUrl?: string;
 	createdAt?: Date;
 	updatedAt?: Date;
 }

@@ -10,11 +10,11 @@ const router = Router();
 // router.delete('/:id', authMiddleware, personnelController.remove)
 
 
-router.get('/:id', personnelController.getOne)
+router.get('/id/:id', personnelController.getOne)
 router.get('/', personnelController.getAll)
-router.get('/user/', authMiddleware, personnelController.getByUser)
+router.get('/me/', authMiddleware, personnelController.getByUser)
 router.post('/', personnelController.create)
-router.patch('/:id', personnelController.update)
-router.delete('/:id', personnelController.remove)
+router.patch('/update/:id', personnelController.update)
+router.delete('/delete/:id', personnelController.remove)
 
 export default router;
