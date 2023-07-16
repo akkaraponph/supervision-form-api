@@ -17,6 +17,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		id!: string;
 		question?: string;
 		ratingScaleSectionId?: string;
+		priority?: string
 
 		static associate(models: any) {
 			// define association here
@@ -44,7 +45,10 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				field: 'rsf_section_id'
 
 			},
-
+			priority: {
+				type: DataTypes.STRING,
+				allowNull: false,
+			},
 
 		},
 		{

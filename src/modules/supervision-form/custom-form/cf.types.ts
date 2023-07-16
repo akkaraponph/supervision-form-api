@@ -3,6 +3,7 @@ export interface CFSectionAttributes {
 	section?: string;
 	supervisionFormId?: string;
 	haveSubSection: boolean;
+	priority: string
 }
 
 export enum QuestionTypeEnum {
@@ -16,6 +17,7 @@ export interface CFQSectionAttributes {
 	detail?: string
 	type?: QuestionTypeEnum
 	CFSectionId?: string
+	priority?: string
 }
 
 export interface ResultCFOEQSectionAttributes {
@@ -24,7 +26,8 @@ export interface ResultCFOEQSectionAttributes {
 	remark?: string
 	file?: string
 	CFQSectionId?: string
-	schoolSupervisionFormId? : string
+	schoolSupervisionFormId?: string
+	priority?: string
 }
 
 export interface ResultCFBQSectionAttributes {
@@ -42,15 +45,17 @@ export interface CFSubSectionAttributes {
 	section?: string
 	target?: string
 	CFSectionId?: string
+	priority?: string
 }
 
 
 export interface CFQSubSectionAttributes {
 	id?: string
 	question?: string
-	detail?:string
+	detail?: string
 	type?: QuestionTypeEnum
 	CFSubSectionId?: string
+	priority?: string
 }
 
 
@@ -70,5 +75,5 @@ export interface ResultCFOEQSubSectionAttributes {
 	remark?: string
 	file?: string
 	CFQSubSectionId?: string
-	schoolSupervisionFormId?:string
+	schoolSupervisionFormId?: string
 }

@@ -1,14 +1,15 @@
 export interface QFAttributes {
-	id?:string;
+	id?: string;
 	question?: string;
 	supervisionFormId?: string;
+	priority?: string
 }
 export interface ResultQFBQAttributes {
 	id?: string;
 	result?: boolean;
 	file?: any;
 	QFId?: string
-	schoolSupervisionFormId? : string
+	schoolSupervisionFormId?: string
 }
 
 export interface ResultQFOEQAttributes {
@@ -16,5 +17,5 @@ export interface ResultQFOEQAttributes {
 	result?: string;
 	file?: any;
 	QFId?: string
-	schoolSupervisionFormId? : string
+	schoolSupervisionFormId?: string
 }

@@ -17,6 +17,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		section		!: string;
 		detail!: string;
 		haveSubSection !: boolean;
+		priority!: string;
 
 		static associate(models: any) {
 			// define association here
@@ -44,11 +45,14 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				defaultValue: true,
 				field: 'have_sub_section'
 			},
+			priority: {
+				type: DataTypes.STRING,
+				allowNull: false,	
+			},
 			supervisionFormId: {
 				type: DataTypes.UUID,
 				allowNull: false,
 				field: 'supervision_form_id'
-
 			},
 			
 		},

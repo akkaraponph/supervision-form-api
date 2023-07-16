@@ -18,6 +18,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		detail!: string
 		type!: QuestionTypeEnum
 		customFormSubSectionId!: string
+		priority!: string
 
 		static associate(models: any) {
 			// define association here
@@ -51,12 +52,17 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				]),
 				defaultValue: QuestionTypeEnum.BOOLEAN
 			},
+			priority: {
+				type: DataTypes.STRING,
+				allowNull: false,	
+			},
 			CFSubSectionId: {
 				type: DataTypes.UUID,
 				allowNull: false,
 				unique: false,
 				field: "cf_sub_section_id"
 			},
+			
 		},
 		{
 			sequelize,
