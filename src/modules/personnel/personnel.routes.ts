@@ -15,6 +15,7 @@ router.get('/', personnelController.getAll)
 router.get('/me/', authMiddleware, personnelController.getByUser)
 router.post('/', personnelController.create)
 router.patch('/update/:id', personnelController.update)
+router.patch('/update/me/', authMiddleware, personnelController.updateByUser)
 router.delete('/delete/:id', personnelController.remove)
 
 export default router;

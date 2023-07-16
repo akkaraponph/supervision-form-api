@@ -66,6 +66,26 @@ export const getOne = async (req: Request, res: Response) => {
 	}
 }
 
+export const getByUser = async (req: Request, res: Response) => {
+	try {
+		// console.log("test")
+		const userId = req.user?.id
+		const school = await SchoolModel.findOne({
+			where: { userId }
+		});
+
+		res.json({
+			msg: `get one by user school was successfully`,
+			payload: school
+		})
+	} catch (error) {
+		res.status(400).json({
+			msg: "get one by user school was failed",
+			payload: {}
+		})
+	}
+}
+
 export const getAll = async (req: Request, res: Response) => {
 	try {
 
@@ -147,6 +167,7 @@ export const remove = async (req: Request, res: Response) => {
 export default {
 	create,
 	update,
+	getByUser,
 	getAll,
 	getOne,
 	remove

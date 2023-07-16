@@ -108,6 +108,26 @@ export const update = async (req: Request, res: Response) => {
 	}
 }
 
+export const updateByUser = async (req: Request, res: Response) => {
+	try {
+		const userId = req.user?.id
+		const body = req.body;
+		const personnel = await PersonnelModel.update({ ...body },{
+			where: { userId }
+		});
+
+		res.json({
+			msg: `update user was successfully`,
+			payload: personnel
+		})
+	} catch (error) {
+		res.status(400).json({
+			msg: "update user was failed",
+			payload: {}
+		})
+	}
+}
+
 
 export const remove = async (req: Request, res: Response) => {
 	try {
@@ -134,5 +154,6 @@ export default {
 	getAll,
 	getOne,
 	getByUser,
+	updateByUser,
 	remove
 }
