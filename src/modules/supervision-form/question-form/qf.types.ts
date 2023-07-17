@@ -1,6 +1,7 @@
 export interface QFAttributes {
 	id?: string;
 	question?: string;
+	detail?: string;
 	supervisionFormId?: string;
 	priority?: string
 }

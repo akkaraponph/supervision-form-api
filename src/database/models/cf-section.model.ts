@@ -47,14 +47,14 @@ module.exports = (sequelize: any, DataTypes: any) => {
 			},
 			priority: {
 				type: DataTypes.STRING,
-				allowNull: false,	
+				allowNull: false,
 			},
 			supervisionFormId: {
 				type: DataTypes.UUID,
 				allowNull: false,
 				field: 'supervision_form_id'
 			},
-			
+
 		},
 		{
 			sequelize,

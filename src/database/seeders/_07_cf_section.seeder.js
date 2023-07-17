@@ -90,7 +90,7 @@ module.exports = {
 				id: "748609d2-8f37-44ff-b6d1-000004c00001",
 				priority: "1",
 				section: '1.  ผู้ให้ข้อมูล',
-				have_sub_section: false,
+				have_sub_section: true,
 				supervision_form_id: "d2494a78-a8a6-40a8-a6ce-64b12982cf04"
 			},
 			{
@@ -135,6 +135,63 @@ module.exports = {
 				have_sub_section: false,
 				supervision_form_id: "d2494a78-a8a6-40a8-a6ce-64b12982cf04"
 			},
+
+			// 1.6  แบบนิเทศ ติดตาม การจัดกิจกรรมการเรียนรู้แบบ Active Learning
+			{
+				id: "748609d2-8f37-44ff-b6d1-500001c00001",
+				priority: "1",
+				section: 'ด้านครูผู้สอน',
+				have_sub_section: false,
+				supervision_form_id: "d2494a78-a8a6-40a8-a6ce-64b12982cf05"
+			},
+			{
+				id: "748609d2-8f37-44ff-b6d1-500001c00002",
+				priority: "2",
+				section: 'ด้านผู้เรียน',
+				have_sub_section: false,
+				supervision_form_id: "d2494a78-a8a6-40a8-a6ce-64b12982cf05"
+			},
+			{
+				id: "748609d2-8f37-44ff-b6d1-500001c00003",
+				priority: "3",
+				section: 'ด้านกระบวนการ',
+				have_sub_section: false,
+				supervision_form_id: "d2494a78-a8a6-40a8-a6ce-64b12982cf05"
+			},
+
+			// 1.7  แบบนิเทศ ติดตามการขับเคลื่อนกระบวนการ  PPLC (Piboon Professional Learning Community)
+			{
+				id: "748609d2-8f37-44ff-b6d1-700001c00001",
+				priority: "1",
+				section: '1.  การแต่งตั้งคณะกรรมการขับเคลื่อนกระบวนการ PLC ระดับสถานศึกษา',
+				have_sub_section: false,
+				supervision_form_id: "d2494a78-a8a6-40a8-a6ce-64b12982cf07"
+			},
+			{
+				id: "748609d2-8f37-44ff-b6d1-700001c00002",
+				priority: "2",
+				section: '2. การกำหนดแผนงานการขับเคลื่อนกระบวนการ PLC ระดับสถานศึกษา',
+				have_sub_section: false,
+				supervision_form_id: "d2494a78-a8a6-40a8-a6ce-64b12982cf07"
+			},
+			{
+				id: "748609d2-8f37-44ff-b6d1-700001c00003",
+				priority: "3",
+				section: '3. การขับเคลื่อนกระบวนการ PPLC สู่การปฏิบัติในสถานศึกษา',
+				have_sub_section: false,
+				supervision_form_id: "d2494a78-a8a6-40a8-a6ce-64b12982cf07"
+			},
+			{
+				id: "748609d2-8f37-44ff-b6d1-700001c00004",
+				priority: "4",
+				section: '4. กิจกรรม PPLC ที่สามารถเป็น Best practice ของแต่ละกลุ่มสาระการเรียนรู้/กลุ่มกิจกรรมพัฒนาผู้เรียน (ในแต่ละกลุ่มสาระการเรียนรู้อาจจะมีมากกว่า 1 กิจกรรม)',
+				have_sub_section: false,
+				supervision_form_id: "d2494a78-a8a6-40a8-a6ce-64b12982cf07"
+			},
+
+		
+			
+
 		]
 		await queryInterface.bulkInsert('cf_section', seedData)
 	},

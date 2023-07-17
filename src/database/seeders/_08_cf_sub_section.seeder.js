@@ -109,6 +109,8 @@ module.exports = {
 				target: null,
 				cf_section_id: "748609d2-8f37-44ff-b6d1-000004c00005"
 			},
+
+			
 			
 		]
 		await queryInterface.bulkInsert('cf_sub_section', seedData)
