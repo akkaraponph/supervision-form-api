@@ -16,7 +16,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		id!: string;
 		result!: boolean;
 		file!: any;
-		questionFormId!: string
+		QFId!: string
 		schoolSupervisionFormId!: string
 
 		static associate(models: any) {
