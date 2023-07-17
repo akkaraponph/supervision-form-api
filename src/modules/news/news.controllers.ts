@@ -60,6 +60,7 @@ export const update = async (req: Request, res: Response) => {
 	try {
 		const id = req.params?.id
 		const body = req.body;
+		
 		const news = await NewsModel.update({ ...body }, {
 			where: { id }
 		});
