@@ -126,8 +126,19 @@ module.exports = {
 				created_at: new Date(),
 				updated_at: new Date(),
 			},
-
-
+			// 1.9 แบบนิเทศ ติดตามการส่งเสริมนิสัยรักการอ่านและการพัฒนาห้องสมุดโรงเรียน
+			{
+				id: "d2494a78-a8a6-40a8-a6ce-64b12982cf09",
+				name: "แบบนิเทศ ติดตามการส่งเสริมนิสัยรักการอ่านและการพัฒนาห้องสมุดโรงเรียน",
+				detail: "",
+				suggestion: "-",
+				supervisor_name: "-",
+				term: "1",
+				year: "2565",
+				supervision_form_type_id: "541e70ff-0893-435d-928e-7fa07ec82f09",
+				created_at: new Date(),
+				updated_at: new Date(),
+			},
 			{
 				id: "d2494a78-a8a6-40a8-a6ce-64b12982cf11",
 				name: "แบบนิเทศ ติดตาม การจัดการขยะและการลดปริมาณขยะในโรงเรียนและชุมชน",
