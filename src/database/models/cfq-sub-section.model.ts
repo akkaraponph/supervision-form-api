@@ -17,7 +17,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		question!: string
 		detail!: string
 		type!: QuestionTypeEnum
-		customFormSubSectionId!: string
+		CFSubSectionId!: string
 		priority!: string
 
 		static associate(models: any) {
