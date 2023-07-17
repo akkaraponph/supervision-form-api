@@ -148,13 +148,13 @@ export const updateByUser = async (req: Request, res: Response) => {
 	try {
 		const userId = req.user?.id
 		const body = req.body;
-		const personnel = await SchoolModel.update({ ...body },{
+		const school = await SchoolModel.update({ ...body },{
 			where: { userId }
 		});
 
 		res.json({
 			msg: `update user was successfully`,
-			payload: personnel
+			payload: school
 		})
 	} catch (error) {
 		res.status(400).json({
