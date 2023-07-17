@@ -160,7 +160,7 @@ export const create = async (req: Request, res: Response) => {
                 teachingStyle: "",
                 openClass: "",
             })
-        } else if (createUser.status === UserRole.PERSONNEL) {
+        } else if (createUser.status === UserRole.PERSONNEL || UserRole.ADMIN) {
             await PersonnelModel.create({
                 "idPersonnel": "",
                 "name": "",

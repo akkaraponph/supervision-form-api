@@ -68,7 +68,7 @@ export const getOne = async (req: Request, res: Response) => {
 
 export const getByUser = async (req: Request, res: Response) => {
 	try {
-		// console.log("test")
+		console.log("test")
 		const userId = req.user?.id
 		const school = await SchoolModel.findOne({
 			where: { userId }
