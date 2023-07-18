@@ -6,15 +6,14 @@ const RSFQuestionModel = db.RSFQuestion
 export const create = async (req: Request, res: Response) => {
     try {
         const payload = await ResultRSFModel.create(req.body)
-
         return res.json({
-            msg: `Create rating scale form 'score' was successfully`,
+            msg: `Create result of the rating scale form was successfully`,
             payload
         })
     } catch (error) {
 
         return res.status(400).json({
-            msg: "Encountered an error when create rating scale form 'score' form!",
+            msg: "Encountered an error when create result of the rating scale form form!",
             payload: {}
         })
     }
@@ -31,12 +30,12 @@ export const getOne = async (req: Request, res: Response) => {
             ]
         })
         return res.status(200).json({
-            msg: "retrieved the data of rating scale form 'score' was successfully",
+            msg: "retrieved the data of result of the rating scale form was successfully",
             payload
         })
     } catch (error) {
         return res.status(400).json({
-            msg: `Encoutered an error when retrieved the rating scale form 'score' by ${req.params.id}`,
+            msg: `Encoutered an error when retrieved the result of the rating scale form by ${req.params.id}`,
             payload: {}
         })
     }
@@ -52,12 +51,12 @@ export const getAll = async (req: Request, res: Response) => {
             ]
         })
         return res.status(200).json({
-            msg: "retrieved the all data of rating scale form 'score' was successfully",
+            msg: "retrieved the all data of result of the rating scale form was successfully",
             payload
         })
     } catch (error) {
         return res.status(400).json({
-            msg: `Encoutered an error when retrieved all data of rating scale form 'score' `,
+            msg: `Encoutered an error when retrieved all data of result of the rating scale form `,
             payload: {}
         })
     }
@@ -72,12 +71,12 @@ export const update = async (req: Request, res: Response) => {
                 where: { id: req.params.id }
             })
         return res.status(200).json({
-            msg: `Update the data of rating scale form 'score' was successfully`,
+            msg: `Update the data of result of the rating scale form was successfully`,
             payload
         })
     } catch (error) {
         return res.status(400).json({
-            msg: `Encoutered an error when update the rating scale form 'score' id: ${req.params.id}`,
+            msg: `Encoutered an error when update the result of the rating scale form id: ${req.params.id}`,
             payload: {}
         })
     }
@@ -97,14 +96,14 @@ export const destroy = async (req: Request, res: Response) => {
         })
 
         return res.status(200).json({
-            msg: `Delete the data of rating scale form 'score' where id  : ${req.params.id} was successfully`,
+            msg: `Delete the data of result of the rating scale form where id  : ${req.params.id} was successfully`,
             payload
         })
 
 
     } catch (error) {
         return res.status(400).json({
-            msg: `Encoutered an error when destroy the rating scale form 'score' by id: ${req.params.id}`,
+            msg: `Encoutered an error when destroy the result of the rating scale form by id: ${req.params.id}`,
             payload: {}
         })
     }
