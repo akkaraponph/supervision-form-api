@@ -3,6 +3,7 @@ import userRoutes from "./modules/user/users.routes";
 import schoolRoutes from "./modules/school/school.routes"
 import peronnelRoutes from "./modules/personnel/personnel.routes"
 import supervisionFormRoutes from "./modules/supervision-form/supervision-form.routes"
+import newsRoutes from './modules/news/news.routes'
 
 import { UserAttributes } from "modules/user/user.types";
 import cors from "cors";
@@ -27,7 +28,7 @@ export const App = () => {
 	app.use('/api/users', userRoutes)
 	app.use('/api/schools', schoolRoutes)
 	app.use('/api/personnels', peronnelRoutes)
-
+	app.use('/api/news', newsRoutes)
 	app.get("/api", (req: Request, res: Response) => {
 		res.end("Hello, World!");
 	})

@@ -1,26 +1,28 @@
 export interface RSFSectionAttributes {
-	id?:string;
+	id?: string;
 	type?: string;
 	supervisionFormId?: string;
-	RSFQuestions? : RSFQuestionAttributes;
+	RSFQuestions?: RSFQuestionAttributes;
+	priority?: string;
 }
 
 export interface CloneRSFSectionAttributes {
-	id?:string;
+	id?: string;
 	type?: string;
 	supervisionFormId?: string;
-	RSFQuestions? : RSFQuestionAttributes[];
+	RSFQuestions?: RSFQuestionAttributes[];
 }
 
 export interface RSFQuestionAttributes {
-	id?:string;
+	id?: string;
 	question?: string;
 	RSFSectionId?: string;
+	priority?: string
 }
 
 export interface ResultRSFAttributes {
-	id?:string;
+	id?: string;
 	score?: number;
 	RSFQuestionId?: string;
-	schoolSupervisionFormId?:string;
+	schoolSupervisionFormId?: string;
 }

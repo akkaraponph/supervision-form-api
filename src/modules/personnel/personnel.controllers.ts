@@ -33,6 +33,7 @@ export const create = async (req: Request, res: Response) => {
 
 export const getByUser = async (req: Request, res: Response) => {
 	try {
+		console.log("test")
 		const userId = req.user?.id
 		const personnel = await PersonnelModel.findOne({
 			where: { userId }
@@ -92,6 +93,12 @@ export const update = async (req: Request, res: Response) => {
 	try {
 		const id = req.params?.id
 		const body = req.body;
+
+		// console.log("===============")
+		// console.log(id);
+		// console.log(body);
+		// console.log("===============")
+
 		const personnel = await PersonnelModel.update({ ...body }, {
 			where: { id }
 		});
@@ -102,6 +109,30 @@ export const update = async (req: Request, res: Response) => {
 	} catch (error) {
 		res.status(400).json({
 			msg: "update personnel was failed",
+			payload: {}
+		})
+	}
+}
+
+export const updateByUser = async (req: Request, res: Response) => {
+	try {
+		const userId = req.user?.id
+		const body = req.body;
+		console.log("===================")
+		console.log(body)
+		console.log("===================")
+
+		const personnel = await PersonnelModel.update({ ...body },{
+			where: { userId }
+		});
+
+		res.json({
+			msg: `update user was successfully`,
+			payload: personnel
+		})
+	} catch (error) {
+		res.status(400).json({
+			msg: "update user was failed",
 			payload: {}
 		})
 	}
@@ -133,5 +164,6 @@ export default {
 	getAll,
 	getOne,
 	getByUser,
+	updateByUser,
 	remove
 }

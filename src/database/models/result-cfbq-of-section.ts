@@ -17,7 +17,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		result!: boolean
 		remark!: string
 		file!: string
-		customFormQuestionOfSubSectionId!: string
+		CFQSectionId!: string
 		schoolSupervisionFormId!: string
 
 		static associate(models: any) {

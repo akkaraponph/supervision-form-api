@@ -10,7 +10,6 @@ import { v4 as uuidv4 } from 'uuid';
 import db from "../../database/models";
 import { Sequelize, Transaction } from 'sequelize';
 
-
 import { CloneRSFSectionAttributes, RSFQuestionAttributes, RSFSectionAttributes } from "./rating-scale-form/rsf.types";
 const SupervisionFormModel = db.SupervisionForm
 const SupervisionFormTypeModel = db.SupervisionFormType
@@ -113,6 +112,7 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 		// Bulk create the cloned SupervisionForm rows
 		const resultSupervisionFormCreated = await SupervisionFormModel.bulkCreate(clonedRows, { transaction: t })
 		await t.commit();
+		
 		/**
 		 * ========================================================
 		 * ===============>> clone supervision form

@@ -1,6 +1,7 @@
 export interface NewsAttributes {
 	id?: string
 	name?: string
+	description?: string
 	editor?: string
 	content?: string
 	link?: string

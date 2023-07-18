@@ -15,8 +15,9 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		 * The `models/index` file will call this method automatically.
 		 */
 		id!: string;
-		question?: string;
-		ratingScaleSectionId?: string;
+		question!: string;
+		RSFSectionId!: string;
+		priority!: string
 
 		static associate(models: any) {
 			// define association here
@@ -44,7 +45,10 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				field: 'rsf_section_id'
 
 			},
-
+			priority: {
+				type: DataTypes.STRING,
+				allowNull: false,
+			},
 
 		},
 		{

@@ -14,9 +14,10 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		 * The `models/index` file will call this method automatically.
 		 */
 		id!: string;
-		section		!: string;
+		section!: string;
 		detail!: string;
 		haveSubSection !: boolean;
+		priority!: string;
 
 		static associate(models: any) {
 			// define association here
@@ -44,13 +45,16 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				defaultValue: true,
 				field: 'have_sub_section'
 			},
+			priority: {
+				type: DataTypes.STRING,
+				allowNull: false,
+			},
 			supervisionFormId: {
 				type: DataTypes.UUID,
 				allowNull: false,
 				field: 'supervision_form_id'
-
 			},
-			
+
 		},
 		{
 			sequelize,

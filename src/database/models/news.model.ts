@@ -16,6 +16,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		 */
 		id!: string
 		name!: string
+		description!: string
 		editor!: string
 		content!: string
 		link!: string
@@ -27,7 +28,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 
 		static associate(models: any) {
 			// define association here
-			News.belongsTo(models.User);
+			// News.belongsTo(models.User);
 		}
 	}
 
@@ -41,6 +42,10 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				field: 'id'
 			},
 			name: {
+				type: DataTypes.STRING,
+				allowNull: true,
+			},
+			description: {
 				type: DataTypes.STRING,
 				allowNull: true,
 			},

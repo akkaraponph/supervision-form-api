@@ -18,6 +18,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		detail!: string
 		type!: QuestionTypeEnum
 		CFSectionId!: string
+		priority!: string
 
 		static associate(models: any) {
 			// define association here
@@ -56,7 +57,10 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				allowNull: false,
 				field: "cf_section_id"
 			},
-		},
+			priority: {
+				type: DataTypes.STRING,
+				allowNull: false,	
+			},		},
 		{
 			sequelize,
 			underscored: true,

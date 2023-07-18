@@ -15,8 +15,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		 */
 		id!: string
 		section!: string
-		target!: string
 		customFormSectionId!: string
+		priority! : string
 
 		static associate(models: any) {
 			// define association here
@@ -38,14 +38,15 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				type: DataTypes.STRING,
 				allowNull: true,
 			},
-			target: {
-				type: DataTypes.STRING,
-				allowNull: true,
-			},
+
 			CFSectionId: {
 				type: DataTypes.UUID,
 				allowNull: false,
 				field: "cf_section_id"
+			},
+			priority: {
+				type: DataTypes.STRING,
+				allowNull: false,	
 			},
 		},
 		{

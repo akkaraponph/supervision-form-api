@@ -9,12 +9,12 @@ const router = Router();
 // router.patch('/:id', authMiddleware, personnelController.update)
 // router.delete('/:id', authMiddleware, personnelController.remove)
 
-
-router.get('/:id', personnelController.getOne)
+router.get('/id/:id', personnelController.getOne)
 router.get('/', personnelController.getAll)
-router.get('/user/', authMiddleware, personnelController.getByUser)
+router.get('/me/', authMiddleware, personnelController.getByUser)
 router.post('/', personnelController.create)
-router.patch('/:id', personnelController.update)
-router.delete('/:id', personnelController.remove)
+router.patch('/update/id/:id', personnelController.update)
+router.patch('/update/me', authMiddleware, personnelController.updateByUser)
+router.delete('/delete/:id', personnelController.remove)
 
 export default router;
