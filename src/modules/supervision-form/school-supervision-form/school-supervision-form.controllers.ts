@@ -162,7 +162,13 @@ export const getAll = async (req: Request, res: Response) => {
 		if (query.form_type) {
 			whereClauseSupervisionFormType.formType = query.form_type as FormType; // Add a condition for the "term" query parameter
 		}
-
+		if (query.type_id) {
+			whereClauseSupervisionFormType.id = query.type_id as string; // Add a condition for the "term" query parameter
+		}
+		console.log("===============================");
+		console.log(whereClauseSupervisionFormType)
+		console.log("===============================");
+		
 		let whereClauseSupervisionForm: Partial<SupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
 
 		if (query.supervisor_name) {
