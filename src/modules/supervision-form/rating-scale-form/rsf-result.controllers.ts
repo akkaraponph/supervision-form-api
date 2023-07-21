@@ -5,16 +5,48 @@ const RSFQuestionModel = db.RSFQuestion
 
 export const create = async (req: Request, res: Response) => {
     try {
-        const payload = await ResultRSFModel.create(req.body)
-        return res.json({
-            msg: `Create result of the rating scale form was successfully`,
-            payload
-        })
-    } catch (error) {
+        /**
+         * Body
+            score!: number;
+            RSFQuestionId!: string;
+            schoolId!: string;
+            schoolSupervisionFormId!: string;
+        */
+        const { RSFQuestionId, schoolSupervisionFormId } = req.body
+        // console.log("--------------");
 
+        // console.log(req.body)
+        // console.log(schoolId, schoolSupervisionFormId)
+        // console.log("--------------");
+        const isExist = await ResultRSFModel.findOne({
+            where: {
+                RSFQuestionId,   schoolSupervisionFormId
+            }
+        })
+        if (isExist) {
+            const payload = await ResultRSFModel.update({
+                ...req.body
+            }, {
+                where: {
+                    RSFQuestionId, schoolSupervisionFormId
+                }
+            })
+            return res.json({
+                msg: `Update result of the rating scale form was successfully`,
+                payload
+            })
+        } else {
+            const payload = await ResultRSFModel.create(req.body)
+            return res.json({
+                msg: `Create result of the rating scale form was successfully`,
+                payload
+            })
+        }
+    } catch (error) {
+ 
         return res.status(400).json({
             msg: "Encountered an error when create result of the rating scale form form!",
-            payload: {}
+            payload: {error}
         })
     }
 }
@@ -44,7 +76,7 @@ export const getOne = async (req: Request, res: Response) => {
 export const getAll = async (req: Request, res: Response) => {
     try {
         const payload = await ResultRSFModel.findAll({
-            include : [
+            include: [
                 {
                     model: RSFQuestionModel,
                 }

@@ -16,7 +16,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		id!: string;
 		score!: number;
 		RSFQuestionId!: string;
-		schoolId!: string;
 		schoolSupervisionFormId!: string;
 
 		static associate(models: any) {
