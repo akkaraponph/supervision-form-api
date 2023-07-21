@@ -344,9 +344,9 @@ export const getOne = async (req: Request, res: Response) => {
 			payload
 		})
 	} catch (error) {
-		// console.log("================");
-		// console.error(error)
-		// console.log("================");
+		console.log("================");
+		console.error(error)
+		console.log("================");
 		return res.status(400).json({
 			msg: `Encoutered an error when retrieved the supervision form by ${req.params.id}`,
 			payload: {}

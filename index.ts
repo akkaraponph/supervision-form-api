@@ -8,7 +8,8 @@ const app = App()
 const runServer = async () => {
 	try {
 		const syncOptions = {
-			logging: process.env.NODE_ENV !== 'production', // Mute sync log output in production
+			// logging: process.env.NODE_ENV === 'production', // Mute sync log output in production
+			logging:true,
 			// logging: process.env.NODE_ENV == 'production', // Mute sync log output in production
 			force: process.env.NODE_ENV !== 'production' || process.env.DB_SYNC_FORCE === 'true', // Disable force sync in production unless DB_SYNC_FORCE is set to true
 		}

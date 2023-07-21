@@ -87,6 +87,13 @@ export const getOne = async (req: Request, res: Response) => {
 
 export const getOneByTermAndYear = async (req: Request, res: Response) => {
 	try {
+		const userId = req.user?.id
+		const school = await db.School.findOne({
+			where: { userId },
+			raw: true
+		})
+	
+
 		const query = req.query;
 		let whereClauseSupervisionFormType: Partial<SupervisionFormTypeAttributes> = {}; // Initialize an empty object for the where clause
 
@@ -114,10 +121,17 @@ export const getOneByTermAndYear = async (req: Request, res: Response) => {
 
 		if (query.school_id) {
 			whereClauseSchoolSupervisionForm.schoolId = query.school_id as string; // Add a condition for the "term" query parameter
+		} 
+		if (school.id) {
+			whereClauseSchoolSupervisionForm.schoolId = school.id as string; // Add a condition for the "term" query parameter
 		}
 		if (query.supervision_form_id) {
 			whereClauseSchoolSupervisionForm.supervisionFormId = query.supervision_form_id as string; // Add a condition for the "term" query parameter
 		}
+
+		// console.log("----------------------------");
+		// console.log(school)
+		// console.log("----------------------------");
 		const payload = await SchoolSupervisionForm.findOne({
 			include: [
 				{
@@ -133,7 +147,7 @@ export const getOneByTermAndYear = async (req: Request, res: Response) => {
 					where: { ...whereClauseSupervisionForm }
 				}
 			],
-			where: {...whereClauseSchoolSupervisionForm }
+			where: { ...whereClauseSchoolSupervisionForm }
 		})
 		return res.status(200).json({
 			msg: "retrieved the data of school supervision form was successfully",
@@ -162,6 +176,12 @@ export const getAll = async (req: Request, res: Response) => {
 		if (query.form_type) {
 			whereClauseSupervisionFormType.formType = query.form_type as FormType; // Add a condition for the "term" query parameter
 		}
+		if (query.type_id) {
+			whereClauseSupervisionFormType.id = query.type_id as string; // Add a condition for the "term" query parameter
+		}
+		console.log("===============================");
+		console.log(whereClauseSupervisionFormType)
+		console.log("===============================");
 
 		let whereClauseSupervisionForm: Partial<SupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
 
@@ -209,7 +229,7 @@ export const getAll = async (req: Request, res: Response) => {
 		// console.log("==============")
 		// console.log(error);
 		// console.log("==============")
-		
+
 		return res.status(400).json({
 			msg: `Encoutered an error when retrieved all data of school supervision form `,
 			payload: {}

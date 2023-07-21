@@ -67,8 +67,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				field: 'school_id',
 				unique: false,
 			},
-
-
 		},
 		{
 			sequelize,
