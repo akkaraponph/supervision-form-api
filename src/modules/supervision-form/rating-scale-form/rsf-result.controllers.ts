@@ -50,6 +50,28 @@ export const create = async (req: Request, res: Response) => {
         })
     }
 }
+export const getOneByQuestionId = async(req:Request, res: Response) =>{
+    try {
+        const payload = await ResultRSFModel.findOne({
+            where: { RSFQuestionId: req.params.id,
+            schoolSupervisionFormId: req.query.ssid },
+            include: [
+                {
+                    model: RSFQuestionModel,
+                }
+            ]
+        })
+        return res.status(200).json({
+            msg: "retrieved the data of result of the rating scale form was successfully",
+            payload
+        })
+    } catch(error) {
+        return res.status(400).json({
+            msg: `Encoutered an error when retrieved the result of the rating scale form by ${req.params.id}`,
+            payload: {}
+        })
+    }
+}
 
 export const getOne = async (req: Request, res: Response) => {
     try {
@@ -142,9 +164,10 @@ export const destroy = async (req: Request, res: Response) => {
 }
 
 export default {
-    create,
     getOne,
+    getOneByQuestionId,
     getAll,
+    create,
     update,
     destroy
 }
