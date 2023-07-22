@@ -54,6 +54,7 @@ router.delete('/rsf/question/delete/:id', RSFQuestionControllers.destroy)
 // result rating scale form
 router.get('/rsf/question/result', ResultRSFControllers.getAll)
 router.get('/rsf/question/result/id/:id', ResultRSFControllers.getOne)
+router.get('/rsf/question/result/id/question/:id', ResultRSFControllers.getOneByQuestionId)
 router.post('/rsf/question/result/create', ResultRSFControllers.create)
 router.patch('/rsf/question/result/update/:id', ResultRSFControllers.update)
 router.delete('/rsf/question/result/delete/:id', ResultRSFControllers.destroy)
