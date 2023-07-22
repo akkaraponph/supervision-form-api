@@ -138,7 +138,7 @@ export const update = async (req: Request, res: Response) => {
 
 export const destroy = async (req: Request, res: Response) => {
     try {
-        const valid = await ResultRSFModel.findOne({ where: { id: req.params.id } })
+        const valid = await ResultRSFModel.findOne({ where: { RSFQuestionId: req.query.question_id,  schoolSupervisionFormId: req.query.ssid } })
         if (!valid) return res.status(400).json({
             msg: `The data where ${req.params.id} not found`,
             payload: {}
