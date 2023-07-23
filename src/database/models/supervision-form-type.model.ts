@@ -13,7 +13,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		 * The `models/index` file will call this method automatically.
 		 */
 		id!: string;
-		type!: supervisionFormTypeEnum;  // PREPARING OPEN SCHOOL
+		type!: string;  // PREPARING OPEN SCHOOL
 		name!: string;  // แบบฟอร์ม รายการนิเทศติดตาม การเตรียมความพร้อมการเปิดภาคเรียน 
 		formType!: FormType
 
@@ -34,14 +34,9 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				field: 'id'
 			},
 			type: {
-				type: DataTypes.ENUM(
-					supervisionFormTypeEnum.PREPARING_OPEN_SCHOOL,
-					supervisionFormTypeEnum.SUPERVISION,
-					supervisionFormTypeEnum.TRACKING
-				),
+				type: DataTypes.STRING,
 				field: 'type',
 				allowNull: false,
-				defaultValue: supervisionFormTypeEnum.SUPERVISION,
 			},
 			name: {
 				type: DataTypes.STRING,
