@@ -11,6 +11,8 @@ import db from "../../database/models";
 import { Sequelize, Transaction } from 'sequelize';
 
 import { CloneRSFSectionAttributes, RSFQuestionAttributes, RSFSectionAttributes } from "./rating-scale-form/rsf.types";
+import { SchoolSupervisionFormAttributes } from "./school-supervision-form/school-supervision-form.types";
+import sequelize from "sequelize";
 const SupervisionFormModel = db.SupervisionForm
 const SupervisionFormTypeModel = db.SupervisionFormType
 const RSFSectionModel = db.RSFSection
@@ -112,7 +114,7 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 		// Bulk create the cloned SupervisionForm rows
 		const resultSupervisionFormCreated = await SupervisionFormModel.bulkCreate(clonedRows, { transaction: t })
 		await t.commit();
-		
+
 		/**
 		 * ========================================================
 		 * ===============>> clone supervision form
@@ -124,7 +126,7 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 			// จับคู่ฟอร์มกับโรงเรียนทั้งหมด
 			const allSchool = await db.School.findAll()
 			const pairSchoolWithSupervisionFormTransaction = await db.sequelize.transaction()
-			allSchool.map(async(row:any)=>{
+			allSchool.map(async (row: any) => {
 				await db.SchoolSupervisionForm.create({
 					schoolId: row['dataValues'].id,
 					supervisionFormId: newSupervisionFormId,
@@ -196,17 +198,17 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 
 					// const RSFQuestionClones = RSFQuestions.map((row: any) => {
 					// 	const RSFQuestionClone = { ...row };
-	
+
 					// 	const newRSFSectionId = uuidv4();
-	
+
 					// 	// Set new values
 					// 	RSFQuestionClone.id = newRSFSectionId;
 					// 	RSFQuestionClone.question = RSFQuestionClone['dataValues'].question;
 					// 	RSFQuestionClone.RSFSectionId = newRSFSectionId;
-	
+
 					// 	return RSFQuestionClone;
 					// });
-	
+
 					// const RSFQuestionTransaction = await db.sequelize.transaction();
 					// try {
 					// 	await db.RSFQuestion.bulkCreate(RSFQuestionClones, { transaction: RSFQuestionTransaction })
@@ -373,6 +375,9 @@ export const getOne = async (req: Request, res: Response) => {
 }
 
 
+
+
+
 export const getAll = async (req: Request, res: Response): Promise<Response> => {
 	try {
 		const query = req.query;
@@ -389,12 +394,12 @@ export const getAll = async (req: Request, res: Response): Promise<Response> => 
 		if (query.form_type) {
 			whereClauseSupervisionFormType.formType = query.form_type as FormType; // Add a condition for the "term" query parameter
 		}
-		
-		
+
+
 		const Include = [
 			{
 				model: SupervisionFormTypeModel,
-				
+
 				where: {
 					formType: {
 						[Op.or]: [FormType.RATING_SCALE, FormType.CUSTOM, FormType.QUESTION],
@@ -553,6 +558,103 @@ export const destroy = async (req: Request, res: Response) => {
 	}
 }
 
+const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) => {
+	try {
+		const supervisionForm = await db.SupervisionForm.findOne({
+			where: {
+				year: req.query?.year,
+				term: req.query?.term,
+			},
+			include: [
+				{
+					model: db.SupervisionFormType,
+					where: {
+						type: "POS_1",
+						formType: "RATING_SCALE",
+					}
+				}
+			]
+		})
+		if (!supervisionForm['dataValues'].id) {
+			return createResponse(res, 400, {
+				msg: `get report was failed`,
+				payload: {}
+			})
+		}
+
+		const allSchoolSupervisionForm: SchoolSupervisionFormAttributes[] = await db.SchoolSupervisionForm.findAll({
+			where: {
+				supervisionFormId: supervisionForm['dataValues'].id,
+				year: req.query.year,
+				term: req.query.term
+			}, raw: true
+		})
+		const groupedData: { [key: string]: any[] } = {};
+		const allSchool = await db.School.count();
+		let allSectionSchoolCount = 0;
+		let allQuestionSchoolCount  = 0;
+		
+		const resultRSFQuestion = allSchoolSupervisionForm.map(async(row: SchoolSupervisionFormAttributes) => {
+			const resultRSFQuestion = await db.ResultRSF.findAll({
+				where: {schoolSupervisionFormId: row.id},
+				// attributes: [
+				// 	sequelize.fn('')
+				// ],
+				group: ['RSFQuestionId'],
+				raw: true
+			})
+		// Manually group the data by RSFQuestionId
+		
+		resultRSFQuestion.forEach((item: any) => {
+		  const RSFQuestionId = item.RSFQuestionId;
+		  if (!groupedData[RSFQuestionId]) {
+			groupedData[RSFQuestionId] = [];
+		  }
+		  groupedData[RSFQuestionId].push(item);
+		});
+	  
+		console.log('------------------');
+		console.log(groupedData);
+		console.log('------------------');
+		return groupedData
+		})
+
+
+		// const section = await db.RSFSection.findAll({
+		// 	where: {
+		// 		supervisionFormId: supervisionForm['dataValues'].id
+		// 	},
+		// 	raw: true
+		// })
+
+		// section.map(async (row: RSFSectionAttributes) => {
+		// 	const question = await db.RSFQuestion.findAll({
+		// 		where: { RSFSectionId: row.id },
+		// 		raw: true
+		// 	})
+
+		// 	question.map(async (row: RSFQuestionAttributes) => {
+		// 		const answer = await db.ResultRSFQuestion.findAll({
+		// 			where: { RSFQuestionId: row.id, schoolSupervisionForm }
+		// 		})
+
+		// 	})
+		// })
+
+		return createResponse(res, 200, {
+			msg: `get report was successfully`,
+			payload: resultRSFQuestion
+		})
+
+
+	} catch (error) {
+		return createResponse(res, 400, {
+			msg: `Encountered and error when get all report by term ${req.query?.term} year: ${req.query?.year}`,
+			payload: {}
+		})
+	}
+}
+
 export default {
 	create,
 	getOne,
@@ -560,5 +662,6 @@ export default {
 	update,
 	destroy,
 	getAllExistingYears,
-	cloningByTermAndYear
+	cloningByTermAndYear,
+	getRSFOpenSchoolReportByTermAndYear
 }

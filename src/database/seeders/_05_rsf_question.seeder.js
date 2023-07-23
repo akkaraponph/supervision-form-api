@@ -233,6 +233,12 @@ module.exports = {
 				question: "มีการแต่งตั้งครูเวรประจำวันคอยควบคุม กำกับ ติดตามดูแลการรักษาความปลอดภัยตลอดทั้งวัน",
 				rsf_section_id: "e46263e9-cd10-4bd8-b040-ff550a0d2ba3"
 			},
+			{
+				id: "e42f2e98-aec0-48ae-a6e0-586e0bda3e05",
+				priority: "3.5",
+				question: "มีการร่วมมือกันระหว่างสถานศึกษา ผู้ปกครอง และชุมชน กำหนด มาตรการรับ-ส่งนักเรียนตอนเช้าและเลิกเรียน",
+				rsf_section_id: "e46263e9-cd10-4bd8-b040-ff550a0d2ba3"
+			},
 		]
 		await queryInterface.bulkInsert('rsf_question', seedData)
 	},
