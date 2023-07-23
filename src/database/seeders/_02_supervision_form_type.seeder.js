@@ -4,7 +4,7 @@ module.exports = {
 			// PREPARING_OPEN_SCHOOL
 			{
 				id: "e22263e9-cd10-4bd8-b040-ff550a0d1ba1",
-				type: "PREPARING_OPEN_SCHOOL",
+				type: "POS_1",
 				name: "แบบฟอร์ม รายการนิเทศติดตาม การเตรียมความพร้อมการเปิดภาคเรียน",
 				form_type: "RATING_SCALE",
 				created_at: new Date(),
@@ -12,7 +12,7 @@ module.exports = {
 			},
 			{
 				id: "e22263e9-cd10-4bd8-b040-ff550a0d1ba2",
-				type: "PREPARING_OPEN_SCHOOL",
+				type: "POS_2",
 				name: "แบบฟอร์ม รายการนิเทศติดตาม การดำเนินงานตามนโยบายของหน่วยงานต้นสังกัด",
 				form_type: "RATING_SCALE",
 				created_at: new Date(),

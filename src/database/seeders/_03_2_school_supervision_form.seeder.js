@@ -15,16 +15,7 @@ module.exports = {
 				term: "1",
 				year: "2566",
 				school_id: 'e26263e9-cd10-4bd8-b040-ff550a0d5ba1',
-				supervision_form_id: "d2494a78-a8a6-40a8-a6ce-64b12982cf02",
-				created_at: new Date(),
-				updated_at: new Date(),
-			},
-			{
-				id: "e32263e9-cd10-4bd8-b040-ff550a0d5ba3",
-				term: "1",
-				year: "2566",
-				school_id: 'e26263e9-cd10-4bd8-b040-ff550a0d5ba1',
-				supervision_form_id: "d2494a78-a8a6-40a8-a6ce-64b12982cf11",
+				supervision_form_id: "e31263e9-cd10-4bd8-b040-ff550a0d1ba2",
 				created_at: new Date(),
 				updated_at: new Date(),
 			}

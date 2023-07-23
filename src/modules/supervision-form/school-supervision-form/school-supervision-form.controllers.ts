@@ -100,6 +100,9 @@ export const getOneByTermAndYear = async (req: Request, res: Response) => {
 		if (query.type) {
 			whereClauseSupervisionFormType.type = query.type as supervisionFormTypeEnum; // Add a condition for the "term" query parameter
 		}
+		if (query.type_id) {
+			whereClauseSupervisionFormType.id = query.type_id as string; // Add a condition for the "term" query parameter
+		}
 		if (query.form_type) {
 			whereClauseSupervisionFormType.formType = query.form_type as FormType; // Add a condition for the "term" query parameter
 		}
