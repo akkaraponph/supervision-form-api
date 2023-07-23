@@ -161,7 +161,6 @@ export const create = async (req: Request, res: Response) => {
                 openClass: "",
             })
             const allSupervisionForm = await db.SupervisionForm.findAll({raw:true})
-            const transaction = await db.sequelize.transaction() 
             allSupervisionForm.map(async(row:any)=>{
                 await db.SchoolSupervisionForm.create({
                     schoolId: newSchool['dataValues'].id,
@@ -171,7 +170,6 @@ export const create = async (req: Request, res: Response) => {
                     supervisorName: "",
                     supervisorPosition: "",
                 })
-                transaction.commit()
             })
         } else if (createUser.status === UserRole.PERSONNEL || UserRole.ADMIN) {
             await PersonnelModel.create({
