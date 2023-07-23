@@ -135,6 +135,7 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 				}, {
 					transaction: pairSchoolWithSupervisionFormTransaction
 				})
+				await pairSchoolWithSupervisionFormTransaction.commit()
 			})
 
 			const checkType = await SupervisionFormTypeModel.findOne({
