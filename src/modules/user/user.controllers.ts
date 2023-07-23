@@ -161,7 +161,6 @@ export const create = async (req: Request, res: Response) => {
                 openClass: "",
             })
             const allSupervisionForm = await db.SupervisionForm.findAll({raw:true})
-            const transaction = await db.sequelize.transaction() 
             allSupervisionForm.map(async(row:any)=>{
                 await db.SchoolSupervisionForm.create({
                     schoolId: newSchool['dataValues'].id,
@@ -171,7 +170,6 @@ export const create = async (req: Request, res: Response) => {
                     supervisorName: "",
                     supervisorPosition: "",
                 })
-                transaction.commit()
             })
         } else if (createUser.status === UserRole.PERSONNEL || UserRole.ADMIN) {
             await PersonnelModel.create({
@@ -317,7 +315,7 @@ export const update = async (req: Request, res: Response) => {
             })
         }
 
-        if (body.password) {
+        if (body.password != "" && body.password != null) {
             const hash = await hashPassword(body.password)
             delete body.password
             const updateData = { ...body, password: hash }
@@ -331,6 +329,7 @@ export const update = async (req: Request, res: Response) => {
                 payload
             })
         } else {
+            delete body.password
             const payload = await UserModel.update({ ...body }, {
                 where: { id }
             })
