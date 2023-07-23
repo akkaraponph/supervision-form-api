@@ -81,14 +81,14 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				type: DataTypes.STRING,
 				allowNull: true,
 			},
+		
 		},
 		{
 			sequelize,
-			underscored: true,
 			modelName: "News",
 			tableName: "news",
-			createdAt: 'created_at',
-			updatedAt: 'updated_at',
+			underscored: true,
+			timestamps: true,
 		}
 	);
 

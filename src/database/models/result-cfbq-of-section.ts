@@ -65,8 +65,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 			underscored: true,
 			modelName: "ResultCFBQSection",
 			tableName: "result_cfbq_section",
-			createdAt: 'created_at',
-			updatedAt: 'updated_at',
+			timestamps: true,
 		}
 	);
 

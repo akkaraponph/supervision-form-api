@@ -37,9 +37,9 @@ export const getOne = async (req: Request, res: Response) => {
 
 		let whereClauseSupervisionForm: Partial<SupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
 
-		if (query.supervisor_name) {
-			whereClauseSupervisionForm.supervisorName = query.supervisor_name as string; // Add a condition for the "year" query parameter
-		}
+		// if (query.supervisor_name) {
+		// 	whereClauseSupervisionForm.supervisorName = query.supervisor_name as string; // Add a condition for the "year" query parameter
+		// }
 
 		if (query.year) {
 			whereClauseSupervisionForm.year = query.year as string; // Add a condition for the "year" query parameter
@@ -106,9 +106,9 @@ export const getOneByTermAndYear = async (req: Request, res: Response) => {
 
 		let whereClauseSupervisionForm: Partial<SupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
 
-		if (query.supervisor_name) {
-			whereClauseSupervisionForm.supervisorName = query.supervisor_name as string; // Add a condition for the "year" query parameter
-		}
+		// if (query.supervisor_name) {
+		// 	whereClauseSupervisionForm.supervisorName = query.supervisor_name as string; // Add a condition for the "year" query parameter
+		// }
 
 		if (query.year) {
 			whereClauseSupervisionForm.year = query.year as string; // Add a condition for the "year" query parameter
@@ -185,9 +185,9 @@ export const getAll = async (req: Request, res: Response) => {
 
 		let whereClauseSupervisionForm: Partial<SupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
 
-		if (query.supervisor_name) {
-			whereClauseSupervisionForm.supervisorName = query.supervisor_name as string; // Add a condition for the "year" query parameter
-		}
+		// if (query.supervisor_name) {
+		// 	whereClauseSupervisionForm.supervisorName = query.supervisor_name as string; // Add a condition for the "year" query parameter
+		// }
 
 		if (query.year) {
 			whereClauseSupervisionForm.year = query.year as string; // Add a condition for the "year" query parameter

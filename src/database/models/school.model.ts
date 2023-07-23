@@ -129,8 +129,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 			underscored: true,
 			modelName: "School",
 			tableName: "school",
-			createdAt: 'created_at',
-			updatedAt: 'updated_at',
+			timestamps: true,
 		}
 	);
 

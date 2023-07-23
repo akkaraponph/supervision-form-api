@@ -61,10 +61,9 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		{
 			sequelize,
 			underscored: true,
+			timestamps: true,
 			modelName: "SupervisionFormType",
 			tableName: "supervision_form_type",
-			createdAt: 'created_at',
-			updatedAt: 'updated_at',
 		}
 	);
 

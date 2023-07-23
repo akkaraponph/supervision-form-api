@@ -76,11 +76,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				type: DataTypes.TEXT,
 				allowNull: true,
 			},
-			supervisorName: {
-				type: DataTypes.STRING,
-				allowNull: true,
-				field: 'supervisor_name'
-			},
+		
 			supervisionFormTypeId: {
 				type: DataTypes.UUID,
 				allowNull: false,
@@ -95,10 +91,10 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		{
 			sequelize,
 			underscored: true,
+			timestamps: true,
 			modelName: "SupervisionForm",
 			tableName: "supervision_form",
-			createdAt: 'created_at',
-			updatedAt: 'updated_at',
+
 		}
 	);
 
