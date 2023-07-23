@@ -315,7 +315,7 @@ export const update = async (req: Request, res: Response) => {
             })
         }
 
-        if (body.password) {
+        if (body.password != "" && body.password != null) {
             const hash = await hashPassword(body.password)
             delete body.password
             const updateData = { ...body, password: hash }
@@ -329,6 +329,7 @@ export const update = async (req: Request, res: Response) => {
                 payload
             })
         } else {
+            delete body.password
             const payload = await UserModel.update({ ...body }, {
                 where: { id }
             })
