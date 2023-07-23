@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import db from "../../database/models";
+import { destroy } from './../supervision-form/supervision-form-type.controllers';
 const SchoolModel = db.School
 const UserModel = db.User
 const RatingScaleScoreModel = db.RatingScaleScore
@@ -148,7 +149,7 @@ export const updateByUser = async (req: Request, res: Response) => {
 	try {
 		const userId = req.user?.id
 		const body = req.body;
-		const school = await SchoolModel.update({ ...body },{
+		const school = await SchoolModel.update({ ...body }, {
 			where: { userId }
 		});
 
@@ -168,6 +169,18 @@ export const updateByUser = async (req: Request, res: Response) => {
 export const remove = async (req: Request, res: Response) => {
 	try {
 		const id = req.params?.id
+		// const schoolSupervisionForm = await db.SchoolSupervisionForm.findOne({
+		// 	where: { schoolId: id }, raw: true
+		// })
+		// console.log("----------------")
+		// console.log(schoolSupervisionForm)
+		// console.log("----------------")
+		// await db.ResultRSF.destroy({
+		// 	where: { schoolSupervisionFormId: schoolSupervisionForm.id }
+		// })
+		// await db.SchoolSupervisionForm.destroy({
+		// 	where: { schoolId: id }
+		// })
 		const school = await SchoolModel.destroy({
 			where: { id }
 		});

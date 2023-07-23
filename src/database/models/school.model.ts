@@ -28,14 +28,17 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		openClass!: string;
 		userId!: string;
 
-
 		static associate(models: any) {
 			// define association here
 			// School.hasMany(models.RatingScaleScore);
 
-			School.hasMany(models.SchoolSupervisionForm);		
+			School.hasMany(models.SchoolSupervisionForm, {
+				onDelete: "CASCADE"
+			});		
 			// School.hasMany(models.ResultRatingScale);		
-			School.belongsTo(models.User)
+			School.belongsTo(models.User, {
+				onDelete: "CASCADE"
+			})
 		}
 	}
 
@@ -121,7 +124,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
 			userId: {
 				type: DataTypes.UUID,
 				allowNull: false,
-				field: 'user_id'
+				field: 'user_id',
+				onDelete: 'CASCADE'
 			}
 		},
 		{

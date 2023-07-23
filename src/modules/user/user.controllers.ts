@@ -162,7 +162,7 @@ export const create = async (req: Request, res: Response) => {
             })
             const allSupervisionForm = await db.SupervisionForm.findAll({raw:true})
             allSupervisionForm.map(async(row:any)=>{
-                await db.SchoolSupervisionForm.create({
+                const data = await db.SchoolSupervisionForm.create({
                     schoolId: newSchool['dataValues'].id,
                     supervisionFormId: row.id,
                     year: row.year,
@@ -170,6 +170,11 @@ export const create = async (req: Request, res: Response) => {
                     supervisorName: "",
                     supervisorPosition: "",
                 })
+                // await db.ResultRSF.create({
+                //     schoolId: newSchool['dataValues'].id,
+                //     schoolSupervisionFormId: data['dataValues'].id
+                // })
+                // console.log()
             })
         } else if (createUser.status === UserRole.PERSONNEL || UserRole.ADMIN) {
             await PersonnelModel.create({

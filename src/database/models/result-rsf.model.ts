@@ -21,7 +21,9 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		static associate(models: any) {
 			// define association here
 			ResultRSF.belongsTo(models.RSFQuestion);
-			ResultRSF.belongsTo(models.SchoolSupervisionForm);
+			ResultRSF.belongsTo(models.SchoolSupervisionForm, {
+				onDelete: 'CASCADE'
+			});
 			// ResultRSF.belongsTo(models.School);
 		}
 	}
