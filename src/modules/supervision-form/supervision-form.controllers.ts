@@ -120,6 +120,24 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 		 */
 		resultSupervisionFormCreated.map(async (row: any) => {
 			const newSupervisionFormId = row['dataValues'].id
+
+			// จับคู่ฟอร์มกับโรงเรียนทั้งหมด
+			const allSchool = await db.School.findAll()
+			const pairSchoolWithSupervisionFormTransaction = await db.sequelize.transaction()
+			allSchool.map(async(row:any)=>{
+				await db.SchoolSupervisionForm.create({
+					schoolId: row['dataValues'].id,
+					supervisionFormId: newSupervisionFormId,
+					supervisorName: "",
+					supervisorPosition: "",
+					year: newYear,
+					term: newTerm
+				}, {
+					transaction: pairSchoolWithSupervisionFormTransaction
+				})
+				await pairSchoolWithSupervisionFormTransaction.commit()
+			})
+
 			const checkType = await SupervisionFormTypeModel.findOne({
 				where: { id: row['dataValues'].supervisionFormTypeId },
 				raw: true
@@ -131,7 +149,6 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 			}
 
 			if (checkType.formType === FormType.RATING_SCALE) {
-
 				const RSFSections = await RSFSectionModel.findAll({
 					where: { supervisionFormId: SupervisionFormidValuePair?.previousId },
 				})
@@ -151,6 +168,7 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 					// Set new values
 					RSFSectionClone.id = newRSFSectionId;
 					RSFSectionClone.type = RSFSectionClone['dataValues'].type;
+					RSFSectionClone.priority = RSFSectionClone['dataValues'].priority;
 					RSFSectionClone.supervisionFormId = newSupervisionFormId;
 
 					return RSFSectionClone;
@@ -344,9 +362,9 @@ export const getOne = async (req: Request, res: Response) => {
 			payload
 		})
 	} catch (error) {
-		console.log("================");
-		console.error(error)
-		console.log("================");
+		// console.log("================");
+		// console.error(error)
+		// console.log("================");
 		return res.status(400).json({
 			msg: `Encoutered an error when retrieved the supervision form by ${req.params.id}`,
 			payload: {}
@@ -441,9 +459,9 @@ export const getAll = async (req: Request, res: Response): Promise<Response> => 
 		]
 		let whereClause: Partial<SupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
 
-		if (query.supervisor_name) {
-			whereClause.supervisorName = query.supervisor_name as string; // Add a condition for the "year" query parameter
-		}
+		// if (query.supervisor_name) {
+		// 	whereClause.supervisorName = query.supervisor_name as string; // Add a condition for the "year" query parameter
+		// }
 
 		if (query.year) {
 			whereClause.year = query.year as string; // Add a condition for the "year" query parameter

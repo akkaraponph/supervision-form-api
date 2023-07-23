@@ -7,7 +7,7 @@ export interface SupervisionFormAttributes {
 	term?: string;
 	year?: string;
 	suggestion?: string;
-	supervisorName?: string;
+	// supervisorName?: string;
 	supervisionFormTypeId?: string;
 }
 

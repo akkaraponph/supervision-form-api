@@ -56,9 +56,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 			underscored: true,
 			modelName: "RSFSection",
 			tableName: "rsf_section",
-			timestamps: false,
-			// createdAt: 'created_at',
-			// updatedAt: 'updated_at',
+			timestamps: true,
 		}
 	);
 

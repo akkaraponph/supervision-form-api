@@ -143,7 +143,7 @@ export const create = async (req: Request, res: Response) => {
         const createUserresponse = await UserModel.create(newUser, { raw: true })
         const createUser = createUserresponse['dataValues']
         if (createUser.status === UserRole.USER) {
-            await SchoolModel.create({
+           const newSchool =  await SchoolModel.create({
                 userId: createUser.id,
                 idSchool: "",
                 name: "",
@@ -159,6 +159,19 @@ export const create = async (req: Request, res: Response) => {
                 nPersnonel: "",
                 teachingStyle: "",
                 openClass: "",
+            })
+            const allSupervisionForm = await db.SupervisionForm.findAll({raw:true})
+            const transaction = await db.sequelize.transaction() 
+            allSupervisionForm.map(async(row:any)=>{
+                await db.SchoolSupervisionForm.create({
+                    schoolId: newSchool['dataValues'].id,
+                    supervisionFormId: row.id,
+                    year: row.year,
+                    term: row.term,
+                    supervisorName: "",
+                    supervisorPosition: "",
+                })
+                transaction.commit()
             })
         } else if (createUser.status === UserRole.PERSONNEL || UserRole.ADMIN) {
             await PersonnelModel.create({

@@ -16,6 +16,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		id!: string;
 		schoolId!: string;
 		supervisionFormId!: string;
+		supervisorName!: string;
+		supervisorPosition!: string;
 		year!: string;
 		term!: string;
 
@@ -61,20 +63,29 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				unique: false,
 				field: 'supervision_form_id'
 			},
+			supervisorName: {
+				type: DataTypes.STRING,
+				allowNull: true,
+				field: 'supervisor_name'
+			},
+			supervisorPosition: {
+				type: DataTypes.STRING,
+				allowNull: true,
+				field: 'supervisor_position'
+			},
 			schoolId: {
 				type: DataTypes.UUID,
 				allowNull: false,
 				field: 'school_id',
 				unique: false,
-			},
+			}
 		},
 		{
 			sequelize,
 			underscored: true,
+			timestamps: true,
 			modelName: "SchoolSupervisionForm",
 			tableName: "school_supervision_form",
-			createdAt: 'created_at',
-			updatedAt: 'updated_at',
 		}
 	);
 

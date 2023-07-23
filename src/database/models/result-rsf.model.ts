@@ -58,8 +58,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 			underscored: true,
 			modelName: "ResultRSF",
 			tableName: "result_rsf",
-			createdAt: 'created_at',
-			updatedAt: 'updated_at',
+			timestamps: true
 		}
 	);
 

@@ -57,8 +57,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
 			modelName: "RSFQuestion",
 			tableName: "rsf_question",
 			timestamps: false,
-			// createdAt: 'created_at',
-			// updatedAt: 'updated_at',
 		}
 	);
 
