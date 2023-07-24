@@ -591,8 +591,10 @@ const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) 
 		},
 		raw: true
 	  });
-  
-	  const groupedData: { [key: string]: any[] } = {};
+
+	  const allSchool = await db.School.count();
+
+	  const groupOfQuestionThatContainAnswer: { [key: string]: any[] } = {};
 	  const resultRSFQuestionPromises = allSchoolSupervisionForm.map(async (row: SchoolSupervisionFormAttributes) => {
 		const resultRSFQuestion = await db.ResultRSF.findAll({
 		  where: { schoolSupervisionFormId: row.id },
@@ -602,12 +604,18 @@ const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) 
   
 		resultRSFQuestion.forEach(async(item: any) => {
 		  const RSFQuestionId = item.RSFQuestionId;
-
-		  if (!groupedData[RSFQuestionId]) {
-			groupedData[RSFQuestionId] = [];
+		  const question = item.question
+		  if (!groupOfQuestionThatContainAnswer[RSFQuestionId]) {
+			groupOfQuestionThatContainAnswer[RSFQuestionId] = [];
 		  }
 		  
-		  groupedData[RSFQuestionId].push(item);
+		  groupOfQuestionThatContainAnswer[RSFQuestionId].push({
+			id: item.id,
+			score: item.score,
+			schoolId: item.SchoolSupervisionFormId
+		  });
+
+
 		});
 	  });
   
@@ -615,6 +623,9 @@ const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) 
 
 	const mappedData: { RSFQuestionId: string, question: string, count: number, answers: any[] }[] = [];
 	const sectionMap: { [key: string]: any[] } = {};
+	const sectionLabels: string[] = [];
+	const sectionValues: number[] = [];
+	let sectionPercent: number = 0;
 	async function fetchData(RSFQuestionId: string): Promise<any> {
 		return new Promise(async (resolve, reject) => {
 		  try {
@@ -622,16 +633,29 @@ const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) 
 			  where: { id: RSFQuestionId },
 			  raw: true
 			});
-	  
+		
 			const question = raw_question.question;
-			const count = groupedData[RSFQuestionId].length;
-			const answers = groupedData[RSFQuestionId];
-	  
+			const count = groupOfQuestionThatContainAnswer[RSFQuestionId].length;
+			const percent = (count * 100) / allSchool
+			const priority = raw_question.priority;
+			const answers = groupOfQuestionThatContainAnswer[RSFQuestionId];
+			
+		
+			let counter = 0;
+			let all_score = 0;
+			
+			answers.map((row:any)=>{
+				all_score += row.score
+				counter+=1
+			})
+
 			const sectionPromises: Promise<any> = new Promise((resolve, reject) => {
-			  db.RSFSection.findOne({
+		
+			db.RSFSection.findOne({
 				where: { id: raw_question.RSFSectionId }
 			  }).then((raw_section: RSFSectionAttributes) => {
 				const section = raw_section.type;
+				
 				resolve({
 				  section,
 				  sectionId: raw_question.RSFSectionId
@@ -640,12 +664,21 @@ const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) 
 			});
 	  
 			const sectionData = await sectionPromises; // Wait for the section data to resolve
-			const sectionId = sectionData.section
-			if (!sectionMap[sectionId]) {
-				sectionMap[sectionId] = [];
+			// const sectionId = sectionData.sectionId
+			const sectionLabel = sectionData.section
+
+			// console.log(sectionLabel)
+
+			if (!sectionLabels.includes(sectionLabel)) {
+				sectionLabels.push(sectionLabel);
+				// sectionValues.push(percent); // Assuming you want to store sectionId in sectionValues
 			  }
 			
 
+			if (!sectionMap[sectionLabel]) {
+				sectionMap[sectionLabel] = [];
+			  }
+			
 			resolve({
 			  RSFQuestionId,
 			  question,
@@ -653,10 +686,15 @@ const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) 
 			  answers,
 			//   sectionData
 			});
-			sectionMap[sectionId].push({
-				RSFQuestionId,
+
+			sectionMap[sectionLabel].push({
+				id: RSFQuestionId,
 				question,
 				count,
+				percent,
+				priority,
+				all_score,
+				mean: all_score/counter,
 				answers
 			});
 			
@@ -668,7 +706,7 @@ const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) 
 	  
 	
 	async function processData() {
-	  const keys = Object.keys(groupedData);
+	  const keys = Object.keys(groupOfQuestionThatContainAnswer);
 	  const promises = keys.map((RSFQuestionId) => fetchData(RSFQuestionId));
 	
 	  try {
@@ -683,11 +721,33 @@ const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) 
 	  }
 	}
 	
+	// Define a function to calculate the mean of an array of numbers
+function calculateMean(numbers: any) {
+	const sum = numbers.reduce((total:any, num:any) => total + num, 0);
+	return sum / numbers.length;
+  }
+
+
 	processData()
 	  .then(() => {
+		// Calculate the mean for each section
+		const sectionMeans: number[] = [];
+
+		Object.entries(sectionMap).forEach(([section, questions]) => {
+		const percentValues = questions.map((question) => question.percent);
+		const mean = calculateMean(percentValues);
+		sectionMeans.push(mean);
+		});
+
+		console.log(sectionMeans);
+
+
+
 			  return createResponse(res, 200, {
 				msg: `get report was successfully`,
 				payload: {
+					sectionLabels,
+					sectionValues:sectionMeans,
 					sectionMap,
 					questionMap: mappedData
 				}
