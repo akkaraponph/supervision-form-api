@@ -614,30 +614,58 @@ const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) 
 	  await Promise.all(resultRSFQuestionPromises); 
 
 	const mappedData: { RSFQuestionId: string, question: string, count: number, answers: any[] }[] = [];
-
+	const sectionMap: { [key: string]: any[] } = {};
 	async function fetchData(RSFQuestionId: string): Promise<any> {
-	  return new Promise((resolve, reject) => {
-		db.RSFQuestion.findOne({
-		  where: { id: RSFQuestionId },
-		  raw: true
-		})
-		.then((raw_question: any) => {
-		  const question = raw_question.question;
-		  const count = groupedData[RSFQuestionId].length;
-		  const answers = groupedData[RSFQuestionId];
-		  
-		  resolve({
-			RSFQuestionId,
-			question,
-			count,
-			answers
-		  });
-		})
-		.catch((error:any) => {
-		  reject(error);
+		return new Promise(async (resolve, reject) => {
+		  try {
+			const raw_question: RSFQuestionAttributes = await db.RSFQuestion.findOne({
+			  where: { id: RSFQuestionId },
+			  raw: true
+			});
+	  
+			const question = raw_question.question;
+			const count = groupedData[RSFQuestionId].length;
+			const answers = groupedData[RSFQuestionId];
+	  
+			const sectionPromises: Promise<any> = new Promise((resolve, reject) => {
+			  db.RSFSection.findOne({
+				where: { id: raw_question.RSFSectionId }
+			  }).then((raw_section: RSFSectionAttributes) => {
+				const section = raw_section.type;
+				resolve({
+				  section,
+				  sectionId: raw_question.RSFSectionId
+				});
+			  });
+			});
+	  
+			const sectionData = await sectionPromises; // Wait for the section data to resolve
+			const sectionId = sectionData.section
+			if (!sectionMap[sectionId]) {
+				sectionMap[sectionId] = [];
+			  }
+			
+
+			resolve({
+			  RSFQuestionId,
+			  question,
+			  count,
+			  answers,
+			//   sectionData
+			});
+			sectionMap[sectionId].push({
+				RSFQuestionId,
+				question,
+				count,
+				answers
+			});
+			
+		  } catch (error) {
+			reject(error);
+		  }
 		});
-	  });
-	}
+	  }
+	  
 	
 	async function processData() {
 	  const keys = Object.keys(groupedData);
@@ -645,6 +673,9 @@ const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) 
 	
 	  try {
 		const resolvedData = await Promise.all(promises);
+		// console.log("---------------")
+		// console.log(resolvedData)
+		// console.log("---------------")
 		mappedData.push(...resolvedData);
 		// /le.log(mappedData);
 	  } catch (error) {
@@ -656,7 +687,10 @@ const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) 
 	  .then(() => {
 			  return createResponse(res, 200, {
 				msg: `get report was successfully`,
-				payload: mappedData
+				payload: {
+					sectionMap,
+					questionMap: mappedData
+				}
 			  });
 		  
 	  });
