@@ -93,7 +93,10 @@ export const getOneByTermAndYear = async (req: Request, res: Response) => {
 			raw: true
 		})
 	
-
+		console.log("------------------------");
+		console.log(school)
+		console.log("------------------------");
+		
 		const query = req.query;
 		let whereClauseSupervisionFormType: Partial<SupervisionFormTypeAttributes> = {}; // Initialize an empty object for the where clause
 
@@ -132,9 +135,6 @@ export const getOneByTermAndYear = async (req: Request, res: Response) => {
 			whereClauseSchoolSupervisionForm.supervisionFormId = query.supervision_form_id as string; // Add a condition for the "term" query parameter
 		}
 
-		// console.log("----------------------------");
-		// console.log(school)
-		// console.log("----------------------------");
 		const payload = await SchoolSupervisionForm.findOne({
 			include: [
 				{

@@ -560,100 +560,115 @@ export const destroy = async (req: Request, res: Response) => {
 
 const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) => {
 	try {
-		const supervisionForm = await db.SupervisionForm.findOne({
+	  const supervisionForm = await db.SupervisionForm.findOne({
+		where: {
+		  year: req.query?.year,
+		  term: req.query?.term,
+		},
+		include: [
+		  {
+			model: db.SupervisionFormType,
 			where: {
-				year: req.query?.year,
-				term: req.query?.term,
-			},
-			include: [
-				{
-					model: db.SupervisionFormType,
-					where: {
-						type: "POS_1",
-						formType: "RATING_SCALE",
-					}
-				}
-			]
-		})
-		if (!supervisionForm['dataValues'].id) {
-			return createResponse(res, 400, {
-				msg: `get report was failed`,
-				payload: {}
-			})
-		}
-
-		const allSchoolSupervisionForm: SchoolSupervisionFormAttributes[] = await db.SchoolSupervisionForm.findAll({
-			where: {
-				supervisionFormId: supervisionForm['dataValues'].id,
-				year: req.query.year,
-				term: req.query.term
-			}, raw: true
-		})
-		const groupedData: { [key: string]: any[] } = {};
-		const allSchool = await db.School.count();
-		let allSectionSchoolCount = 0;
-		let allQuestionSchoolCount  = 0;
-		
-		const resultRSFQuestion = allSchoolSupervisionForm.map(async(row: SchoolSupervisionFormAttributes) => {
-			const resultRSFQuestion = await db.ResultRSF.findAll({
-				where: {schoolSupervisionFormId: row.id},
-				// attributes: [
-				// 	sequelize.fn('')
-				// ],
-				group: ['RSFQuestionId'],
-				raw: true
-			})
-		// Manually group the data by RSFQuestionId
-		
-		resultRSFQuestion.forEach((item: any) => {
+			  type: "POS_1",
+			  formType: "RATING_SCALE",
+			}
+		  }
+		]
+	  });
+  
+	  if (!supervisionForm) {
+		return createResponse(res, 400, {
+		  msg: `get report was failed`,
+		  payload: {}
+		});
+	  }
+  
+	  const allSchoolSupervisionForm: SchoolSupervisionFormAttributes[] = await db.SchoolSupervisionForm.findAll({
+		where: {
+		  supervisionFormId: supervisionForm['dataValues'].id,
+		  year: req.query.year,
+		  term: req.query.term
+		},
+		raw: true
+	  });
+  
+	  const groupedData: { [key: string]: any[] } = {};
+	  const resultRSFQuestionPromises = allSchoolSupervisionForm.map(async (row: SchoolSupervisionFormAttributes) => {
+		const resultRSFQuestion = await db.ResultRSF.findAll({
+		  where: { schoolSupervisionFormId: row.id },
+		  group: ['RSFQuestionId'],
+		  raw: true
+		});
+  
+		resultRSFQuestion.forEach(async(item: any) => {
 		  const RSFQuestionId = item.RSFQuestionId;
+
 		  if (!groupedData[RSFQuestionId]) {
 			groupedData[RSFQuestionId] = [];
 		  }
+		  
 		  groupedData[RSFQuestionId].push(item);
 		});
-	  
-		console.log('------------------');
-		console.log(groupedData);
-		console.log('------------------');
-		return groupedData
+	  });
+  
+	  await Promise.all(resultRSFQuestionPromises); 
+
+	const mappedData: { RSFQuestionId: string, question: string, count: number, answers: any[] }[] = [];
+
+	async function fetchData(RSFQuestionId: string): Promise<any> {
+	  return new Promise((resolve, reject) => {
+		db.RSFQuestion.findOne({
+		  where: { id: RSFQuestionId },
+		  raw: true
 		})
-
-
-		// const section = await db.RSFSection.findAll({
-		// 	where: {
-		// 		supervisionFormId: supervisionForm['dataValues'].id
-		// 	},
-		// 	raw: true
-		// })
-
-		// section.map(async (row: RSFSectionAttributes) => {
-		// 	const question = await db.RSFQuestion.findAll({
-		// 		where: { RSFSectionId: row.id },
-		// 		raw: true
-		// 	})
-
-		// 	question.map(async (row: RSFQuestionAttributes) => {
-		// 		const answer = await db.ResultRSFQuestion.findAll({
-		// 			where: { RSFQuestionId: row.id, schoolSupervisionForm }
-		// 		})
-
-		// 	})
-		// })
-
-		return createResponse(res, 200, {
-			msg: `get report was successfully`,
-			payload: resultRSFQuestion
+		.then((raw_question: any) => {
+		  const question = raw_question.question;
+		  const count = groupedData[RSFQuestionId].length;
+		  const answers = groupedData[RSFQuestionId];
+		  
+		  resolve({
+			RSFQuestionId,
+			question,
+			count,
+			answers
+		  });
 		})
-
-
-	} catch (error) {
-		return createResponse(res, 400, {
-			msg: `Encountered and error when get all report by term ${req.query?.term} year: ${req.query?.year}`,
-			payload: {}
-		})
+		.catch((error:any) => {
+		  reject(error);
+		});
+	  });
 	}
-}
+	
+	async function processData() {
+	  const keys = Object.keys(groupedData);
+	  const promises = keys.map((RSFQuestionId) => fetchData(RSFQuestionId));
+	
+	  try {
+		const resolvedData = await Promise.all(promises);
+		mappedData.push(...resolvedData);
+		// /le.log(mappedData);
+	  } catch (error) {
+		console.error("Error occurred during data processing:", error);
+	  }
+	}
+	
+	processData()
+	  .then(() => {
+			  return createResponse(res, 200, {
+				msg: `get report was successfully`,
+				payload: mappedData
+			  });
+		  
+	  });
+	
+	} catch (error) {
+	  return createResponse(res, 400, {
+		msg: `Encountered an error when getting all report by term ${req.query?.term} year: ${req.query?.year}`,
+		payload: {}
+	  });
+	}
+  }
+  
 
 export default {
 	create,
