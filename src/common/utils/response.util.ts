@@ -12,5 +12,8 @@ export const createResponse = (
   data: ApiResponse,
   status: string,
 ): Response => {
-  return res.status(statusCode).json(data);
+  return res.status(statusCode).json({
+    status,
+    ...data
+  });
 };

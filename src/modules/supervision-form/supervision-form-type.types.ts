@@ -11,7 +11,7 @@ export enum supervisionFormTypeEnum {
 	TRACKING = "TRACKING"
 }
 export interface SupervisionFormTypeAttributes {
-	id?: string;     
+	id?: string;
 	type?: string;  // PREPARING_OPEN_SCHOOL
 	name?: string;  // แบบฟอร์ม รายการนิเทศติดตาม การเตรียมความพร้อมการเปิดภาคเรียน
 	schoolId?: string;

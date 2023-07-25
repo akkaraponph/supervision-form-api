@@ -25,7 +25,7 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 		const { cloneTerm, cloneYear, newTerm, newYear } = req.body
 		if (!cloneTerm && !cloneYear && !newTerm && !newYear) return createResponse(res, 400, {
 			msg: 'The cloneTerm, cloneyear, newTerm and newYear is required'
-		},  'failed')
+		}, 'failed')
 
 		// const allSupervisionFormType = await SupervisionFormTypeModel.findAll({
 		// 	raw: true
@@ -228,13 +228,13 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 		createResponse(res, 200, {
 			msg: 'success',
 			payload: resultSupervisionFormCreated
-		},  'success')
+		}, 'success')
 	} catch (error) {
 		console.error(error)
 		t.rollback();
 		return createResponse(res, 400, {
 			msg: 'Encountered an error when clone supervision form!'
-		},  'failed')
+		}, 'failed')
 	}
 }
 
@@ -278,11 +278,11 @@ export const getAllExistingYears = async (req: Request, res: Response) => {
 		createResponse(res, 200, {
 			msg: 'Retrieved the years and terms of the forms successfully',
 			payload: years,
-		},   'success');
+		}, 'success');
 	} catch (error) {
 		createResponse(res, 400, {
 			msg: 'Encountered an error when getting all existing years and terms of the forms',
-		},  'failed');
+		}, 'failed');
 	}
 };
 
@@ -471,7 +471,7 @@ export const getAll = async (req: Request, res: Response): Promise<Response> => 
 			meta,
 			payload,
 		};
-		
+
 
 		return createResponse(res, 200, data, 'success');
 	} catch (error) {
@@ -496,17 +496,17 @@ export const update = async (req: Request, res: Response) => {
 
 		return createResponse(res, 200, {
 			msg: `Update the data of supervision form was successfully`,
-		
+
 			payload
-		},  'success');
+		}, 'success');
 	} catch (error) {
-		return createResponse(res, 400, 
+		return createResponse(res, 400,
 			{
 				msg: `Encoutered an error when update the supervision form id: ${req.params.id}`,
 				payload: {}
 			},
 			'failed'
-			);
+		);
 	}
 }
 
@@ -525,13 +525,13 @@ export const destroy = async (req: Request, res: Response) => {
 		return createResponse(res, 200, {
 			msg: `Delete the data of supervision form where id  : ${req.params.id} was successfully`,
 			payload
-		},  'success');
+		}, 'success');
 
 	} catch (error) {
 		return createResponse(res, 400, {
 			msg: `Encoutered an error when destroy the supervision by id: ${req.params.id}`,
 			payload: {}
-		},  'failed');
+		}, 'failed');
 
 	}
 }
@@ -541,8 +541,8 @@ function isValidYear(yearString: string) {
 	// Regular expression to match YYYY format (e.g., 2023)
 	const yearPattern = /^\d{4}$/;
 	return yearPattern.test(yearString);
-  }
-  
+}
+
 
 const cloningSchoolSupevisionFormByTermAndYear = async (req: Request, res: Response) => {
 	try {
@@ -558,7 +558,7 @@ const cloningSchoolSupevisionFormByTermAndYear = async (req: Request, res: Respo
 			console.log('Invalid year:', newYear);
 			res.status(400).send('Invalid year format. Year should be in YYYY format.');
 		}
-  
+
 		if (parseInt(newTerm) == 1 || parseInt(newTerm) == 2) {
 			const termAndYearIsExist = await db.SchoolSupervisionForm.findOne({
 				where: {
@@ -571,7 +571,7 @@ const cloningSchoolSupevisionFormByTermAndYear = async (req: Request, res: Respo
 				return createResponse(res, 400, {
 					msg: `Encoutered an error when clone the supervision by year: ${req.query.year}, term: ${req.query.term}`,
 					payload: {}
-				},  'failed');
+				}, 'failed');
 			}
 			const payload = await allSchool.map(async (school: SchoolAttributes) => {
 				const schoolId = school.id
@@ -588,21 +588,21 @@ const cloningSchoolSupevisionFormByTermAndYear = async (req: Request, res: Respo
 			return createResponse(res, 200, {
 				msg: `clone the data of supervision form where  year: ${req.query.year}, term: ${req.query.term} was successfully`,
 				payload
-			},  'success');
+			}, 'success');
 		} else {
 			return createResponse(res, 400, {
 				msg: `Encoutered an error term: ${req.query.term} is invalid`,
 				payload: {
 					data: parseInt(newTerm) != 1 && parseInt(newTerm) != 2
 				}
-			},  'failed');
+			}, 'failed');
 		}
 
 	} catch (error) {
 		return createResponse(res, 400, {
 			msg: `Encoutered an error when clone the supervision by  year: ${req.query.year}, term: ${req.query.term}`,
 			payload: {}
-		},  'failed');
+		}, 'failed');
 	}
 }
 
@@ -628,7 +628,7 @@ const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) 
 			return createResponse(res, 400, {
 				msg: `get report was failed`,
 				payload: {}
-			},  'failed');
+			}, 'failed');
 		}
 
 		const allSchoolSupervisionForm: SchoolSupervisionFormAttributes[] = await db.SchoolSupervisionForm.findAll({
@@ -796,7 +796,7 @@ const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) 
 						sectionMap,
 						questionMap: mappedData
 					}
-				},  'success');
+				}, 'success');
 
 			});
 
@@ -804,7 +804,7 @@ const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) 
 		return createResponse(res, 400, {
 			msg: `Encountered an error when getting all report by term ${req.query?.term} year: ${req.query?.year}`,
 			payload: {}
-		},  'failed');
+		}, 'failed');
 	}
 }
 
