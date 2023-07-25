@@ -13,6 +13,7 @@ import { Sequelize, Transaction } from 'sequelize';
 import { CloneRSFSectionAttributes, RSFQuestionAttributes, RSFSectionAttributes } from "./rating-scale-form/rsf.types";
 import { SchoolSupervisionFormAttributes } from "./school-supervision-form/school-supervision-form.types";
 import sequelize from "sequelize";
+import { SchoolAttributes } from "modules/school/school.types";
 const SupervisionFormModel = db.SupervisionForm
 const SupervisionFormTypeModel = db.SupervisionFormType
 const RSFSectionModel = db.RSFSection
@@ -48,7 +49,7 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 				],
 
 			},
-		
+
 
 		]
 		//  ค้นหาข้อมูล แบบฟอร์มนิเทศติดตาม ทั้งหมดตามปีที่ต้องการโคลน
@@ -209,7 +210,7 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 				// console.log("=====================");
 			}
 
-			
+
 
 			// throw new Error()
 
@@ -441,13 +442,13 @@ export const getAll = async (req: Request, res: Response): Promise<Response> => 
 		// 	whereClause.supervisorName = query.supervisor_name as string; // Add a condition for the "year" query parameter
 		// }
 
-		if (query.year) {
-			whereClause.year = query.year as string; // Add a condition for the "year" query parameter
-		}
+		// if (query.year) {
+		// 	whereClause.year = query.year as string; // Add a condition for the "year" query parameter
+		// }
 
-		if (query.term) {
-			whereClause.term = query.term as string; // Add a condition for the "term" query parameter
-		}
+		// if (query.term) {
+		// 	whereClause.term = query.term as string; // Add a condition for the "term" query parameter
+		// }
 
 		const payload = await db.SupervisionForm.findAll({
 			where: whereClause,
@@ -531,208 +532,264 @@ export const destroy = async (req: Request, res: Response) => {
 	}
 }
 
-const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) => {
+const cloningSchoolSupevisionFormByTermAndYear = async (req: Request, res: Response) => {
 	try {
-	  const supervisionForm = await db.SupervisionForm.findOne({
-		where: {
-		  year: req.query?.year,
-		  term: req.query?.term,
-		},
-		include: [
-		  {
-			model: db.SupervisionFormType,
-			where: {
-			  type: "POS_1",
-			  formType: "RATING_SCALE",
+
+		const allSchool = await db.School.findAll({ raw: true })
+		const allSupervisionForm = await db.SupervisionForm.findAll({
+			raw: true
+		})
+		const newTerm = req.query.term as string
+		const newYear = req.query.year as string
+
+		if (parseInt(newTerm) == 1 || parseInt(newTerm) == 2) {
+			const termAndYearIsExist = await db.SchoolSupervisionForm.findOne({
+				where: {
+					year: newYear,
+					term: newTerm
+				}, raw: true
+			})
+			if (termAndYearIsExist) {
+				return createResponse(res, 400, {
+					msg: `Encoutered an error when clone the supervision by year: ${req.query.year}, term: ${req.query.term}`,
+					payload: {}
+				});
 			}
-		  }
-		]
-	  });
-  
-	  if (!supervisionForm) {
-		return createResponse(res, 400, {
-		  msg: `get report was failed`,
-		  payload: {}
-		});
-	  }
-  
-	  const allSchoolSupervisionForm: SchoolSupervisionFormAttributes[] = await db.SchoolSupervisionForm.findAll({
-		where: {
-		  supervisionFormId: supervisionForm['dataValues'].id,
-		  year: req.query.year,
-		  term: req.query.term
-		},
-		raw: true
-	  });
-
-	  const allSchool = await db.School.count();
-
-	  const groupOfQuestionThatContainAnswer: { [key: string]: any[] } = {};
-	  const resultRSFQuestionPromises = allSchoolSupervisionForm.map(async (row: SchoolSupervisionFormAttributes) => {
-		const resultRSFQuestion = await db.ResultRSF.findAll({
-		  where: { schoolSupervisionFormId: row.id },
-		  group: ['RSFQuestionId'],
-		  raw: true
-		});
-  
-		resultRSFQuestion.forEach(async(item: any) => {
-		  const RSFQuestionId = item.RSFQuestionId;
-		  const question = item.question
-		  if (!groupOfQuestionThatContainAnswer[RSFQuestionId]) {
-			groupOfQuestionThatContainAnswer[RSFQuestionId] = [];
-		  }
-		  
-		  groupOfQuestionThatContainAnswer[RSFQuestionId].push({
-			id: item.id,
-			score: item.score,
-			schoolId: item.SchoolSupervisionFormId
-		  });
-
-
-		});
-	  });
-  
-	  await Promise.all(resultRSFQuestionPromises); 
-
-	const mappedData: { RSFQuestionId: string, question: string, count: number, answers: any[] }[] = [];
-	const sectionMap: { [key: string]: any[] } = {};
-	const sectionLabels: string[] = [];
-	const sectionValues: number[] = [];
-	let sectionPercent: number = 0;
-	async function fetchData(RSFQuestionId: string): Promise<any> {
-		return new Promise(async (resolve, reject) => {
-		  try {
-			const raw_question: RSFQuestionAttributes = await db.RSFQuestion.findOne({
-			  where: { id: RSFQuestionId },
-			  raw: true
-			});
-		
-			const question = raw_question.question;
-			const count = groupOfQuestionThatContainAnswer[RSFQuestionId].length;
-			const percent = (count * 100) / allSchool
-			const priority = raw_question.priority;
-			const answers = groupOfQuestionThatContainAnswer[RSFQuestionId];
-			
-		
-			let counter = 0;
-			let all_score = 0;
-			
-			answers.map((row:any)=>{
-				all_score += row.score
-				counter+=1
+			const payload = await allSchool.map(async (school: SchoolAttributes) => {
+				const schoolId = school.id
+				allSupervisionForm.map(async (supervisionForm: SupervisionFormAttributes) => {
+					await db.SchoolSupervisionForm.create({
+						schoolId,
+						supervisionFormId: supervisionForm.id,
+						year: newYear,
+						term: newTerm
+					})
+				})
 			})
 
-			const sectionPromises: Promise<any> = new Promise((resolve, reject) => {
-		
-			db.RSFSection.findOne({
-				where: { id: raw_question.RSFSectionId }
-			  }).then((raw_section: RSFSectionAttributes) => {
-				const section = raw_section.type;
-				
-				resolve({
-				  section,
-				  sectionId: raw_question.RSFSectionId
-				});
-			  });
+			return createResponse(res, 200, {
+				msg: `clone the data of supervision form where  year: ${req.query.year}, term: ${req.query.term} was successfully`,
+				payload
 			});
-	  
-			const sectionData = await sectionPromises; // Wait for the section data to resolve
-			// const sectionId = sectionData.sectionId
-			const sectionLabel = sectionData.section
-
-			// console.log(sectionLabel)
-
-			if (!sectionLabels.includes(sectionLabel)) {
-				sectionLabels.push(sectionLabel);
-				// sectionValues.push(percent); // Assuming you want to store sectionId in sectionValues
-			  }
-			
-
-			if (!sectionMap[sectionLabel]) {
-				sectionMap[sectionLabel] = [];
-			  }
-			
-			resolve({
-			  RSFQuestionId,
-			  question,
-			  count,
-			  answers,
-			//   sectionData
-			});
-
-			sectionMap[sectionLabel].push({
-				id: RSFQuestionId,
-				question,
-				count,
-				percent,
-				priority,
-				all_score,
-				mean: all_score/counter,
-				answers
-			});
-			
-		  } catch (error) {
-			reject(error);
-		  }
-		});
-	  }
-	  
-	
-	async function processData() {
-	  const keys = Object.keys(groupOfQuestionThatContainAnswer);
-	  const promises = keys.map((RSFQuestionId) => fetchData(RSFQuestionId));
-	
-	  try {
-		const resolvedData = await Promise.all(promises);
-		mappedData.push(...resolvedData);
-		// /le.log(mappedData);
-	  } catch (error) {
-		console.error("Error occurred during data processing:", error);
-	  }
-	}
-	
-	// Define a function to calculate the mean of an array of numbers
-function calculateMean(numbers: any) {
-	const sum = numbers.reduce((total:any, num:any) => total + num, 0);
-	return sum / numbers.length;
-  }
-
-
-	processData()
-	  .then(() => {
-		// Calculate the mean for each section
-		const sectionMeans: number[] = [];
-
-		Object.entries(sectionMap).forEach(([section, questions]) => {
-		const percentValues = questions.map((question) => question.percent);
-		const mean = calculateMean(percentValues);
-		sectionMeans.push(mean);
-		});
-
-		console.log(sectionMeans);
-
-
-
-			  return createResponse(res, 200, {
-				msg: `get report was successfully`,
+		} else {
+			return createResponse(res, 400, {
+				msg: `Encoutered an error term: ${req.query.term} is invalid`,
 				payload: {
-					sectionLabels,
-					sectionValues:sectionMeans,
-					sectionMap,
-					questionMap: mappedData
+					data: parseInt(newTerm) != 1 && parseInt(newTerm) != 2
 				}
-			  });
-		  
-	  });
-	
+			});
+		}
+
 	} catch (error) {
-	  return createResponse(res, 400, {
-		msg: `Encountered an error when getting all report by term ${req.query?.term} year: ${req.query?.year}`,
-		payload: {}
-	  });
+		return createResponse(res, 400, {
+			msg: `Encoutered an error when clone the supervision by  year: ${req.query.year}, term: ${req.query.term}`,
+			payload: {}
+		});
 	}
-  }
-  
+}
+
+const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) => {
+	try {
+		const supervisionForm = await db.SupervisionForm.findOne({
+			where: {
+				year: req.query?.year,
+				term: req.query?.term,
+			},
+			include: [
+				{
+					model: db.SupervisionFormType,
+					where: {
+						type: "POS_1",
+						formType: "RATING_SCALE",
+					}
+				}
+			]
+		});
+
+		if (!supervisionForm) {
+			return createResponse(res, 400, {
+				msg: `get report was failed`,
+				payload: {}
+			});
+		}
+
+		const allSchoolSupervisionForm: SchoolSupervisionFormAttributes[] = await db.SchoolSupervisionForm.findAll({
+			where: {
+				supervisionFormId: supervisionForm['dataValues'].id,
+				year: req.query.year,
+				term: req.query.term
+			},
+			raw: true
+		});
+
+		const allSchool = await db.School.count();
+
+		const groupOfQuestionThatContainAnswer: { [key: string]: any[] } = {};
+		const resultRSFQuestionPromises = allSchoolSupervisionForm.map(async (row: SchoolSupervisionFormAttributes) => {
+			const resultRSFQuestion = await db.ResultRSF.findAll({
+				where: { schoolSupervisionFormId: row.id },
+				group: ['RSFQuestionId'],
+				raw: true
+			});
+
+			resultRSFQuestion.forEach(async (item: any) => {
+				const RSFQuestionId = item.RSFQuestionId;
+				const question = item.question
+				if (!groupOfQuestionThatContainAnswer[RSFQuestionId]) {
+					groupOfQuestionThatContainAnswer[RSFQuestionId] = [];
+				}
+
+				groupOfQuestionThatContainAnswer[RSFQuestionId].push({
+					id: item.id,
+					score: item.score,
+					schoolId: item.SchoolSupervisionFormId
+				});
+
+
+			});
+		});
+
+		await Promise.all(resultRSFQuestionPromises);
+
+		const mappedData: { RSFQuestionId: string, question: string, count: number, answers: any[] }[] = [];
+		const sectionMap: { [key: string]: any[] } = {};
+		const sectionLabels: string[] = [];
+		const sectionValues: number[] = [];
+		let sectionPercent: number = 0;
+		async function fetchData(RSFQuestionId: string): Promise<any> {
+			return new Promise(async (resolve, reject) => {
+				try {
+					const raw_question: RSFQuestionAttributes = await db.RSFQuestion.findOne({
+						where: { id: RSFQuestionId },
+						raw: true
+					});
+
+					const question = raw_question.question;
+					const count = groupOfQuestionThatContainAnswer[RSFQuestionId].length;
+					const percent = (count * 100) / allSchool
+					const priority = raw_question.priority;
+					const answers = groupOfQuestionThatContainAnswer[RSFQuestionId];
+
+
+					let counter = 0;
+					let all_score = 0;
+
+					answers.map((row: any) => {
+						all_score += row.score
+						counter += 1
+					})
+
+					const sectionPromises: Promise<any> = new Promise((resolve, reject) => {
+
+						db.RSFSection.findOne({
+							where: { id: raw_question.RSFSectionId }
+						}).then((raw_section: RSFSectionAttributes) => {
+							const section = raw_section.type;
+
+							resolve({
+								section,
+								sectionId: raw_question.RSFSectionId
+							});
+						});
+					});
+
+					const sectionData = await sectionPromises; // Wait for the section data to resolve
+					// const sectionId = sectionData.sectionId
+					const sectionLabel = sectionData.section
+
+					// console.log(sectionLabel)
+
+					if (!sectionLabels.includes(sectionLabel)) {
+						sectionLabels.push(sectionLabel);
+						// sectionValues.push(percent); // Assuming you want to store sectionId in sectionValues
+					}
+
+
+					if (!sectionMap[sectionLabel]) {
+						sectionMap[sectionLabel] = [];
+					}
+
+					resolve({
+						RSFQuestionId,
+						question,
+						count,
+						answers,
+						//   sectionData
+					});
+
+					sectionMap[sectionLabel].push({
+						id: RSFQuestionId,
+						question,
+						count,
+						percent,
+						priority,
+						all_score,
+						mean: all_score / counter,
+						answers
+					});
+
+				} catch (error) {
+					reject(error);
+				}
+			});
+		}
+
+
+		async function processData() {
+			const keys = Object.keys(groupOfQuestionThatContainAnswer);
+			const promises = keys.map((RSFQuestionId) => fetchData(RSFQuestionId));
+
+			try {
+				const resolvedData = await Promise.all(promises);
+				mappedData.push(...resolvedData);
+				// /le.log(mappedData);
+			} catch (error) {
+				console.error("Error occurred during data processing:", error);
+			}
+		}
+
+		// Define a function to calculate the mean of an array of numbers
+		function calculateMean(numbers: any) {
+			const sum = numbers.reduce((total: any, num: any) => total + num, 0);
+			return sum / numbers.length;
+		}
+
+
+		processData()
+			.then(() => {
+				// Calculate the mean for each section
+				const sectionMeans: number[] = [];
+
+				Object.entries(sectionMap).forEach(([section, questions]) => {
+					const percentValues = questions.map((question) => question.percent);
+					const mean = calculateMean(percentValues);
+					sectionMeans.push(mean);
+				});
+
+				console.log(sectionMeans);
+
+
+
+				return createResponse(res, 200, {
+					msg: `get report was successfully`,
+					payload: {
+						sectionLabels,
+						sectionValues: sectionMeans,
+						sectionMap,
+						questionMap: mappedData
+					}
+				});
+
+			});
+
+	} catch (error) {
+		return createResponse(res, 400, {
+			msg: `Encountered an error when getting all report by term ${req.query?.term} year: ${req.query?.year}`,
+			payload: {}
+		});
+	}
+}
+
 
 export default {
 	create,
@@ -742,5 +799,6 @@ export default {
 	destroy,
 	getAllExistingYears,
 	cloningByTermAndYear,
-	getRSFOpenSchoolReportByTermAndYear
+	getRSFOpenSchoolReportByTermAndYear,
+	cloningSchoolSupevisionFormByTermAndYear
 }

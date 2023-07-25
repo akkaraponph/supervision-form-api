@@ -61,15 +61,15 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				allowNull: true,
 			},
 
-			term: {
-				type: DataTypes.STRING(1),
-				allowNull: false,
-			},
-			year: {
-				type: DataTypes.STRING(4),
-				allowNull: true,
-				field: 'year'
-			},
+			// term: {
+			// 	type: DataTypes.STRING(1),
+			// 	allowNull: false,
+			// },
+			// year: {
+			// 	type: DataTypes.STRING(4),
+			// 	allowNull: true,
+			// 	field: 'year'
+			// },
 			suggestion: {
 				type: DataTypes.TEXT,
 				allowNull: true,

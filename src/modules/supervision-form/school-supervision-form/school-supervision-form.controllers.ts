@@ -116,14 +116,14 @@ export const getOneByTermAndYear = async (req: Request, res: Response) => {
 		// 	whereClauseSupervisionForm.supervisorName = query.supervisor_name as string; // Add a condition for the "year" query parameter
 		// }
 
+		let whereClauseSchoolSupervisionForm: Partial<SchoolSupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
 		if (query.year) {
-			whereClauseSupervisionForm.year = query.year as string; // Add a condition for the "year" query parameter
+			whereClauseSchoolSupervisionForm.year = query.year as string; // Add a condition for the "year" query parameter
 		}
 
 		if (query.term) {
-			whereClauseSupervisionForm.term = query.term as string; // Add a condition for the "term" query parameter
+			whereClauseSchoolSupervisionForm.term = query.term as string; // Add a condition for the "term" query parameter
 		}
-		let whereClauseSchoolSupervisionForm: Partial<SchoolSupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
 
 		if (query.school_id) {
 			whereClauseSchoolSupervisionForm.schoolId = query.school_id as string; // Add a condition for the "term" query parameter
