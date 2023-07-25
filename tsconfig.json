@@ -99,7 +99,7 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   "include": [
-    "**/*.ts", "src/database/models/result-rsf.model.ts", "src/database/models/rsf-question.model.ts", "src/modules/supervision-form/custom-form/result-cfbq-sub-section.controllers.ts",
+    "**/*.ts", "src/database/models/result-rsf.model.ts", "src/database/models/rsf-question.model.ts", "src/modules/supervision-form/custom-form/result-cfbq-sub-section.controllers.ts", "src/database/models/cf-section.model", "src/database/models/cf-sub-section.model", "src/database/models/cfq-section.model",
   ],
   "exclude": [
     "node_modules",

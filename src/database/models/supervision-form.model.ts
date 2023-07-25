@@ -39,8 +39,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				}
 			});
 			SupervisionForm.hasMany(models.RSFSection);
-			SupervisionForm.hasMany(models.CFSection);
-			SupervisionForm.hasMany(models.QF);
 			SupervisionForm.hasMany(models.SchoolSupervisionForm);
 		}
 	}

@@ -1,6 +1,6 @@
 import { Op } from "sequelize";
 import { Request, Response } from "express";
-import { QuestionTypeEnum } from "./custom-form/cf.types";
+
 import { FormType, SupervisionFormTypeAttributes, supervisionFormTypeEnum } from "./supervision-form-type.types";
 import { SupervisionFormAttributes } from "./supervision-form.types";
 import { getPaginationMeta } from "../../common/utils/meta.util";
