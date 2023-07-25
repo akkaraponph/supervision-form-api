@@ -48,25 +48,7 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 				],
 
 			},
-			{
-				model: db.CFSection,
-				include: [
-					{
-						model: db.CFSubSection,
-						include: [
-							{
-								model: db.CFQSubSection,
-							}
-						]
-					},
-					{
-						model: db.CFQSection
-					}
-				]
-			},
-			{
-				model: db.QF,
-			},
+		
 
 		]
 		//  ค้นหาข้อมูล แบบฟอร์มนิเทศติดตาม ทั้งหมดตามปีที่ต้องการโคลน
@@ -227,16 +209,7 @@ export const cloningByTermAndYear = async (req: Request, res: Response) => {
 				// console.log("=====================");
 			}
 
-			if (checkType.formType === FormType.QUESTION) {
-				// console.log("=====================")
-				// console.log(checkType)
-				// console.log("=====================");
-			}
-			if (checkType.formType === FormType.CUSTOM) {
-				// console.log("=====================")
-				// console.log(checkType)
-				// console.log("=====================");
-			}
+			
 
 			// throw new Error()
 
@@ -337,25 +310,25 @@ export const getOne = async (req: Request, res: Response) => {
 					],
 
 				},
-				{
-					model: db.CFSection,
-					include: [
-						{
-							model: db.CFSubSection,
-							include: [
-								{
-									model: db.CFQSubSection,
-								}
-							]
-						},
-						{
-							model: db.CFQSection
-						}
-					]
-				},
-				{
-					model: db.QF,
-				},
+				// {
+				// 	model: db.CFSection,
+				// 	include: [
+				// 		{
+				// 			model: db.CFSubSection,
+				// 			include: [
+				// 				{
+				// 					model: db.CFQSubSection,
+				// 				}
+				// 			]
+				// 		},
+				// 		{
+				// 			model: db.CFQSection
+				// 		}
+				// 	]
+				// },
+				// {
+				// 	model: db.QF,
+				// },
 
 			],
 		})
@@ -427,40 +400,40 @@ export const getAll = async (req: Request, res: Response): Promise<Response> => 
 					]
 				}
 			},
-			{
-				model: db.CFSection,
-				include: [
-					{
-						model: db.CFSubSection,
+			// {
+			// 	model: db.CFSection,
+			// 	include: [
+			// 		{
+			// 			model: db.CFSubSection,
 
-						include: [
-							{
-								model: db.CFQSubSection,
-							}
-						]
-					},
-					{
-						model: db.CFQSection
-					}
-				],
-				attributes: {
-					exclude: [
-						'SupervisionFormId',
-						'supervisionFormId',
-					]
+			// 			include: [
+			// 				{
+			// 					model: db.CFQSubSection,
+			// 				}
+			// 			]
+			// 		},
+			// 		{
+			// 			model: db.CFQSection
+			// 		}
+			// 	],
+			// 	attributes: {
+			// 		exclude: [
+			// 			'SupervisionFormId',
+			// 			'supervisionFormId',
+			// 		]
 
-				}
-			},
-			{
-				model: db.QF,
-				attributes: {
-					exclude: [
-						'SupervisionFormId',
-						'supervisionFormId',
-					]
+			// 	}
+			// },
+			// {
+			// 	model: db.QF,
+			// 	attributes: {
+			// 		exclude: [
+			// 			'SupervisionFormId',
+			// 			'supervisionFormId',
+			// 		]
 
-				}
-			},
+			// 	}
+			// },
 		]
 		let whereClause: Partial<SupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
 
@@ -711,9 +684,6 @@ const getRSFOpenSchoolReportByTermAndYear = async (req: Request, res: Response) 
 	
 	  try {
 		const resolvedData = await Promise.all(promises);
-		// console.log("---------------")
-		// console.log(resolvedData)
-		// console.log("---------------")
 		mappedData.push(...resolvedData);
 		// /le.log(mappedData);
 	  } catch (error) {
