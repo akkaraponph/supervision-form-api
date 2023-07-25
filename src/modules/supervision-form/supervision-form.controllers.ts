@@ -262,15 +262,14 @@ export const create = async (req: Request, res: Response) => {
 
 export const getAllExistingYears = async (req: Request, res: Response) => {
 	try {
-		const forms = await SupervisionFormModel.findAll({
+		const forms = await db.SchoolSupervisionForm.findAll({
 			attributes: ['year'],
 			group: ['year'],
 			raw: true,
+			order: [['year', 'DESC']] // Sorting by 'year' in descending order
 		});
 
-
 		const years = forms.map((form: any) => form.year);
-
 		//   const yearsAndTerms = forms.map((form: any) => ({
 		// 	year: form.year,
 		// 	term: form.term,
@@ -549,6 +548,7 @@ const cloningSchoolSupevisionFormByTermAndYear = async (req: Request, res: Respo
 					term: newTerm
 				}, raw: true
 			})
+
 			if (termAndYearIsExist) {
 				return createResponse(res, 400, {
 					msg: `Encoutered an error when clone the supervision by year: ${req.query.year}, term: ${req.query.term}`,

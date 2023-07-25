@@ -92,10 +92,6 @@ export const getOneByTermAndYear = async (req: Request, res: Response) => {
 			where: { userId },
 			raw: true
 		})
-	
-		console.log("------------------------");
-		console.log(school)
-		console.log("------------------------");
 		
 		const query = req.query;
 		let whereClauseSupervisionFormType: Partial<SupervisionFormTypeAttributes> = {}; // Initialize an empty object for the where clause

@@ -13,7 +13,7 @@ const router = Router();
 // ชื่อ แบบ ฟอร์มทั้ง 18 ฟอร์ม
 router.get('', supervisionFormControllers.getAll)
 // router.post('/clone', supervisionFormControllers.cloningByTermAndYear)
-router.post('/clone', supervisionFormControllers.cloningSchoolSupevisionFormByTermAndYear)
+router.get('/clone', authMiddleware,supervisionFormControllers.cloningSchoolSupevisionFormByTermAndYear)
 
 router.get('/year', supervisionFormControllers.getAllExistingYears)
 router.get('/id/:id', supervisionFormControllers.getOne)
