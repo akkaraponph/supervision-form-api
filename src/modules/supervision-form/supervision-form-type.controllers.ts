@@ -91,14 +91,14 @@ export const getAll = async (req: Request, res: Response) => {
 			payload,
 		  };
 
-		return createResponse(res, 200, data);
+		return createResponse(res, 200, data,  'success');
         
      
     } catch (error) {
-        return res.status(400).json({
+        return  createResponse(res, 400, {
             msg: `Encoutered an error when retrieved all data of supervision form `,
             payload: {}
-        })
+        },  'failed'); 
     }
 }
 

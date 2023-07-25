@@ -9,7 +9,8 @@ interface ApiResponse {
 export const createResponse = (
   res: Response,
   statusCode: number,
-  data: ApiResponse
+  data: ApiResponse,
+  status: string,
 ): Response => {
   return res.status(statusCode).json(data);
 };
