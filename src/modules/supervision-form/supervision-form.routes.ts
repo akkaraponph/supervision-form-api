@@ -53,6 +53,7 @@ router.delete('/rsf/question/result/delete', ResultRSFControllers.destroy)
 router.get('/school', SchoolSupervisionFormControllers.getAll)
 router.get('/school/id/:id', SchoolSupervisionFormControllers.getOne)
 router.get('/school/education_year', authMiddleware, SchoolSupervisionFormControllers.getOneByTermAndYear)
+router.get('/school/rsf', authMiddleware, SchoolSupervisionFormControllers.getOneByTermAndYearBySchoolId)
 
 router.post('/school/create', SchoolSupervisionFormControllers.create)
 router.patch('/school/update/:id', SchoolSupervisionFormControllers.update)
