@@ -37,17 +37,6 @@ export const getOne = async (req: Request, res: Response) => {
 
 		let whereClauseSupervisionForm: Partial<SupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
 
-		// if (query.supervisor_name) {
-		// 	whereClauseSupervisionForm.supervisorName = query.supervisor_name as string; // Add a condition for the "year" query parameter
-		// }
-
-		if (query.year) {
-			whereClauseSupervisionForm.year = query.year as string; // Add a condition for the "year" query parameter
-		}
-
-		if (query.term) {
-			whereClauseSupervisionForm.term = query.term as string; // Add a condition for the "term" query parameter
-		}
 		let whereClauseSchoolSupervisionForm: Partial<SchoolSupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
 
 		if (query.school_id) {
@@ -102,9 +91,7 @@ export const getOneByTermAndYearBySchoolId = async (req: Request, res: Response)
 
 		let whereClauseSupervisionForm: Partial<SupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
 
-		// if (query.supervisor_name) {
-		// 	whereClauseSupervisionForm.supervisorName = query.supervisor_name as string; // Add a condition for the "year" query parameter
-		// }
+
 
 		let whereClauseSchoolSupervisionForm: Partial<SchoolSupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
 		if (query.year) {
@@ -175,10 +162,7 @@ export const getOneByTermAndYear = async (req: Request, res: Response) => {
 
 		let whereClauseSupervisionForm: Partial<SupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
 
-		// if (query.supervisor_name) {
-		// 	whereClauseSupervisionForm.supervisorName = query.supervisor_name as string; // Add a condition for the "year" query parameter
-		// }
-
+	
 		let whereClauseSchoolSupervisionForm: Partial<SchoolSupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
 		if (query.year) {
 			whereClauseSchoolSupervisionForm.year = query.year as string; // Add a condition for the "year" query parameter
@@ -245,23 +229,10 @@ export const getAll = async (req: Request, res: Response) => {
 		if (query.type_id) {
 			whereClauseSupervisionFormType.id = query.type_id as string; // Add a condition for the "term" query parameter
 		}
-		console.log("===============================");
-		console.log(whereClauseSupervisionFormType)
-		console.log("===============================");
 
 		let whereClauseSupervisionForm: Partial<SupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
 
-		// if (query.supervisor_name) {
-		// 	whereClauseSupervisionForm.supervisorName = query.supervisor_name as string; // Add a condition for the "year" query parameter
-		// }
-
-		if (query.year) {
-			whereClauseSupervisionForm.year = query.year as string; // Add a condition for the "year" query parameter
-		}
-
-		if (query.term) {
-			whereClauseSupervisionForm.term = query.term as string; // Add a condition for the "term" query parameter
-		}
+	
 		let whereClauseSchoolSupervisionForm: Partial<SchoolSupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
 
 		if (query.school_id) {
@@ -292,9 +263,6 @@ export const getAll = async (req: Request, res: Response) => {
 			payload
 		})
 	} catch (error) {
-		// console.log("==============")
-		// console.log(error);
-		// console.log("==============")
 
 		return res.status(400).json({
 			msg: `Encoutered an error when retrieved all data of school supervision form `,

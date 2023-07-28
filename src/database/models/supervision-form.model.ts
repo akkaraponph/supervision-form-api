@@ -15,8 +15,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		id!: string;
 		name!: string;  // แบบฟอร์ม รายการนิเทศติดตาม การเตรียมความพร้อมการเปิดภาคเรียน 
 		detail!: string;
-		term!: string;
-		educationYear!: string;
 		supervisionFormTypeId!: string;
 		suggestion!: string;
 		supervisorName!: string;

@@ -11,7 +11,7 @@ module.exports = {
 				email: "GK@ML.com",
 				address: "OP",
 				tel: "09273827123",
-				img_url: "https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U",
+				image: "https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U",
 				created_at: new Date(),
 				updated_at: new Date(),
 				user_id: "e16263e9-cd10-4bd8-b040-ff550a0d5ba1",

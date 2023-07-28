@@ -15,6 +15,7 @@ declare global {
 		}
 	}
 }
+
 export const App = () => {
 
 	const app = express()

@@ -10,6 +10,8 @@ const PersonnelModel = db.Personnel
 
 export const getAll = async (req: Request, res: Response) => {
     try {
+
+
         const payload = await UserModel.findAll({
             attributes: {
                 exclude: ['password'],
@@ -32,8 +34,9 @@ export const getAll = async (req: Request, res: Response) => {
             payload
         })
     } catch (error) {
-        // console.log(error)
-
+        console.log("-----------------");
+        console.log(error)
+        console.log("-----------------");
         return res.status(400).json({
             msg: "get users was failed",
             payload: {}
@@ -143,7 +146,7 @@ export const create = async (req: Request, res: Response) => {
         const createUserresponse = await UserModel.create(newUser, { raw: true })
         const createUser = createUserresponse['dataValues']
         if (createUser.status === UserRole.USER) {
-           const newSchool =  await SchoolModel.create({
+            const newSchool = await SchoolModel.create({
                 userId: createUser.id,
                 idSchool: "",
                 name: "",
@@ -160,22 +163,44 @@ export const create = async (req: Request, res: Response) => {
                 teachingStyle: "",
                 openClass: "",
             })
-            const allSupervisionForm = await db.SupervisionForm.findAll({raw:true})
-            allSupervisionForm.map(async(row:any)=>{
-                const data = await db.SchoolSupervisionForm.create({
+            const allSupervisionForm = await db.SupervisionForm.findAll({ raw: true });
+            const latestYearEntry = await db.SchoolSupervisionForm.findOne({
+              order: [['year', 'DESC']],
+              raw: true,
+            });
+            
+            let latestYear: number | null = null;
+            if (latestYearEntry) {
+              latestYear = latestYearEntry.year;
+            }
+            
+            const allTerms = [1, 2]; // Add more terms if needed
+            
+            // Check if an entry exists for the current term and the latest year
+            const entryExists = async (term: number): Promise<boolean> => {
+              const existingEntry = await db.SchoolSupervisionForm.findOne({
+                where: { year: latestYear, term },
+              });
+              return !!existingEntry;
+            };
+            
+            // Loop through all SupervisionForms to create entries for each term and the latest year
+            for (const term of allTerms) {
+              if (!(await entryExists(term))) {
+                for (const row of allSupervisionForm) {
+                  await db.SchoolSupervisionForm.create({
                     schoolId: newSchool['dataValues'].id,
                     supervisionFormId: row.id,
-                    year: row.year,
-                    term: row.term,
+                    year: latestYear,
+                    term: term,
                     supervisorName: "",
                     supervisorPosition: "",
-                })
-                // await db.ResultRSF.create({
-                //     schoolId: newSchool['dataValues'].id,
-                //     schoolSupervisionFormId: data['dataValues'].id
-                // })
-                // console.log()
-            })
+                  });
+                }
+              }
+            }
+            
+
         } else if (createUser.status === UserRole.PERSONNEL || UserRole.ADMIN) {
             await PersonnelModel.create({
                 "idPersonnel": "",
@@ -278,7 +303,7 @@ export const login = async (req: Request, res: Response) => {
         }
         const schoolData = await SchoolModel.findOne({
             where: { userId: user.id },
-            raw:true
+            raw: true
         })
         let sid = "";
         if (schoolData) {
@@ -290,7 +315,7 @@ export const login = async (req: Request, res: Response) => {
             sub: user.id,
             status: user.status,
             name: user.username,
-            sid : sid
+            sid: sid
         })
         delete user.password
         return res.status(200).json({
