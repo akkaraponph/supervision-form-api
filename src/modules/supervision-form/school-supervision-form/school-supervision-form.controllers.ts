@@ -160,8 +160,11 @@ export const getAllReport = async (req: Request, res: Response) => {
 							include: [
 								{
 									model: db.RSFSection,
+									orderBy: ["priority", "DESC"]
 								}
-							]
+							],
+							orderBy: ["priority", "DESC"]
+							
 						}
 					]
 				},
@@ -215,6 +218,7 @@ export const getAllReport = async (req: Request, res: Response) => {
 		let QuestionArray: {
 			[key: string]: any[]
 		} = {}
+
 		// วนซ้ำข้อมูลเพื่อ แมพค่า คำถามกับ คำตอบ
 		allSchoolAnswer.forEach((element: any) => {
 			// console.log(element)
@@ -255,22 +259,27 @@ export const getAllReport = async (req: Request, res: Response) => {
 			if (!QuestionMeanArrayOfEachSection[section]) {
 				QuestionMeanArrayOfEachSection[section] = []
 			}
-			SectionArray[section].forEach((question: string) => {
-				let meanOfQuestion = meanScores[question]
-				QuestionMeanArrayOfEachSection[section].push(meanOfQuestion)
-			})
-
+			if(section != "null" || section != null){
+				SectionArray[section].forEach((question: string) => {
+					let meanOfQuestion = meanScores[question]
+					QuestionMeanArrayOfEachSection[section].push(meanOfQuestion)
+				})
+			}
 		})
+
 		const meanSectionScores: { [question: string]: number } = {};
 		// หาค่าเฉลี่ย ของคำถาม
 		Object.keys(QuestionMeanArrayOfEachSection).forEach((section) => {
-			const scoresArray = QuestionMeanArrayOfEachSection[section];
-			const sum = scoresArray.reduce((acc, score) => acc + score, 0);
-			const mean = sum / scoresArray.length;
-
-			// Round the mean value to two decimal places
-			const roundedMean = parseFloat(mean.toFixed(2));
-			meanSectionScores[section] = roundedMean;
+			if(section){
+				const scoresArray = QuestionMeanArrayOfEachSection[section];
+				const sum = scoresArray.reduce((acc, score) => acc + score, 0);
+				const mean = sum / scoresArray.length;
+	
+				// Round the mean value to two decimal places
+				const roundedMean = parseFloat(mean.toFixed(2));
+				meanSectionScores[section] = roundedMean;
+			
+			}
 		});
 
 		// console.log(QuestionMeanArrayOfEachSection)
@@ -281,15 +290,6 @@ export const getAllReport = async (req: Request, res: Response) => {
 
 		const sectionMeanLabels = Object.keys(meanSectionScores);
 		const sectionMeanValues = Object.values(meanSectionScores);
-
-		// console.log("Questions Array:", questionsMeanLabel);
-		// console.log("Mean Scores Array:", meanScoresArray);
-
-
-		const result = {
-			sectionMeanLabel,
-			sectionMean
-		}
 
 		return createResponse(res, 200, {
 			msg: "get success",
