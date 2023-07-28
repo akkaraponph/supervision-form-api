@@ -212,7 +212,7 @@ export const create = async (req: Request, res: Response) => {
                 "lastname": "",
                 "position": "",
                 "group": "",
-                "email": createUser.email,
+                "email": "",
                 "address": "",
                 "tel": "",
                 userId: createUser.id,
