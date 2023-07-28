@@ -17,7 +17,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		id!: string;
 		username!: string;
 		password!: string;
-		email!: string;
+		// email!: string;
 		// admin, user, personel
 		status!: string; 
 
@@ -50,11 +50,11 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				field: 'password'
 
 			},
-			email: {
-				type: DataTypes.STRING(120),
-				allowNull: true,
-				field: 'email'
-			},
+			// email: {
+			// 	type: DataTypes.STRING(120),
+			// 	allowNull: true,
+			// 	field: 'email'
+			// },
 			status: {
 				type: DataTypes.ENUM(UserRole.ADMIN, UserRole.USER, UserRole.PERSONNEL),
 				field: 'status',

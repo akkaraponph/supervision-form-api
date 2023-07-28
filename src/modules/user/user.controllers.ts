@@ -152,7 +152,7 @@ export const create = async (req: Request, res: Response) => {
                 name: "",
                 size: "",
                 district: "",
-                email: createUser.email,
+                email: "",
                 tel: "",
                 address: "",
                 junior: "",
@@ -165,41 +165,45 @@ export const create = async (req: Request, res: Response) => {
             })
             const allSupervisionForm = await db.SupervisionForm.findAll({ raw: true });
             const latestYearEntry = await db.SchoolSupervisionForm.findOne({
-              order: [['year', 'DESC']],
-              raw: true,
+                order: [['year', 'DESC']],
+                raw: true,
             });
-            
+
             let latestYear: number | null = null;
             if (latestYearEntry) {
-              latestYear = latestYearEntry.year;
+                latestYear = latestYearEntry.year;
             }
-            
+            // 1. check term ?
+            // 2. latest year ?
+            // 3. if term have 1 and 2 term 
+            // for each term to create 1 and 2
+            // latest year
+
             const allTerms = [1, 2]; // Add more terms if needed
-            
-            // Check if an entry exists for the current term and the latest year
+
             const entryExists = async (term: number): Promise<boolean> => {
-              const existingEntry = await db.SchoolSupervisionForm.findOne({
-                where: { year: latestYear, term },
-              });
-              return !!existingEntry;
+                const existingEntry = await db.SchoolSupervisionForm.findOne({
+                    where: { year: latestYear, term },
+                });
+                return !!existingEntry;
             };
-            
+
             // Loop through all SupervisionForms to create entries for each term and the latest year
             for (const term of allTerms) {
-              if (!(await entryExists(term))) {
-                for (const row of allSupervisionForm) {
-                  await db.SchoolSupervisionForm.create({
-                    schoolId: newSchool['dataValues'].id,
-                    supervisionFormId: row.id,
-                    year: latestYear,
-                    term: term,
-                    supervisorName: "",
-                    supervisorPosition: "",
-                  });
+                if ((await entryExists(term))) {
+                    for (const row of allSupervisionForm) {
+                        await db.SchoolSupervisionForm.create({
+                            schoolId: newSchool['dataValues'].id,
+                            supervisionFormId: row.id,
+                            year: latestYear,
+                            term: term,
+                            supervisorName: "",
+                            supervisorPosition: "",
+                        });
+                    }
                 }
-              }
             }
-            
+
 
         } else if (createUser.status === UserRole.PERSONNEL || UserRole.ADMIN) {
             await PersonnelModel.create({

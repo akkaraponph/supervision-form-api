@@ -9,7 +9,7 @@ export interface UserAttributes {
 	id?: string;
 	username: string;
 	password: string;
-	email?: string;
+	// email?: string;
 	status?: string;
 	createdAt?: Date;
 	updatedAt?: Date;

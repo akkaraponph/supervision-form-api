@@ -91,6 +91,14 @@ export const getAll = async (req: Request, res: Response) => {
 	try {
 
 		const school = await SchoolModel.findAll({
+			include: [
+				{
+					model: db.User,
+					attributes: {
+						exclude: ['password']
+					}
+				}
+			],
 			attributes: {
 				exclude: ['user_id']
 			},
