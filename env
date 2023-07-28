@@ -21,4 +21,4 @@ DB_PASSWORD_TEST=""
 DB_DATABASE_TEST=supervision_forms
 DB_HOST_TEST=localhost
 
-DB_DIALECT=mysql
+DB_DIALECT=postgres | mysql | your dialect
