@@ -21,6 +21,27 @@ module.exports = {
 				created_at: new Date(),
 				updated_at: new Date(),
 
+			},
+			{
+				id: "e26263e9-cd10-4bd8-b040-ff550a0d5ba2",
+				id_school: "233",
+				name: "test",
+				size: "test",
+				district: "test",
+				email: "test2@gmail.com",
+				tel: "0987263512",
+				address: "test",
+				junior: "test",
+				senior: "test",
+				director: "test",
+				n_teacher: "2",
+				n_personnel: "3",
+				teaching_style: "test",
+				open_class: "string",
+				user_id: "e16263e9-cd10-4bd8-b040-ff550a0d5ba3",
+				created_at: new Date(),
+				updated_at: new Date(),
+
 			}
 		]
 		await queryInterface.bulkInsert('school', seedData)
