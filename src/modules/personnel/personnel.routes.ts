@@ -1,6 +1,7 @@
 import { Router, Response, Request } from "express";
 import { authMiddleware } from "../../middlewares/auth.midleware";
 import personnelController from "./personnel.controllers";
+import { upload } from "../../middlewares/upload.middleware";
 const router = Router();
 
 // router.get('/:id', authMiddleware, personnelController.getOne)
@@ -16,5 +17,7 @@ router.post('/', personnelController.create)
 router.patch('/update/id/:id', personnelController.update)
 router.patch('/update/me', authMiddleware, personnelController.updateByUser)
 router.delete('/delete/:id', personnelController.remove)
+
+router.post('/upload', authMiddleware,upload.single('image'), personnelController.uploadImage);
 
 export default router;

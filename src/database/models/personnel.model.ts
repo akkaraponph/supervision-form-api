@@ -8,12 +8,6 @@ import { PersonnelAttributes } from "../../modules/personnel/personnel.types";
 
 module.exports = (sequelize: any, DataTypes: any) => {
 	class Personnel extends Model<PersonnelAttributes> implements PersonnelAttributes {
-
-		/**
-		 * Helper method for defining associations.
-		 * This method is not a part of Sequelize lifecycle.
-		 * The `models/index` file will call this method automatically.
-		 */
 		id!: string;
 		idPersonnel!: string;
 		name!: string;
