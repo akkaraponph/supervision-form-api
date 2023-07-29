@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import db from "../../database/models";
+import fs from 'fs';
+import path from 'path';
 const PersonnelModel = db.Personnel
 const UserModel = db.User
 
@@ -156,32 +158,55 @@ export const remove = async (req: Request, res: Response) => {
 		})
 	}
 }
-
+export const getImage = async (req: Request, res: Response) => {
+	try {
+		const imagePath = req.params.path;
+		// Serve the image using Express's sendFile method
+		res.sendFile(imagePath);
+	} catch (err) {
+		console.error(err);
+		res.status(400).json({ error: 'Internal server error' });
+	}
+}
 export const uploadImage = async (req: Request, res: Response) => {
 	try {
 		const uid = req.user?.id;
 		const resPrsonnel = await db.Personnel.findOne({
 			where: { userId: uid }, raw: true
 		})
-		
+
 		const personnelId = resPrsonnel.id
 
 		// Check if the file was uploaded successfully
 		if (!req.file) {
 			return res.status(400).json({ error: 'No image file uploaded' });
 		}
-		const imageFilePath = req.file.path;
+		const imageFilePath = req.file.filename;
 
 		// Find the personnel by id
-		const personnel = await db.Personnel.findOne({ where: { id: personnelId } });
+		const personnel = await db.Personnel.findOne({ where: { id: personnelId }, raw: true });
 
 		if (!personnel) {
 			return res.status(404).json({ error: 'Personnel not found' });
 		}
+		console.log(personnel.image)
+		if (personnel.image) {
+			// Construct the full path to the image file
+			const imagePath = `public/uploads/${personnel.image}`
+			if (fs.existsSync(imagePath)) {
+				try {
+					fs.unlinkSync(imagePath);
+					console.log('Previous image removed:', imagePath);
+				} catch (err) {
+					console.error('Error removing previous image:', err);
+				}
+			}
+		}
 
 		// Update the personnel's image property with the file path
-		personnel.image = imageFilePath;
-		await personnel.save();
+		await db.Personnel.update({ ...personnel, image: imageFilePath }, {
+			where: { id: personnelId }
+		})
 
 		// Respond with a success message or other response
 		res.json({ message: 'Personnel image uploaded successfully!' });
