@@ -95,7 +95,9 @@ export const update = async (req: Request, res: Response) => {
 	try {
 		const id = req.params?.id
 		const body = req.body;
-
+		if(body.image) {
+			delete body.image
+		}
 		// console.log("===============")
 		// console.log(id);
 		// console.log(body);
@@ -120,9 +122,12 @@ export const updateByUser = async (req: Request, res: Response) => {
 	try {
 		const userId = req.user?.id
 		const body = req.body;
-		console.log("===================")
-		console.log(body)
-		console.log("===================")
+		if(body.image) {
+			delete body.image
+		}
+		// console.log("===================")
+		// console.log(body)
+		// console.log("===================")
 
 		const personnel = await PersonnelModel.update({ ...body }, {
 			where: { userId }

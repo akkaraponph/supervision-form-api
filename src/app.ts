@@ -11,9 +11,12 @@ import cors from "cors";
 declare global {
 	namespace Express {
 		interface Request {
-			user?: UserAttributes
+			user?: UserAttributes,
+			cover?: Express.Multer.File | null;
+			imageList?: Express.Multer.File[] | null;
 		}
 	}
+	  
 }
 
 export const App = () => {

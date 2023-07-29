@@ -18,7 +18,7 @@ router.patch('/update/id/:id', personnelController.update)
 router.patch('/update/me', authMiddleware, personnelController.updateByUser)
 router.delete('/delete/:id', personnelController.remove)
 
-router.post('/upload', authMiddleware,upload.single('image'), personnelController.uploadImage);
+router.post('/upload', authMiddleware, upload.single('image'), personnelController.uploadImage);
 router.get('/image/:name', personnelController.getImage);
 
 export default router;
