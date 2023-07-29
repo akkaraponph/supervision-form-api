@@ -160,14 +160,16 @@ export const remove = async (req: Request, res: Response) => {
 }
 export const getImage = async (req: Request, res: Response) => {
 	try {
-		const imagePath = req.params.path;
-		// Serve the image using Express's sendFile method
-		res.sendFile(imagePath);
+		const imageName = req.params.name;
+		const imagePath = path.join(__dirname, '../../../public/uploads/', imageName);
+		// const imagePath = `public/uploads/${imageName}`// No need to add 'public/uploads/'
+    	res.sendFile(imagePath);
 	} catch (err) {
 		console.error(err);
 		res.status(400).json({ error: 'Internal server error' });
 	}
 }
+
 export const uploadImage = async (req: Request, res: Response) => {
 	try {
 		const uid = req.user?.id;
@@ -192,6 +194,7 @@ export const uploadImage = async (req: Request, res: Response) => {
 		console.log(personnel.image)
 		if (personnel.image) {
 			// Construct the full path to the image file
+			
 			const imagePath = `public/uploads/${personnel.image}`
 			if (fs.existsSync(imagePath)) {
 				try {
@@ -224,5 +227,6 @@ export default {
 	getByUser,
 	updateByUser,
 	remove,
-	uploadImage
+	uploadImage,
+	getImage
 }
