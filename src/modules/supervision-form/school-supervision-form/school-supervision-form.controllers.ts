@@ -160,13 +160,15 @@ export const getAllReport = async (req: Request, res: Response) => {
 							include: [
 								{
 									model: db.RSFSection,
-									orderBy: ["priority", "DESC"]
+									orderBy: ["priority", "ASC"]
 								}
 							],
-							orderBy: ["priority", "DESC"]
-							
+							orderBy: ["priority", "ASC"]
 						}
-					]
+					],
+					where: {
+						score: { [db.Sequelize.Op.ne]: null }
+					}
 				},
 				{
 					model: db.SupervisionForm,
@@ -187,26 +189,20 @@ export const getAllReport = async (req: Request, res: Response) => {
 					{ term },
 					{ '$SupervisionForm.SupervisionFormType.type$': { [db.Sequelize.Op.ne]: null } },
 				],
-			}, raw: true,
-			returning: true
+			},
+			orderBy: ["ResultRSFs.RSFQuestion.priority"],
+			raw: true,
+			// returning: true
 		})
 
-		
-
+		// console.log("---------------")
+		// console.log(allSchoolAnswer)
+		// console.log("---------------")
 
 		// Calculate mean scores for each section and question using for loop
 		const sectionMeanLabel: string[] = [];
 		const sectionMean: string[] = [];
-		interface AnswerObject {
-			section: string,
-			sectionId: string,
-			questionId: string,
-			question: string,
-			answer: number
-		}
-
-		let answerArray: AnswerObject[] = []
-
+	
 		let resultQuestionArray: {
 			[key: string]: any[]
 		} = {}
@@ -215,29 +211,34 @@ export const getAllReport = async (req: Request, res: Response) => {
 			[key: string]: any[]
 		} = {}
 
-		let QuestionArray: {
-			[key: string]: any[]
-		} = {}
+		allSchoolAnswer.sort((a:any, b:any) => {
+			const priorityA = a['ResultRSFs.RSFQuestion.RSFSection.priority'];
+			const priorityB = b['ResultRSFs.RSFQuestion.RSFSection.priority'];
+			return priorityA - priorityB;
+		  });
 
+		  
 		// วนซ้ำข้อมูลเพื่อ แมพค่า คำถามกับ คำตอบ
 		allSchoolAnswer.forEach((element: any) => {
-			// console.log(element)
 			if (!resultQuestionArray[element['ResultRSFs.RSFQuestion.question']]) {
-				resultQuestionArray[element['ResultRSFs.RSFQuestion.question']] = []
+			  resultQuestionArray[element['ResultRSFs.RSFQuestion.question']] = [];
 			}
-			resultQuestionArray[element['ResultRSFs.RSFQuestion.question']].push(element['ResultRSFs.score'])
-
+			resultQuestionArray[element['ResultRSFs.RSFQuestion.question']].push(element['ResultRSFs.score']);
+		  
 			const sectionType = element['ResultRSFs.RSFQuestion.RSFSection.type'];
 			const question = element['ResultRSFs.RSFQuestion.question'];
-
+		  
 			if (!SectionArray[sectionType]) {
-				SectionArray[sectionType] = []
+			  SectionArray[sectionType] = [];
 			}
-
+		  
 			if (question && !SectionArray[sectionType].includes(question)) {
-				SectionArray[sectionType].push((question))
+			  SectionArray[sectionType].push(question);
 			}
-		});
+		  });
+
+		  
+		
 		// ประกาศตัวแปรเพื่อเก็บค่าเฉลี่ยของคำถาม
 		const meanScores: { [question: string]: number } = {};
 		// หาค่าเฉลี่ย ของคำถาม
