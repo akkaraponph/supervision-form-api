@@ -64,6 +64,7 @@ router.get('/rsf_open_school_report', authMiddleware, supervisionFormControllers
 
 // getAllReport
 router.get('/report', SchoolSupervisionFormControllers.getAllReport)
+router.get('/report/school', authMiddleware, SchoolSupervisionFormControllers.getAllSchoolReport)
 
 
 export default router;

@@ -143,6 +143,174 @@ export const getOneByTermAndYearBySchoolId = async (req: Request, res: Response)
 	}
 }
 
+export const getAllSchoolReport = async (req: Request, res: Response) => {
+	try {
+		const year = req.query?.year
+		const term = req.query?.term
+		const typeParam = req.query?.type as string
+		const uid = req.user?.id
+		const school = await db.School.findOne({
+			where: { userId: uid },
+			raw: true
+		})
+	
+		const schoolAnswer = await db.SchoolSupervisionForm.findAll({
+			include: [
+				{
+					model: db.ResultRSF,
+					include: [
+						{
+							model: db.RSFQuestion,
+							include: [
+								{
+									model: db.RSFSection,
+									orderBy: ["priority", "ASC"]
+								}
+							],
+							orderBy: ["priority", "ASC"]
+						}
+					],
+					where: {
+						score: { [db.Sequelize.Op.ne]: null }
+					}
+				},
+				{
+					model: db.SupervisionForm,
+					include: [
+						{
+							model: db.SupervisionFormType,
+							where: {
+								type: typeParam
+							},
+							required: false,
+						}
+					]
+				}
+			],
+			where: {
+				[db.Sequelize.Op.and]: [
+					{ year },
+					{ term },
+					{ '$SupervisionForm.SupervisionFormType.type$': { [db.Sequelize.Op.ne]: null } },
+				],
+				// term, year,
+				schoolId: school.id
+			},
+			orderBy: ["ResultRSFs.RSFQuestion.priority"],
+			raw: true,
+			// returning: true
+		})
+		// console.log(schoolAnswer)
+
+		// Calculate mean scores for each section and question using for loop
+		const sectionMeanLabel: string[] = [];
+		const sectionMean: string[] = [];
+
+		let resultQuestionArray: {
+			[key: string]: any[]
+		} = {}
+
+		let SectionArray: {
+			[key: string]: any[]
+		} = {}
+
+		schoolAnswer.sort((a: any, b: any) => {
+			const priorityA = a['ResultRSFs.RSFQuestion.RSFSection.priority'];
+			const priorityB = b['ResultRSFs.RSFQuestion.RSFSection.priority'];
+			return priorityA - priorityB;
+		});
+
+
+		// วนซ้ำข้อมูลเพื่อ แมพค่า คำถามกับ คำตอบ
+		schoolAnswer.forEach((element: any) => {
+			if (!resultQuestionArray[element['ResultRSFs.RSFQuestion.question']]) {
+				resultQuestionArray[element['ResultRSFs.RSFQuestion.question']] = [];
+			}
+			resultQuestionArray[element['ResultRSFs.RSFQuestion.question']].push(element['ResultRSFs.score']);
+
+			const sectionType = element['ResultRSFs.RSFQuestion.RSFSection.type'];
+			const question = element['ResultRSFs.RSFQuestion.question'];
+
+			if (!SectionArray[sectionType]) {
+				SectionArray[sectionType] = [];
+			}
+
+			if (question && !SectionArray[sectionType].includes(question)) {
+				SectionArray[sectionType].push(question);
+			}
+		});
+
+
+
+		// ประกาศตัวแปรเพื่อเก็บค่าเฉลี่ยของคำถาม
+		const meanScores: { [question: string]: number } = {};
+		// หาค่าเฉลี่ย ของคำถาม
+		Object.keys(resultQuestionArray).forEach((question) => {
+			const scoresArray = resultQuestionArray[question];
+			const sum = scoresArray.reduce((acc, score) => acc + score, 0);
+			const mean = sum / scoresArray.length;
+			// Round the mean value to two decimal places
+			const roundedMean = parseFloat(mean.toFixed(2));
+			meanScores[question] = roundedMean;
+		});
+		// ประกาศเพื่อเก็บค่าเฉลี่ยของ ตอนที่
+		let QuestionMeanArrayOfEachSection: {
+			[key: string]: any[]
+		} = {}
+
+		// console.log(meanScores['มีการจัดประชุมครู /บุคลากร /ผู้ปกครอง และนักเรียนก่อนเปิดภาคเรียน'])
+		Object.keys(SectionArray).forEach((section) => {
+			if (!QuestionMeanArrayOfEachSection[section]) {
+				QuestionMeanArrayOfEachSection[section] = []
+			}
+			if (section != "null" || section != null) {
+				SectionArray[section].forEach((question: string) => {
+					let meanOfQuestion = meanScores[question]
+					QuestionMeanArrayOfEachSection[section].push(meanOfQuestion)
+				})
+			}
+		})
+
+		const meanSectionScores: { [question: string]: number } = {};
+		// หาค่าเฉลี่ย ของคำถาม
+		Object.keys(QuestionMeanArrayOfEachSection).forEach((section) => {
+			if (section) {
+				const scoresArray = QuestionMeanArrayOfEachSection[section];
+				const sum = scoresArray.reduce((acc, score) => acc + score, 0);
+				const mean = sum / scoresArray.length;
+
+				// Round the mean value to two decimal places
+				const roundedMean = parseFloat(mean.toFixed(2));
+				meanSectionScores[section] = roundedMean;
+
+			}
+		});
+
+		// console.log(QuestionMeanArrayOfEachSection)
+
+		// Separate the keys (questions) and values (mean scores) into separate arrays.
+		const questionsMeanLabel = Object.keys(meanScores);
+		const meanScoresArray = Object.values(meanScores);
+
+		const sectionMeanLabels = Object.keys(meanSectionScores);
+		const sectionMeanValues = Object.values(meanSectionScores);
+
+		return createResponse(res, 200, {
+			msg: "get success",
+			payload: {
+				sectionMeanLabels,
+				sectionMeanValues,
+				questionsMeanLabel,
+				meanScoresArray
+			},
+		}, 'success')
+	} catch (error) {
+		return createResponse(res, 400, {
+			msg: "can't get school report",
+			payload: error
+		}, "failed")
+	}
+}
 
 export const getAllReport = async (req: Request, res: Response) => {
 	try {
@@ -195,14 +363,10 @@ export const getAllReport = async (req: Request, res: Response) => {
 			// returning: true
 		})
 
-		// console.log("---------------")
-		// console.log(allSchoolAnswer)
-		// console.log("---------------")
-
 		// Calculate mean scores for each section and question using for loop
 		const sectionMeanLabel: string[] = [];
 		const sectionMean: string[] = [];
-	
+
 		let resultQuestionArray: {
 			[key: string]: any[]
 		} = {}
@@ -211,34 +375,34 @@ export const getAllReport = async (req: Request, res: Response) => {
 			[key: string]: any[]
 		} = {}
 
-		allSchoolAnswer.sort((a:any, b:any) => {
+		allSchoolAnswer.sort((a: any, b: any) => {
 			const priorityA = a['ResultRSFs.RSFQuestion.RSFSection.priority'];
 			const priorityB = b['ResultRSFs.RSFQuestion.RSFSection.priority'];
 			return priorityA - priorityB;
-		  });
+		});
 
-		  
+
 		// วนซ้ำข้อมูลเพื่อ แมพค่า คำถามกับ คำตอบ
 		allSchoolAnswer.forEach((element: any) => {
 			if (!resultQuestionArray[element['ResultRSFs.RSFQuestion.question']]) {
-			  resultQuestionArray[element['ResultRSFs.RSFQuestion.question']] = [];
+				resultQuestionArray[element['ResultRSFs.RSFQuestion.question']] = [];
 			}
 			resultQuestionArray[element['ResultRSFs.RSFQuestion.question']].push(element['ResultRSFs.score']);
-		  
+
 			const sectionType = element['ResultRSFs.RSFQuestion.RSFSection.type'];
 			const question = element['ResultRSFs.RSFQuestion.question'];
-		  
-			if (!SectionArray[sectionType]) {
-			  SectionArray[sectionType] = [];
-			}
-		  
-			if (question && !SectionArray[sectionType].includes(question)) {
-			  SectionArray[sectionType].push(question);
-			}
-		  });
 
-		  
-		
+			if (!SectionArray[sectionType]) {
+				SectionArray[sectionType] = [];
+			}
+
+			if (question && !SectionArray[sectionType].includes(question)) {
+				SectionArray[sectionType].push(question);
+			}
+		});
+
+
+
 		// ประกาศตัวแปรเพื่อเก็บค่าเฉลี่ยของคำถาม
 		const meanScores: { [question: string]: number } = {};
 		// หาค่าเฉลี่ย ของคำถาม
@@ -260,7 +424,7 @@ export const getAllReport = async (req: Request, res: Response) => {
 			if (!QuestionMeanArrayOfEachSection[section]) {
 				QuestionMeanArrayOfEachSection[section] = []
 			}
-			if(section != "null" || section != null){
+			if (section != "null" || section != null) {
 				SectionArray[section].forEach((question: string) => {
 					let meanOfQuestion = meanScores[question]
 					QuestionMeanArrayOfEachSection[section].push(meanOfQuestion)
@@ -271,15 +435,15 @@ export const getAllReport = async (req: Request, res: Response) => {
 		const meanSectionScores: { [question: string]: number } = {};
 		// หาค่าเฉลี่ย ของคำถาม
 		Object.keys(QuestionMeanArrayOfEachSection).forEach((section) => {
-			if(section){
+			if (section) {
 				const scoresArray = QuestionMeanArrayOfEachSection[section];
 				const sum = scoresArray.reduce((acc, score) => acc + score, 0);
 				const mean = sum / scoresArray.length;
-	
+
 				// Round the mean value to two decimal places
 				const roundedMean = parseFloat(mean.toFixed(2));
 				meanSectionScores[section] = roundedMean;
-			
+
 			}
 		});
 
@@ -299,8 +463,6 @@ export const getAllReport = async (req: Request, res: Response) => {
 				sectionMeanValues,
 				questionsMeanLabel,
 				meanScoresArray
-				// questionsArray,
-				// meanScoresArray
 			},
 		}, 'success')
 	} catch (error) {
@@ -564,5 +726,6 @@ export default {
 	update,
 	destroy,
 	getOneByTermAndYearBySchoolId,
-	getAllReport
+	getAllReport,
+	getAllSchoolReport
 }
