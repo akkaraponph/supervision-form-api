@@ -6,6 +6,7 @@ import { SchoolSupervisionFormAttributes } from "./school-supervision-form.types
 import { createResponse } from "../../../common/utils/response.util";
 import { RSFQuestionAttributes, RSFSectionAttributes, ResultRSFAttributes } from "../rating-scale-form/rsf.types";
 import { IFormReport, IResultRsf } from "./report.type";
+import { Op } from "sequelize";
 
 const SchoolSupervisionForm = db.SchoolSupervisionForm
 
@@ -153,7 +154,7 @@ export const getAllSchoolReport = async (req: Request, res: Response) => {
 			where: { userId: uid },
 			raw: true
 		})
-	
+
 		const schoolAnswer = await db.SchoolSupervisionForm.findAll({
 			include: [
 				{
@@ -673,16 +674,26 @@ export const getAll = async (req: Request, res: Response) => {
 
 export const update = async (req: Request, res: Response) => {
 	try {
+		const id = req.params.id
+		const body = req.body;
+		const resp = await db.SchoolSupervisionForm.findOne({
+			where: {id}, raw:true
+		})
 		const payload = await SchoolSupervisionForm.update({
-			...req.body,
+			...resp,
+			...body,
 		},
 			{
-				where: { id: req.params.id }
+				where: {
+					id
+				}
 			})
 		return res.status(200).json({
 			msg: `Update the data of school supervision form was successfully`,
 			payload
 		})
+
+
 	} catch (error) {
 		return res.status(400).json({
 			msg: `Encoutered an error when update the school supervision form id: ${req.params.id}`,
