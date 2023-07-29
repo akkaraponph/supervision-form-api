@@ -9,4 +9,5 @@ router.post('/', newsController.create)
 router.patch('/:id', newsController.update)
 router.delete('/:id', newsController.remove)
 
+
 export default router;

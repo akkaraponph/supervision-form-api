@@ -158,6 +158,7 @@ export const remove = async (req: Request, res: Response) => {
 		})
 	}
 }
+
 export const getImage = async (req: Request, res: Response) => {
 	try {
 		const imageName = req.params.name;

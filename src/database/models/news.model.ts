@@ -9,11 +9,6 @@ import { NewsAttributes } from "../../modules/news/news.types";
 module.exports = (sequelize: any, DataTypes: any) => {
 	class News extends Model<NewsAttributes> implements NewsAttributes {
 
-		/**
-		 * Helper method for defining associations.
-		 * This method is not a part of Sequelize lifecycle.
-		 * The `models/index` file will call this method automatically.
-		 */
 		id!: string
 		name!: string
 		description!: string
