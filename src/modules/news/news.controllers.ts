@@ -113,6 +113,52 @@ export const getOne = async (req: Request, res: Response) => {
 	}
 }
 
+// export const update = async (req: Request, res: Response) => {
+// 	try {
+// 	  const id = req.params?.id;
+// 	  const body = req.body;
+  
+// 	  // Check if the file was uploaded successfully
+// 	  if (!req.file) {
+// 		return res.status(400).json({ error: 'No image file uploaded' });
+// 	  }
+  
+// 	  const imageFilePath = req.file.filename;
+  
+// 	  // Find the News by id
+// 	  const news = await NewsModel.findOne({ where: { id } });
+  
+// 	  if (!news) {
+// 		return res.status(404).json({ error: 'News not found' });
+// 	  }
+  
+// 	  if (news.cover) {
+// 		// Construct the full path to the image file
+// 		const imagePath = path.join(__dirname, '../../../public/uploads/news/covers', news.cover);
+  
+// 		if (fs.existsSync(imagePath)) {
+// 		  try {
+// 			fs.unlinkSync(imagePath);
+// 			console.log('Previous image removed:', imagePath);
+// 		  } catch (err) {
+// 			console.error('Error removing previous image:', err);
+// 		  }
+// 		}
+// 	  }
+  
+// 	  // Update the news cover property with the file path
+// 	  await NewsModel.update({ ...body, cover: imageFilePath }, {
+// 		where: { id }
+// 	  });
+  
+// 	  // Respond with a success message or other response
+// 	  res.json({ message: 'News updated successfully!' });
+// 	} catch (err) {
+// 	  console.error(err);
+// 	  res.status(500).json({ error: 'Internal server error' });
+// 	}
+//   };
+
 export const update = async (req: Request, res: Response) => {
 	try {
 		const id = req.params?.id

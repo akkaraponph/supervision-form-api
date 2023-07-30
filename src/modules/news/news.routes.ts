@@ -31,7 +31,12 @@ router.get('/image/:name', newsController.getImage)
 
 router.post('/upload', newsController.create)
 
-router.patch('/upadate/:id', newsController.update)
+// router.patch('/upadate/:id', newsController.update)
+router.patch('/upadate/:id', uploadNews.fields([
+	{ name: 'cover', maxCount: 1 },
+	{ name: 'imageList', maxCount: 10 }
+  ]), newsController.update);
+
 router.delete('/delete/:id', newsController.remove)
 
 
