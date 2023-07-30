@@ -27,7 +27,10 @@ router.post('/create', uploadNews.fields([
 // );
 
 router.get('/image/cover/:name', newsController.getImageCover)
+router.delete('/image/cover/:name', newsController.deleteCoverImage)
+
 router.get('/image/:name', newsController.getImage)
+router.delete('/image/:name', newsController.deleteImage)
 
 router.post('/upload', newsController.create)
 

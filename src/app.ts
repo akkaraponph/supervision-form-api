@@ -28,6 +28,7 @@ export const App = () => {
 	// };
 
 	app.use(cors());
+	app.use(express.json({ limit: '20mb' }));
 	app.use('/api/supervision_forms', supervisionFormRoutes)
 	app.use('/api/users', userRoutes)
 	app.use('/api/schools', schoolRoutes)
