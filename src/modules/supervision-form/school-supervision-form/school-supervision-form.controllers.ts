@@ -683,16 +683,13 @@ export const update = async (req: Request, res: Response) => {
 			...resp,
 			...body,
 		},
-			{
-				where: {
-					id
-				}
-			})
+		{
+			where: {id}
+		})
 		return res.status(200).json({
 			msg: `Update the data of school supervision form was successfully`,
 			payload
 		})
-
 
 	} catch (error) {
 		return res.status(400).json({

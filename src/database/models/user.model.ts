@@ -56,10 +56,10 @@ module.exports = (sequelize: any, DataTypes: any) => {
 			// 	field: 'email'
 			// },
 			status: {
-				type: DataTypes.ENUM(UserRole.ADMIN, UserRole.USER, UserRole.PERSONNEL),
+				type: DataTypes.ENUM(UserRole.ADMIN, UserRole.USER, UserRole.PERSONNEL, UserRole.DIRECTOR),
 				field: 'status',
 				allowNull: false,
-				defaultValue: UserRole.PERSONNEL,
+				defaultValue: UserRole.USER,
 			},
 			
 			// role: {

@@ -7,6 +7,8 @@ export interface SchoolSupervisionFormAttributes {
 	supervisorPosition?: string;
 	year? : string;
 	term? : string;
+	isSend? : boolean;
+	isConfirm?: boolean;
 	createdAt?: Date;
 	updatedAt?: Date;
 }

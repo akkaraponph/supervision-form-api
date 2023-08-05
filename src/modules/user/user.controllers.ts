@@ -205,7 +205,7 @@ export const create = async (req: Request, res: Response) => {
             }
 
 
-        } else if (createUser.status === UserRole.PERSONNEL || UserRole.ADMIN) {
+        } else if (createUser.status === UserRole.PERSONNEL || UserRole.ADMIN || UserRole.DIRECTOR) {
             await PersonnelModel.create({
                 "idPersonnel": "",
                 "name": "",
@@ -313,7 +313,7 @@ export const login = async (req: Request, res: Response) => {
         if (schoolData) {
             sid = schoolData.id
         }
-        console.log(schoolData)
+        // console.log(schoolData)
         // const token = jwt.sign({ id: user.id, role: user.role, name: user.name }, "test", { expiresIn: '1h' });
         const token: string = createJwtToken({
             sub: user.id,

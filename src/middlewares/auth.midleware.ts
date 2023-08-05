@@ -8,12 +8,7 @@ const UserModel = db.User
 
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
 	try {
-		// Bearer token
-		// ['Bearer', 'token']
 		const token = req.headers.authorization?.split(' ')[1] as string;
-		// console.log("======== middleware ==========")
-		// console.log(req.headers.authorization?.split(' '))
-		// console.log("------------------------");
 		if (!token) {
 			return res.status(401).json({
 				msg: "No token provided",

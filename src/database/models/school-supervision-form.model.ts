@@ -17,6 +17,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		supervisionFormId!: string;
 		supervisorName!: string;
 		supervisorPosition!: string;
+		isSend? : boolean;
+		isConfirm?: boolean;
 		year!: string;
 		term!: string;
 
@@ -71,6 +73,16 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				field: 'school_id',
 				unique: false,
 				onDelete: 'CASCADE',
+			},
+			isSend: {
+				type: DataTypes.BOOLEAN,
+				field: "is_send",
+				defaultValue: false,
+			},
+			isConfirm: {
+				type: DataTypes.BOOLEAN,
+				field: "is_confirm",
+				defaultValue: false,
 			}
 		},
 		{
