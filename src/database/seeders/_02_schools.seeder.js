@@ -2,7 +2,7 @@ module.exports = {
 	up: async (queryInterface) => {
 		seedData = [
 			{
-				id: "e26263e9-cd10-4bd8-b040-ff550a0d5ba1",
+				id: "e26263e9-cd10-4bd8-b040-ff550a1d1ba1",
 				id_school: "231",
 				name: "A1",
 				size: "test",
@@ -23,7 +23,7 @@ module.exports = {
 
 			},
 			{
-				id: "e26263e9-cd10-4bd8-b040-ff550a0d5ba2",
+				id: "e26263e9-cd10-4bd8-b040-ff550a1d1ba2",
 				id_school: "232",
 				name: "A2",
 				size: "test",
@@ -43,7 +43,7 @@ module.exports = {
 				updated_at: new Date(),
 			},
 			{
-				id: "e26263e9-cd10-4bd8-b040-ff550a0d5ba3",
+				id: "e26263e9-cd10-4bd8-b040-ff550a1d1ba3",
 				id_school: "233",
 				name: "A3",
 				size: "test",
@@ -63,7 +63,7 @@ module.exports = {
 				updated_at: new Date(),
 			},
 			{
-				id: "e26263e9-cd10-4bd8-b040-ff550a0d5ba4",
+				id: "e26263e9-cd10-4bd8-b040-ff550a1d1ba4",
 				id_school: "234",
 				name: "A4",
 				size: "test",
@@ -83,7 +83,7 @@ module.exports = {
 				updated_at: new Date(),
 			},
 			{
-				id: "e26263e9-cd10-4bd8-b040-ff550a0d5ba5",
+				id: "e26263e9-cd10-4bd8-b040-ff550a1d1ba5",
 				id_school: "235",
 				name: "A5",
 				size: "test",
@@ -103,7 +103,7 @@ module.exports = {
 				updated_at: new Date(),
 			},
 			{
-				id: "e26263e9-cd10-4bd8-b040-ff550a0d5ba6",
+				id: "e26263e9-cd10-4bd8-b040-ff550a1d1ba6",
 				id_school: "236",
 				name: "A6",
 				size: "test",
@@ -123,7 +123,7 @@ module.exports = {
 				updated_at: new Date(),
 			},
 			{
-				id: "e26263e9-cd10-4bd8-b040-ff550a0d5ba7",
+				id: "e26263e9-cd10-4bd8-b040-ff550a1d1ba7",
 				id_school: "237",
 				name: "A7",
 				size: "test",
@@ -143,7 +143,7 @@ module.exports = {
 				updated_at: new Date(),
 			},
 			{
-				id: "e26263e9-cd10-4bd8-b040-ff550a0d5ba8",
+				id: "e26263e9-cd10-4bd8-b040-ff550a1d1ba8",
 				id_school: "238",
 				name: "A8",
 				size: "test",
@@ -163,7 +163,7 @@ module.exports = {
 				updated_at: new Date(),
 			},
 			{
-				id: "e26263e9-cd10-4bd8-b040-ff550a0d5ba9",
+				id: "e26263e9-cd10-4bd8-b040-ff550a1d1ba9",
 				id_school: "239",
 				name: "A9",
 				size: "test",
@@ -183,7 +183,7 @@ module.exports = {
 				updated_at: new Date(),
 			},
 			{
-				id: "e26263e9-cd10-4bd8-b040-ff550a0d1ba0",
+				id: "e26263e9-cd10-4bd8-b040-ff550a1d2ba0",
 				id_school: "240",
 				name: "A10",
 				size: "test",
