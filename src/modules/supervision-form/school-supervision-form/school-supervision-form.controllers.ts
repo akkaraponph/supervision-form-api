@@ -318,7 +318,41 @@ export const getAllReport = async (req: Request, res: Response) => {
 		const year = req.query?.year
 		const term = req.query?.term
 		const typeParam = req.query?.type as string
+		const allSchoolSupervisonForm = await db.SchoolSupervisionForm.findAll({
+			include: [
+			{
+				model: db.SupervisionForm,
+				include: [
+				  {
+					model: db.SupervisionFormType,
+					where: {
+					  type: typeParam
+					},
+					required: false,
+				  }
+				]
+			  }
+			],
+			where: {
+				[db.Sequelize.Op.and]: [
+					{ year },
+					{ term },
+					{ '$SupervisionForm.SupervisionFormType.type$': { [db.Sequelize.Op.ne]: null } },
+				],
+			}, raw:true
+		})
 
+		let countScool = 0
+	
+		allSchoolSupervisonForm.map(async (resp:any)=>{
+			const answer  = await db.ResultRSF.findOne({
+				where: {schoolSupervisionFormId: resp.id}, raw:true
+			})
+			if (answer){
+				countScool+=1
+			}
+		})
+		
 		const allSchoolAnswer = await db.SchoolSupervisionForm.findAll({
 			include: [
 				{
@@ -463,7 +497,8 @@ export const getAllReport = async (req: Request, res: Response) => {
 				sectionMeanLabels,
 				sectionMeanValues,
 				questionsMeanLabel,
-				meanScoresArray
+				meanScoresArray,
+				count: countScool
 			},
 		}, 'success')
 	} catch (error) {
@@ -677,15 +712,15 @@ export const update = async (req: Request, res: Response) => {
 		const id = req.params.id
 		const body = req.body;
 		const resp = await db.SchoolSupervisionForm.findOne({
-			where: {id}, raw:true
+			where: { id }, raw: true
 		})
 		const payload = await SchoolSupervisionForm.update({
 			...resp,
 			...body,
 		},
-		{
-			where: {id}
-		})
+			{
+				where: { id }
+			})
 		return res.status(200).json({
 			msg: `Update the data of school supervision form was successfully`,
 			payload
