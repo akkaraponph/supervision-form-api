@@ -81,7 +81,7 @@ export const getOne = async (req: Request, res: Response) => {
 }
 
 export const me = async (req: Request, res: Response) => {
-    console.log("====================")
+    // console.log("====================")
     try {
         const user = req.user;
 
@@ -109,9 +109,9 @@ export const me = async (req: Request, res: Response) => {
             payload
         })
     } catch (error) {
-        console.log("==================")
-        console.log(error)
-        console.log("==================")
+        // console.log("==================")
+        // console.log(error)
+        // console.log("==================")
         return res.status(400).json({
             msg: "get profile was failed",
             payload: { error }
@@ -309,17 +309,27 @@ export const login = async (req: Request, res: Response) => {
             where: { userId: user.id },
             raw: true
         })
+        const personnelSchool =await PersonnelModel.findOne({
+            where: {
+                userId: user.id
+            },
+            raw: true
+        })
         let sid = "";
         if (schoolData) {
             sid = schoolData.id
         }
-        // console.log(schoolData)
+        let pid = "";
+        if (personnelSchool) {
+            pid = personnelSchool.id
+        }
         // const token = jwt.sign({ id: user.id, role: user.role, name: user.name }, "test", { expiresIn: '1h' });
         const token: string = createJwtToken({
             sub: user.id,
             status: user.status,
             name: user.username,
-            sid: sid
+            sid,
+            pid
         })
         delete user.password
         return res.status(200).json({

@@ -15,7 +15,18 @@ export const create = async (req: Request, res: Response) => {
 				payload: {}
 			})
 		}
-
+		const isExist = await db.PersonnelSchool.findOne({
+			where: {
+				schoolId: body.schoolId
+			},
+			raw:true
+		})
+		if (isExist) {
+			return res.status(400).json({
+				msg: "Encountered an error create was failed duplicated value !",
+				payload: {}
+			})
+		}
 		const personnel = await db.Personnel.findOne({
 			where: { id: body.personnelId },
 			raw: true
@@ -34,7 +45,7 @@ export const create = async (req: Request, res: Response) => {
 			payload: personnelSchool
 		})
 	} catch (error) {
-		console.log(error)
+		// console.log(error)
 		return res.status(400).json({
 			msg: "create personnelSchool was failed",
 			payload: {}

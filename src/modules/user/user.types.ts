@@ -19,6 +19,7 @@ export interface UserAttributes {
 export interface TokenPayload {
 	sub: number;
 	sid: string;
+	pid: string;
 	status: string;
 	exp: number;
 }
