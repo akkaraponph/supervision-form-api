@@ -712,6 +712,7 @@ export const update = async (req: Request, res: Response) => {
 		const resp = await db.SchoolSupervisionForm.findOne({
 			where: { id }, raw: true
 		})
+		
 		const payload = await SchoolSupervisionForm.update({
 			...resp,
 			...body,
