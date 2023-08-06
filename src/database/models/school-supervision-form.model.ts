@@ -17,6 +17,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		supervisionFormId!: string;
 		supervisorName!: string;
 		supervisorPosition!: string;
+		isSend? : boolean;
+		isConfirm?: boolean;
 		year!: string;
 		term!: string;
 
@@ -27,16 +29,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				onDelete: 'CASCADE'
 			});
 
-			SchoolSupervisionForm.hasMany(models.ResultCFBQSection);
-			SchoolSupervisionForm.hasMany(models.ResultCFOEQSection);
-
-			SchoolSupervisionForm.hasMany(models.ResultCFBQSubSection);
-			SchoolSupervisionForm.hasMany(models.ResultCFOEQSubSection);
-
 			SchoolSupervisionForm.hasMany(models.ResultRSF);
 
-			SchoolSupervisionForm.hasMany(models.ResultQFBQ);
-			SchoolSupervisionForm.hasMany(models.ResultQFOEQ);
 		}
 	}
 
@@ -49,7 +43,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				primaryKey: true,
 				field: 'id'
 			},
-
 			year: {
 				type: DataTypes.STRING(4),
 				allowNull: false
@@ -80,6 +73,16 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				field: 'school_id',
 				unique: false,
 				onDelete: 'CASCADE',
+			},
+			isSend: {
+				type: DataTypes.BOOLEAN,
+				field: "is_send",
+				defaultValue: false,
+			},
+			isConfirm: {
+				type: DataTypes.BOOLEAN,
+				field: "is_confirm",
+				defaultValue: false,
 			}
 		},
 		{

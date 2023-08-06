@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import db from "../../database/models";
+import fs from 'fs';
+import path from 'path';
 const PersonnelModel = db.Personnel
 const UserModel = db.User
 
@@ -17,7 +19,7 @@ export const create = async (req: Request, res: Response) => {
 			})
 		}
 
-		const personnel = await PersonnelModel.create({ ...body});
+		const personnel = await PersonnelModel.create({ ...body });
 
 		return res.json({
 			msg: `create personnel was successfully`,
@@ -93,7 +95,9 @@ export const update = async (req: Request, res: Response) => {
 	try {
 		const id = req.params?.id
 		const body = req.body;
-
+		if(body.image) {
+			delete body.image
+		}
 		// console.log("===============")
 		// console.log(id);
 		// console.log(body);
@@ -118,11 +122,14 @@ export const updateByUser = async (req: Request, res: Response) => {
 	try {
 		const userId = req.user?.id
 		const body = req.body;
-		console.log("===================")
-		console.log(body)
-		console.log("===================")
+		if(body.image) {
+			delete body.image
+		}
+		// console.log("===================")
+		// console.log(body)
+		// console.log("===================")
 
-		const personnel = await PersonnelModel.update({ ...body },{
+		const personnel = await PersonnelModel.update({ ...body }, {
 			where: { userId }
 		});
 
@@ -157,6 +164,66 @@ export const remove = async (req: Request, res: Response) => {
 	}
 }
 
+export const getImage = async (req: Request, res: Response) => {
+	try {
+		const imageName = req.params.name;
+		const imagePath = path.join(__dirname, '../../../public/uploads/', imageName);
+		// const imagePath = `public/uploads/${imageName}`// No need to add 'public/uploads/'
+    	res.sendFile(imagePath);
+	} catch (err) {
+		console.error(err);
+		res.status(400).json({ error: 'Internal server error' });
+	}
+}
+
+export const uploadImage = async (req: Request, res: Response) => {
+	try {
+		const uid = req.user?.id;
+		const resPrsonnel = await db.Personnel.findOne({
+			where: { userId: uid }, raw: true
+		})
+
+		const personnelId = resPrsonnel.id
+
+		// Check if the file was uploaded successfully
+		if (!req.file) {
+			return res.status(400).json({ error: 'No image file uploaded' });
+		}
+		const imageFilePath = req.file.filename;
+
+		// Find the personnel by id
+		const personnel = await db.Personnel.findOne({ where: { id: personnelId }, raw: true });
+
+		if (!personnel) {
+			return res.status(404).json({ error: 'Personnel not found' });
+		}
+		console.log(personnel.image)
+		if (personnel.image) {
+			// Construct the full path to the image file
+			
+			const imagePath = `public/uploads/${personnel.image}`
+			if (fs.existsSync(imagePath)) {
+				try {
+					fs.unlinkSync(imagePath);
+					console.log('Previous image removed:', imagePath);
+				} catch (err) {
+					console.error('Error removing previous image:', err);
+				}
+			}
+		}
+
+		// Update the personnel's image property with the file path
+		await db.Personnel.update({ ...personnel, image: imageFilePath }, {
+			where: { id: personnelId }
+		})
+
+		// Respond with a success message or other response
+		res.json({ message: 'Personnel image uploaded successfully!' });
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ error: 'Internal server error' });
+	}
+}
 
 export default {
 	create,
@@ -165,5 +232,7 @@ export default {
 	getOne,
 	getByUser,
 	updateByUser,
-	remove
+	remove,
+	uploadImage,
+	getImage
 }

@@ -2,7 +2,6 @@
 
 import { Model, UUIDV4 } from "sequelize";
 
-
 import { ResultRSFAttributes } from "../../modules/supervision-form/rating-scale-form/rsf.types";
 
 module.exports = (sequelize: any, DataTypes: any) => {

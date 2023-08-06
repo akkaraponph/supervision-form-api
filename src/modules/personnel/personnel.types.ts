@@ -8,8 +8,14 @@ export interface PersonnelAttributes {
 	email?: string;
 	address?: string;
 	tel?: string;
-	userId:string;
-	imgUrl?: string;
+	userId: string;
+	image?: string;
 	createdAt?: Date;
 	updatedAt?: Date;
+}
+
+export interface PersonnelSchoolAttributes {
+	id?: string;
+	schoolId?: string;
+	personnelId?: string;
 }

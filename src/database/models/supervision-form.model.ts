@@ -15,8 +15,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
 		id!: string;
 		name!: string;  // แบบฟอร์ม รายการนิเทศติดตาม การเตรียมความพร้อมการเปิดภาคเรียน 
 		detail!: string;
-		term!: string;
-		educationYear!: string;
 		supervisionFormTypeId!: string;
 		suggestion!: string;
 		supervisorName!: string;
@@ -39,8 +37,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				}
 			});
 			SupervisionForm.hasMany(models.RSFSection);
-			SupervisionForm.hasMany(models.CFSection);
-			SupervisionForm.hasMany(models.QF);
 			SupervisionForm.hasMany(models.SchoolSupervisionForm);
 		}
 	}
@@ -63,15 +59,15 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				allowNull: true,
 			},
 
-			term: {
-				type: DataTypes.STRING(1),
-				allowNull: false,
-			},
-			year: {
-				type: DataTypes.STRING(4),
-				allowNull: true,
-				field: 'year'
-			},
+			// term: {
+			// 	type: DataTypes.STRING(1),
+			// 	allowNull: false,
+			// },
+			// year: {
+			// 	type: DataTypes.STRING(4),
+			// 	allowNull: true,
+			// 	field: 'year'
+			// },
 			suggestion: {
 				type: DataTypes.TEXT,
 				allowNull: true,

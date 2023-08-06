@@ -9,22 +9,18 @@ import { NewsAttributes } from "../../modules/news/news.types";
 module.exports = (sequelize: any, DataTypes: any) => {
 	class News extends Model<NewsAttributes> implements NewsAttributes {
 
-		/**
-		 * Helper method for defining associations.
-		 * This method is not a part of Sequelize lifecycle.
-		 * The `models/index` file will call this method automatically.
-		 */
 		id!: string
 		name!: string
 		description!: string
 		editor!: string
 		content!: string
-		link!: string
-		img1!:string
-		img2!:string
-		img3!:string
-		img4!:string
-		img5!:string
+		cover!: string
+		// img1!:string
+		// img2!:string
+		// img3!:string
+		// img4!:string
+		// img5!:string
+		imageList!: string
 
 		static associate(models: any) {
 			// define association here
@@ -57,30 +53,35 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				type: DataTypes.TEXT,
 				allowNull: true,
 			},
-			link: {
+			cover: {
 				type: DataTypes.STRING,
 				allowNull: true,
 			},
-			img1: {
-				type: DataTypes.STRING,
-				allowNull: true,
-			},
-			img2: {
-				type: DataTypes.STRING,
-				allowNull: true,
-			},
-			img3: {
-				type: DataTypes.STRING,
-				allowNull: true,
-			},
-			img4: {
-				type: DataTypes.STRING,
-				allowNull: true,
-			},
-			img5: {
-				type: DataTypes.STRING,
-				allowNull: true,
-			},
+			imageList: {
+				type: DataTypes.TEXT, // Use TEXT data type to store longer strings
+				field: "image_list",
+				allowNull: true, // Set allowNull to true if the field can be empty
+			  },
+			// img1: {
+			// 	type: DataTypes.STRING,
+			// 	allowNull: true,
+			// },
+			// img2: {
+			// 	type: DataTypes.STRING,
+			// 	allowNull: true,
+			// },
+			// img3: {
+			// 	type: DataTypes.STRING,
+			// 	allowNull: true,
+			// },
+			// img4: {
+			// 	type: DataTypes.STRING,
+			// 	allowNull: true,
+			// },
+			// img5: {
+			// 	type: DataTypes.STRING,
+			// 	allowNull: true,
+			// },
 		
 		},
 		{

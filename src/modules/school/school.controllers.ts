@@ -91,6 +91,14 @@ export const getAll = async (req: Request, res: Response) => {
 	try {
 
 		const school = await SchoolModel.findAll({
+			include: [
+				{
+					model: db.User,
+					attributes: {
+						exclude: ['password']
+					}
+				}
+			],
 			attributes: {
 				exclude: ['user_id']
 			},
@@ -113,6 +121,46 @@ export const getAll = async (req: Request, res: Response) => {
 		// 		}
 		// 	]
 		// })
+		res.json({
+			msg: `get all school was successfully`,
+			payload: school,
+			// formData
+		})
+	} catch (error) {
+		res.status(400).json({
+			msg: "get all school was failed",
+			payload: {}
+		})
+	}
+}
+
+
+
+export const getAllbyDirector = async (req: Request, res: Response) => {
+	try {
+		const term = req.query.term
+		const year = req.query.year
+		const school = await SchoolModel.findAll({
+			include: [
+				{
+					model: db.User,
+					attributes: {
+						exclude: ['password']
+					}
+				},
+				{
+					model: db.SchoolSupervisionForm,
+					where: {
+						term,
+						year,
+					}
+				}
+			],
+			attributes: {
+				exclude: ['user_id']
+			},
+		});
+	
 		res.json({
 			msg: `get all school was successfully`,
 			payload: school,
@@ -199,6 +247,7 @@ export const remove = async (req: Request, res: Response) => {
 
 export default {
 	create,
+	getAllbyDirector,
 	update,
 	getByUser,
 	updateByUser,
