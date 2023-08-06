@@ -4,9 +4,7 @@ import { FormType, SupervisionFormTypeAttributes, supervisionFormTypeEnum } from
 import { SupervisionFormAttributes } from "../supervision-form.types";
 import { SchoolSupervisionFormAttributes } from "./school-supervision-form.types";
 import { createResponse } from "../../../common/utils/response.util";
-import { RSFQuestionAttributes, RSFSectionAttributes, ResultRSFAttributes } from "../rating-scale-form/rsf.types";
-import { IFormReport, IResultRsf } from "./report.type";
-import { Op } from "sequelize";
+
 
 const SchoolSupervisionForm = db.SchoolSupervisionForm
 

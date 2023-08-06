@@ -5,6 +5,7 @@ const router = Router();
 
 router.get('/id/:id', authMiddleware, schoolController.getOne)
 router.get('/', schoolController.getAll)
+router.get('/by/director', schoolController.getAllbyDirector)
 router.get('/me/', authMiddleware, schoolController.getByUser)
 router.post('/', schoolController.create)
 router.patch('/update/id/:id', authMiddleware, schoolController.update)
