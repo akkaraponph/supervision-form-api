@@ -26,3 +26,11 @@ export interface ResultRSFAttributes {
 	RSFQuestionId?: string;
 	schoolSupervisionFormId?: string;
 }
+export interface PersonnelResultRSFAttributes {
+	id?: string;
+	score?: number;
+	RSFQuestionId?: string;
+	personnelSupervisionFormId?: string;
+}
+
+

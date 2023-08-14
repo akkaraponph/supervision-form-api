@@ -12,3 +12,11 @@ export interface SchoolSupervisionFormAttributes {
 	createdAt?: Date;
 	updatedAt?: Date;
 }
+
+export interface PersonnelSupervisionFormAttributes {
+	id?: string;
+	schoolSupervisionFormId?: string;
+	personnelId?: string;
+	createdAt?: Date;
+	updatedAt?: Date;
+}
