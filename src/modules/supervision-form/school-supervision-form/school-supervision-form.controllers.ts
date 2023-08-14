@@ -313,7 +313,7 @@ export const getAllSchoolReport = async (req: Request, res: Response) => {
 
 const getAllSchoolReportByPersonnel = async (req: Request, res: Response) => {
 	try {
-		
+
 		const year = req.query?.year
 		const term = req.query?.term
 		const typeParam = req.query?.type as string
@@ -326,7 +326,7 @@ const getAllSchoolReportByPersonnel = async (req: Request, res: Response) => {
 			where: { schoolId: school.id },
 			raw: true
 		})
-		
+
 
 		const personnelAnswer = await db.PersonnelSupervisionForm.findAll({
 			include: [
@@ -364,13 +364,13 @@ const getAllSchoolReportByPersonnel = async (req: Request, res: Response) => {
 							]
 						}
 					],
-					
+
 				}
 			],
 			where: {
 				[db.Sequelize.Op.and]: [
-					{ '$SchoolSupervisionForm.year$': year  },
-					{ '$SchoolSupervisionForm.term$': term  },
+					{ '$SchoolSupervisionForm.year$': year },
+					{ '$SchoolSupervisionForm.term$': term },
 					// { term },
 					{ '$SchoolSupervisionForm.SupervisionForm.SupervisionFormType.type$': { [db.Sequelize.Op.ne]: null } },
 				],
@@ -382,150 +382,6 @@ const getAllSchoolReportByPersonnel = async (req: Request, res: Response) => {
 			raw: true,
 		})
 
-		// console.log("🚀 -----------------------")
-		// console.log("🚀 ", personnelAnswer)
-		// console.log("🚀 -----------------------")
-
-		const schoolAnswer = await db.SchoolSupervisionForm.findAll({
-			include: [
-				{
-					model: db.ResultRSF,
-					include: [
-						{
-							model: db.RSFQuestion,
-							include: [
-								{
-									model: db.RSFSection,
-									orderBy: ["priority", "ASC"]
-								}
-							],
-							orderBy: ["priority", "ASC"]
-						}
-					],
-					where: {
-						score: { [db.Sequelize.Op.ne]: null }
-					}
-				},
-				{
-					model: db.SupervisionForm,
-					include: [
-						{
-							model: db.SupervisionFormType,
-							where: {
-								type: typeParam
-							},
-							required: false,
-						}
-					]
-				}
-			],
-			where: {
-				[db.Sequelize.Op.and]: [
-					{ year },
-					{ term },
-					{ '$SupervisionForm.SupervisionFormType.type$': { [db.Sequelize.Op.ne]: null } },
-				],
-				// term, year,
-				schoolId: school.id
-			},
-			orderBy: ["ResultRSFs.RSFQuestion.priority"],
-			raw: true,
-			// returning: true
-		})
-		// console.log(schoolAnswer)
-
-		// // Calculate mean scores for each section and question using for loop
-		// const sectionMeanLabel: string[] = [];
-		// const sectionMean: string[] = [];
-
-		// let resultQuestionArray: {
-		// 	[key: string]: any[]
-		// } = {}
-
-		// let SectionArray: {
-		// 	[key: string]: any[]
-		// } = {}
-
-		// schoolAnswer.sort((a: any, b: any) => {
-		// 	const priorityA = a['ResultRSFs.RSFQuestion.RSFSection.priority'];
-		// 	const priorityB = b['ResultRSFs.RSFQuestion.RSFSection.priority'];
-		// 	return priorityA - priorityB;
-		// });
-
-
-		// // วนซ้ำข้อมูลเพื่อ แมพค่า คำถามกับ คำตอบ
-		// schoolAnswer.forEach((element: any) => {
-		// 	if (!resultQuestionArray[element['ResultRSFs.RSFQuestion.question']]) {
-		// 		resultQuestionArray[element['ResultRSFs.RSFQuestion.question']] = [];
-		// 	}
-		// 	resultQuestionArray[element['ResultRSFs.RSFQuestion.question']].push(element['ResultRSFs.score']);
-
-		// 	const sectionType = element['ResultRSFs.RSFQuestion.RSFSection.type'];
-		// 	const question = element['ResultRSFs.RSFQuestion.question'];
-
-		// 	if (!SectionArray[sectionType]) {
-		// 		SectionArray[sectionType] = [];
-		// 	}
-
-		// 	if (question && !SectionArray[sectionType].includes(question)) {
-		// 		SectionArray[sectionType].push(question);
-		// 	}
-		// });
-
-
-
-		// // ประกาศตัวแปรเพื่อเก็บค่าเฉลี่ยของคำถาม
-		// const meanScores: { [question: string]: number } = {};
-		// // หาค่าเฉลี่ย ของคำถาม
-		// Object.keys(resultQuestionArray).forEach((question) => {
-		// 	const scoresArray = resultQuestionArray[question];
-		// 	const sum = scoresArray.reduce((acc, score) => acc + score, 0);
-		// 	const mean = sum / scoresArray.length;
-		// 	// Round the mean value to two decimal places
-		// 	const roundedMean = parseFloat(mean.toFixed(2));
-		// 	meanScores[question] = roundedMean;
-		// });
-		// // ประกาศเพื่อเก็บค่าเฉลี่ยของ ตอนที่
-		// let QuestionMeanArrayOfEachSection: {
-		// 	[key: string]: any[]
-		// } = {}
-
-		// // console.log(meanScores['มีการจัดประชุมครู /บุคลากร /ผู้ปกครอง และนักเรียนก่อนเปิดภาคเรียน'])
-		// Object.keys(SectionArray).forEach((section) => {
-		// 	if (!QuestionMeanArrayOfEachSection[section]) {
-		// 		QuestionMeanArrayOfEachSection[section] = []
-		// 	}
-		// 	if (section != "null" || section != null) {
-		// 		SectionArray[section].forEach((question: string) => {
-		// 			let meanOfQuestion = meanScores[question]
-		// 			QuestionMeanArrayOfEachSection[section].push(meanOfQuestion)
-		// 		})
-		// 	}
-		// })
-
-		// const meanSectionScores: { [question: string]: number } = {};
-		// // หาค่าเฉลี่ย ของคำถาม
-		// Object.keys(QuestionMeanArrayOfEachSection).forEach((section) => {
-		// 	if (section) {
-		// 		const scoresArray = QuestionMeanArrayOfEachSection[section];
-		// 		const sum = scoresArray.reduce((acc, score) => acc + score, 0);
-		// 		const mean = sum / scoresArray.length;
-
-		// 		// Round the mean value to two decimal places
-		// 		const roundedMean = parseFloat(mean.toFixed(2));
-		// 		meanSectionScores[section] = roundedMean;
-
-		// 	}
-		// });
-
-		// // console.log(QuestionMeanArrayOfEachSection)
-
-		// // Separate the keys (questions) and values (mean scores) into separate arrays.
-		// const questionsMeanLabel = Object.keys(meanScores);
-		// const meanScoresArray = Object.values(meanScores);
-
-		// const sectionMeanLabels = Object.keys(meanSectionScores);
-		// const sectionMeanValues = Object.values(meanSectionScores);
 
 		// Calculate mean scores for each section and question using for loop
 		const sectionMeanLabel: string[] = [];
@@ -832,6 +688,216 @@ export const getAllReport = async (req: Request, res: Response) => {
 	}
 }
 
+
+export const getAllReportByPersonnel = async (req: Request, res: Response) => {
+	try {
+		const year = req.query?.year
+		const term = req.query?.term
+		const typeParam = req.query?.type as string
+
+		const allPersonnelSupervisonForm = await db.PersonnelSupervisionForm.findAll({
+			include: [
+				{
+					model: db.SchoolSupervisionForm,
+					include: [
+						{
+							model: db.SupervisionForm,
+							include: [
+								{
+									model: db.SupervisionFormType,
+									where: {
+										type: typeParam
+									},
+									required: false,
+								}
+							]
+						}
+					]
+				}
+			],
+			where: {
+				[db.Sequelize.Op.and]: [
+					{ '$SchoolSupervisionForm.year$': year },
+					{ '$SchoolSupervisionForm.term$': term },
+					{ '$SchoolSupervisionForm.SupervisionForm.SupervisionFormType.type$': { [db.Sequelize.Op.ne]: null } },
+				],
+			}, raw: true
+		})
+
+
+		let countScool = 0
+
+		allPersonnelSupervisonForm.map(async (resp: any) => {
+
+			const answer = await db.PersonnelResultRSF.findOne({
+				where: { personnelSupervisionFormId: resp.id }, raw: true
+			})
+			if (answer) {
+				countScool += 1
+			}
+		})
+
+		const allPersonnelAnswer = await db.PersonnelSupervisionForm.findAll({
+			include: [
+				{
+					model: db.PersonnelResultRSF,
+					include: [
+						{
+							model: db.RSFQuestion,
+							include: [
+								{
+									model: db.RSFSection,
+									orderBy: ["priority", "ASC"]
+								}
+							],
+							orderBy: ["priority", "ASC"]
+						}
+					],
+					where: {
+						score: { [db.Sequelize.Op.ne]: null }
+					}
+				},
+				{
+					model: db.SchoolSupervisionForm,
+					include: [
+						{
+							model: db.SupervisionForm,
+							include: [
+								{
+									model: db.SupervisionFormType,
+									where: {
+										type: typeParam
+									},
+									required: false,
+								}
+							]
+						}
+					],
+
+				},
+
+			],
+			where: {
+				[db.Sequelize.Op.and]: [
+					{ '$SchoolSupervisionForm.year$': year },
+					{ '$SchoolSupervisionForm.term$': term },
+					{ '$SchoolSupervisionForm.SupervisionForm.SupervisionFormType.type$': { [db.Sequelize.Op.ne]: null } },
+				],
+			},
+			orderBy: ["PersonnelResultRSFs.RSFQuestion.priority"],
+			raw: true,
+			// returning: true
+		})
+
+
+		// Calculate mean scores for each section and question using for loop
+		const sectionMeanLabel: string[] = [];
+		const sectionMean: string[] = [];
+
+		let resultQuestionArray: {
+			[key: string]: any[]
+		} = {}
+
+		let SectionArray: {
+			[key: string]: any[]
+		} = {}
+
+		allPersonnelAnswer.sort((a: any, b: any) => {
+			const priorityA = a['PersonnelResultRSFs.RSFQuestion.RSFSection.priority'];
+			const priorityB = b['PersonnelResultRSFs.RSFQuestion.RSFSection.priority'];
+			return priorityA - priorityB;
+		});
+
+
+		// วนซ้ำข้อมูลเพื่อ แมพค่า คำถามกับ คำตอบ
+		allPersonnelAnswer.forEach((element: any) => {
+			if (!resultQuestionArray[element['PersonnelResultRSFs.RSFQuestion.question']]) {
+				resultQuestionArray[element['PersonnelResultRSFs.RSFQuestion.question']] = [];
+			}
+			resultQuestionArray[element['PersonnelResultRSFs.RSFQuestion.question']].push(element['PersonnelResultRSFs.score']);
+
+			const sectionType = element['PersonnelResultRSFs.RSFQuestion.RSFSection.type'];
+			const question = element['PersonnelResultRSFs.RSFQuestion.question'];
+
+			if (!SectionArray[sectionType]) {
+				SectionArray[sectionType] = [];
+			}
+
+			if (question && !SectionArray[sectionType].includes(question)) {
+				SectionArray[sectionType].push(question);
+			}
+		});
+
+		// ประกาศตัวแปรเพื่อเก็บค่าเฉลี่ยของคำถาม
+		const meanScores: { [question: string]: number } = {};
+		// หาค่าเฉลี่ย ของคำถาม
+		Object.keys(resultQuestionArray).forEach((question) => {
+			const scoresArray = resultQuestionArray[question];
+			const sum = scoresArray.reduce((acc, score) => acc + score, 0);
+			const mean = sum / scoresArray.length;
+			// Round the mean value to two decimal places
+			const roundedMean = parseFloat(mean.toFixed(2));
+			meanScores[question] = roundedMean;
+		});
+		// ประกาศเพื่อเก็บค่าเฉลี่ยของ ตอนที่
+		let QuestionMeanArrayOfEachSection: {
+			[key: string]: any[]
+		} = {}
+
+		// console.log(meanScores['มีการจัดประชุมครู /บุคลากร /ผู้ปกครอง และนักเรียนก่อนเปิดภาคเรียน'])
+		Object.keys(SectionArray).forEach((section) => {
+			if (!QuestionMeanArrayOfEachSection[section]) {
+				QuestionMeanArrayOfEachSection[section] = []
+			}
+			if (section != "null" || section != null) {
+				SectionArray[section].forEach((question: string) => {
+					let meanOfQuestion = meanScores[question]
+					QuestionMeanArrayOfEachSection[section].push(meanOfQuestion)
+				})
+			}
+		})
+
+		const meanSectionScores: { [question: string]: number } = {};
+		// หาค่าเฉลี่ย ของคำถาม
+		Object.keys(QuestionMeanArrayOfEachSection).forEach((section) => {
+			if (section) {
+				const scoresArray = QuestionMeanArrayOfEachSection[section];
+				const sum = scoresArray.reduce((acc, score) => acc + score, 0);
+				const mean = sum / scoresArray.length;
+
+				// Round the mean value to two decimal places
+				const roundedMean = parseFloat(mean.toFixed(2));
+				meanSectionScores[section] = roundedMean;
+
+			}
+		});
+
+		// console.log(QuestionMeanArrayOfEachSection)
+
+		// Separate the keys (questions) and values (mean scores) into separate arrays.
+		const questionsMeanLabel = Object.keys(meanScores);
+		const meanScoresArray = Object.values(meanScores);
+
+		const sectionMeanLabels = Object.keys(meanSectionScores);
+		const sectionMeanValues = Object.values(meanSectionScores);
+
+		return createResponse(res, 200, {
+			msg: "get success",
+			payload: {
+				sectionMeanLabels,
+				sectionMeanValues,
+				questionsMeanLabel,
+				meanScoresArray,
+				count: countScool
+			},
+		}, 'success')
+	} catch (error) {
+		return createResponse(res, 400, {
+			msg: "can't get report",
+			payload: error
+		}, "failed")
+	}
+}
 // export const getAllReport = async (req: Request, res: Response) => {
 // 	try {
 // 		const year = req.query?.year
@@ -1087,6 +1153,26 @@ export const update = async (req: Request, res: Response) => {
 				})
 			})
 		}
+
+		if (!afterUpdateSSF.isSend) {
+
+			const personnelSupervisionForm = await db.PersonnelSupervisionForm.findOne({
+				where: {
+					schoolSupervisionFormId: resp.id,
+				}, raw: true
+			})
+			if (personnelSupervisionForm) {
+				await db.PersonnelResultRSF.destroy({
+					where: { personnelSupervisionFormId: personnelSupervisionForm.id },
+					raw: true
+				})
+				await db.PersonnelSupervisionForm.destroy({
+					where: { id: personnelSupervisionForm.id },
+					raw: true
+				})
+			}
+
+		}
 		return res.status(200).json({
 			msg: `Update the data of school supervision form was successfully`,
 			payload
@@ -1137,5 +1223,6 @@ export default {
 	getOneByTermAndYearBySchoolId,
 	getAllReport,
 	getAllSchoolReport,
-	getAllSchoolReportByPersonnel
+	getAllSchoolReportByPersonnel,
+	getAllReportByPersonnel
 }

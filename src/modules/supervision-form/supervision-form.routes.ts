@@ -63,6 +63,7 @@ router.delete('/school/delete/:id', SchoolSupervisionFormControllers.destroy)
 router.get('/rsf_open_school_report', authMiddleware, supervisionFormControllers.getRSFOpenSchoolReportByTermAndYear)
 
 // getAllReport
+router.get('/report/personnel', SchoolSupervisionFormControllers.getAllReportByPersonnel)
 router.get('/report', SchoolSupervisionFormControllers.getAllReport)
 router.get('/report/school', authMiddleware, SchoolSupervisionFormControllers.getAllSchoolReport)
 router.get('/report/school/personnel', authMiddleware, SchoolSupervisionFormControllers.getAllSchoolReportByPersonnel)
