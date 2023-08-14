@@ -141,6 +141,79 @@ export const getOneByTermAndYearBySchoolId = async (req: Request, res: Response)
 	}
 }
 
+
+export const getOneByTermAndYearByPersonnelId = async (req: Request, res: Response) => {
+	try {
+		const query = req.query;
+		let whereClauseSupervisionFormType: Partial<SupervisionFormTypeAttributes> = {}; // Initialize an empty object for the where clause
+
+		if (query.type) {
+			whereClauseSupervisionFormType.type = query.type as supervisionFormTypeEnum; // Add a condition for the "term" query parameter
+		}
+		if (query.type_id) {
+			whereClauseSupervisionFormType.id = query.type_id as string; // Add a condition for the "term" query parameter
+		}
+		if (query.form_type) {
+			whereClauseSupervisionFormType.formType = query.form_type as FormType; // Add a condition for the "term" query parameter
+		}
+
+		let whereClauseSupervisionForm: Partial<SupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
+
+		let whereClauseSchoolSupervisionForm: Partial<SchoolSupervisionFormAttributes> = {}; // Initialize an empty object for the where clause
+		if (query.year) {
+			whereClauseSchoolSupervisionForm.year = query.year as string; // Add a condition for the "year" query parameter
+		}
+
+		if (query.term) {
+			whereClauseSchoolSupervisionForm.term = query.term as string; // Add a condition for the "term" query parameter
+		}
+
+		if (query.school_id) {
+			whereClauseSchoolSupervisionForm.schoolId = query.school_id as string; // Add a condition for the "term" query parameter
+		}
+
+		if (query.supervision_form_id) {
+			whereClauseSchoolSupervisionForm.supervisionFormId = query.supervision_form_id as string; // Add a condition for the "term" query parameter
+		}
+		
+		
+		const payload = await db.PersonnelSupervisionForm.findOne({
+			include: [
+				{
+					model: db.SchoolSupervisionForm,
+					include: [
+						{
+							model: db.SupervisionForm,
+							include: [
+								{
+									model: db.SupervisionFormType,
+									where: {
+										...whereClauseSupervisionFormType
+									}
+								}
+							],
+							where: { ...whereClauseSupervisionForm }
+						}
+					],
+					where: { ...whereClauseSupervisionForm }
+				}
+			],
+			// where: { ...whereClauseSchoolSupervisionForm }
+		})
+		console.log("🚀 ~ file: school-supervision-form.controllers.ts:203 ~ getOneByTermAndYearByPersonnelId ~ payload:", payload)
+		
+		return res.status(200).json({
+			msg: "🚀retrieved the data of personnel supervision form was successfully",
+			payload
+		})
+	} catch (error) {
+		return res.status(400).json({
+			msg: `🚀Encoutered an error when retrieved the personnel supervision form by ${req.params.id}`,
+			payload: {}
+		})
+	}
+}
+
 export const getAllSchoolReport = async (req: Request, res: Response) => {
 	try {
 		const year = req.query?.year
@@ -1224,5 +1297,6 @@ export default {
 	getAllReport,
 	getAllSchoolReport,
 	getAllSchoolReportByPersonnel,
-	getAllReportByPersonnel
+	getAllReportByPersonnel,
+	getOneByTermAndYearByPersonnelId
 }

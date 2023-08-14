@@ -5,6 +5,7 @@ import supervisionFormControllers from "./supervision-form.controllers";
 import RSFSectionControllers from "./rating-scale-form/rsf-section.controllers";
 import RSFQuestionControllers from "./rating-scale-form/rsf-question.controllers";
 import ResultRSFControllers from "./rating-scale-form/rsf-result.controllers";
+import PersonnelResultRSFControllers from "./rating-scale-form/rsf-personnel-result.controllers";
 
 import SchoolSupervisionFormControllers from "./school-supervision-form/school-supervision-form.controllers"
 
@@ -46,14 +47,23 @@ router.delete('/rsf/question/delete/:id', RSFQuestionControllers.destroy)
 router.get('/rsf/question/result', ResultRSFControllers.getAll)
 router.get('/rsf/question/result/id/:id', ResultRSFControllers.getOne)
 router.get('/rsf/question/result/id/question/:id', ResultRSFControllers.getOneByQuestionId)
+router.get('/rsf/question/result/id/question/personnel/:id', PersonnelResultRSFControllers.getOneByQuestionId)
 router.post('/rsf/question/result/create', ResultRSFControllers.create)
 router.patch('/rsf/question/result/update/:id', ResultRSFControllers.update)
 router.delete('/rsf/question/result/delete', ResultRSFControllers.destroy)
+
+router.get('/rsf/question/result/personnel', PersonnelResultRSFControllers.getAll)
+router.get('/rsf/question/result/personnel/id/:id', PersonnelResultRSFControllers.getOne)
+router.get('/rsf/question/result/personnel/id/question/:id', PersonnelResultRSFControllers.getOneByQuestionId)
+router.post('/rsf/question/result/personnel/create', PersonnelResultRSFControllers.create)
+router.patch('/rsf/question/result/personnel/update/:id', PersonnelResultRSFControllers.update)
+router.delete('/rsf/question/result/personnel/delete', PersonnelResultRSFControllers.destroy)
 
 router.get('/school', SchoolSupervisionFormControllers.getAll)
 router.get('/school/id/:id', SchoolSupervisionFormControllers.getOne)
 router.get('/school/education_year', authMiddleware, SchoolSupervisionFormControllers.getOneByTermAndYear)
 router.get('/school/rsf', authMiddleware, SchoolSupervisionFormControllers.getOneByTermAndYearBySchoolId)
+router.get('/school/rsf/personnel', authMiddleware, SchoolSupervisionFormControllers.getOneByTermAndYearByPersonnelId)
 
 router.post('/school/create', SchoolSupervisionFormControllers.create)
 router.patch('/school/update/:id', SchoolSupervisionFormControllers.update)
