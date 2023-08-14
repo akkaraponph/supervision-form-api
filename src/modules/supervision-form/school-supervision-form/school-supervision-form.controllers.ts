@@ -219,12 +219,22 @@ export const getAllSchoolReport = async (req: Request, res: Response) => {
 		const year = req.query?.year
 		const term = req.query?.term
 		const typeParam = req.query?.type as string
-		const uid = req.user?.id
-		const school = await db.School.findOne({
-			where: { userId: uid },
-			raw: true
-		})
-
+		let uid;
+		let school;
+		if (req.query?.school_id){
+			const school_id = req?.query?.school_id
+			school = await db.School.findOne({
+				where: { id: school_id },
+				raw: true
+			})
+		}else {
+			uid = req.user?.id
+			school = await db.School.findOne({
+				where: { userId: uid },
+				raw: true
+			})
+		}
+		
 		const schoolAnswer = await db.SchoolSupervisionForm.findAll({
 			include: [
 				{
@@ -386,15 +396,26 @@ export const getAllSchoolReport = async (req: Request, res: Response) => {
 
 const getAllSchoolReportByPersonnel = async (req: Request, res: Response) => {
 	try {
-
 		const year = req.query?.year
 		const term = req.query?.term
 		const typeParam = req.query?.type as string
-		const uid = req.user?.id
-		const school = await db.School.findOne({
-			where: { userId: uid },
-			raw: true
-		})
+		
+		let uid;
+		let school;
+		if (req.query?.school_id){
+			const school_id = req?.query?.school_id
+			school = await db.School.findOne({
+				where: { id: school_id },
+				raw: true
+			})
+		}else {
+			uid = req.user?.id
+			school = await db.School.findOne({
+				where: { userId: uid },
+				raw: true
+			})
+		}
+
 		const personnelSchool = await db.PersonnelSchool.findOne({
 			where: { schoolId: school.id },
 			raw: true
