@@ -420,7 +420,7 @@ const getAllSchoolReportByPersonnel = async (req: Request, res: Response) => {
 			where: { schoolId: school.id },
 			raw: true
 		})
-
+		const school_id = school.id
 
 		const personnelAnswer = await db.PersonnelSupervisionForm.findAll({
 			include: [
@@ -458,6 +458,9 @@ const getAllSchoolReportByPersonnel = async (req: Request, res: Response) => {
 							]
 						}
 					],
+					where: { 
+						schoolId: school_id
+					}
 
 				}
 			],
@@ -465,6 +468,7 @@ const getAllSchoolReportByPersonnel = async (req: Request, res: Response) => {
 				[db.Sequelize.Op.and]: [
 					{ '$SchoolSupervisionForm.year$': year },
 					{ '$SchoolSupervisionForm.term$': term },
+					// { '$SchoolSupervisionForm.schoolId$': school_id },
 					// { term },
 					{ '$SchoolSupervisionForm.SupervisionForm.SupervisionFormType.type$': { [db.Sequelize.Op.ne]: null } },
 				],

@@ -192,27 +192,31 @@ export const update = async (req: Request, res: Response) => {
 
 export const destroy = async (req: Request, res: Response) => {
     try {
-        const valid = await ResultRSFModel.findOne({ where: { RSFQuestionId: req.query.question_id, schoolSupervisionFormId: req.query.ssid } })
+
         const personnelSupervisionForm = await db.PersonnelSupervisionForm.findOne({
             where: { schoolSupervisionFormId: req.query.ssid },
             raw: true
         })
         const personnelValid = await db.PersonnelResultRSF.findOne({ where: { RSFQuestionId: req.query.question_id, personnelSupervisionFormId: personnelSupervisionForm.id } })
+        
+        const valid = await ResultRSFModel.findOne({ where: { RSFQuestionId: req.query.question_id, schoolSupervisionFormId: req.query.ssid } })
+        console.log("🚀 ~ file: rsf-result.controllers.ts:202 ~ destroy ~ valid:", valid)
         if (valid) {
             const payload = await ResultRSFModel.destroy({
                 where: { RSFQuestionId: req.query.question_id, schoolSupervisionFormId: req.query.ssid }
             })
             return res.status(200).json({
-                msg: `Delete the data of result of the rating scale form where id  : ${req.params.id} was successfully`,
+                msg: `Delete the data of result of the rating scale form where id  : ${req.query.question_id} was successfully`,
                 payload
             })
         }
+ 
         if (personnelValid) {
             const payload = await db.PersonnelResultRSF.destroy({
-                where: { RSFQuestionId: req.query.question_id, personnelSupervisionFormId: personnelSupervisionForm.id }
+                where: { RSFQuestionId: req.query.question_id, personnelSupervisionFormId: personnelSupervisionForm.question_id }
             })
             return res.status(200).json({
-                msg: `Delete the data of result of the rating scale form where personnel supervision form  : ${req.params.id} was successfully`,
+                msg: `Delete the data of result of the rating scale form where personnel supervision form  : ${req.query.question_id} was successfully`,
                 payload
             })
         }

@@ -204,7 +204,6 @@ export const create = async (req: Request, res: Response) => {
                 }
             }
 
-
         } else if (createUser.status === UserRole.PERSONNEL || UserRole.ADMIN || UserRole.DIRECTOR) {
             await PersonnelModel.create({
                 "idPersonnel": "",
